@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../images/logo.svg';
+import  { Link } from 'react-router';
 import '../styles/App.css';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
+          <Link to="/profile">To Profile</Link>
         </p>
       </div>
     );
