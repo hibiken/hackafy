@@ -1,13 +1,10 @@
 import React from 'react';
-import logo from '../images/logo.svg';
+import Header from './Header';
 
 const MainLayout = (props) => {
   return (
     <div className="main-layout">
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to React</h2>
-      </div>
+      <Header />
 
       <div className="container">
         {props.children}
