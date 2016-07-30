@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import Profile from './components/Profile';
+
 import './styles/index.css';
 
 import { Router, Route, hashHistory } from 'react-router';

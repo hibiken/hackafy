@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../images/logo.svg';
 import  { Link } from 'react-router';
+
+import '../styles/vendors/normalize.css';
+import '../styles/vendors/skeleton.css';
 import '../styles/App.css';
 
 class App extends Component {
