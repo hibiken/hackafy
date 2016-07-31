@@ -33,3 +33,8 @@
   text-decoration: none;
   color: #262626;
 }
+
+.Header__nav-link .NavLink--active {
+  padding-bottom: 2px;
+  border-bottom: 2px solid;
+}
