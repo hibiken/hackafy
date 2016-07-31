@@ -9,3 +9,7 @@ build
 # misc
 .DS_Store
 npm-debug.log
+
+# development fake data
+src/images/example*.*
+src/images/profile*.*
