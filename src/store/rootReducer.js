@@ -9,4 +9,9 @@ const rootReducer = combineReducers({
   currentUser,
 });
 
+/*** Selectors ***/
+export const getIsSignedIn = (state) => {
+  return Boolean(state.currentUser.authenticationToken);
+};
+
 export default rootReducer;

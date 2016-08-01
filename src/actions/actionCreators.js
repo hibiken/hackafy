@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'react-router-redux';
 import { API_URL } from '../config/constants';
 import {
   USER_SIGN_IN_SUCCESS,
@@ -6,7 +7,7 @@ import {
 } from './actionTypes';
 
 export const userSignIn = (credentials) => (dispatch) => {
-  console.log('credentials', credentials);
+  // TODO: show spinner
   return axios({
     method: 'post',
     url: `${API_URL}/users/signin`,
@@ -21,6 +22,8 @@ export const userSignIn = (credentials) => (dispatch) => {
       type: USER_SIGN_IN_SUCCESS,
       payload: data.user,
     });
+
+    dispatch(push('/'));
   })
   .catch(response => {
     console.log('signin failed', response);
