@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { API_URL } from '../config/constants';
+import { API_URL } from '../../config/constants';
 import {
   USER_SIGN_UP_SUCCESS,
   USER_SIGN_UP_FAILURE,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILURE,
   USER_SIGN_OUT
-} from './actionTypes';
+} from '../actionTypes';
 
 export const userSignUp = ({email, username, password}) => (dispatch) => {
   // TODO: show spinner

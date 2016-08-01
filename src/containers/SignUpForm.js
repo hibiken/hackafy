@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { userSignUp } from '../actions/actionCreators';
+import { userSignUp } from '../actions';
 
 class SignUpForm extends React.Component {
   render() {

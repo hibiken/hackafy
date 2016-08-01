@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { userSignOut } from '../actions/actionCreators';
+import { userSignOut } from '../actions';
 
 const Profile = (props) => {
   return (
