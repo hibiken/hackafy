@@ -7,6 +7,7 @@ import Home from '../views/Home';
 import SignUp from '../views/SignUp';
 import SignIn from '../views/SignIn';
 import Profile from '../views/Profile';
+import ProfileEdit from '../views/ProfileEdit';
 
 import requireAuth from './requireAuth';
 
@@ -20,6 +21,7 @@ const createRoutes = (store) => {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/profile" component={requireAuth(Profile)} />
+        <Route path="/profile/edit" component={requireAuth(ProfileEdit)} />
       </Route>
     </Router>
   );

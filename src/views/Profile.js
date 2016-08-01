@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { userSignOut } from '../actions';
 import { getCurrentUser } from '../store/rootReducer';
 import '../styles/Profile.css';
@@ -23,6 +24,7 @@ class Profile extends React.Component {
           </div>
           <div className="eight columns">
             <h3>{username}</h3>
+            <button><Link to="/profile/edit">Edit Profile</Link></button>
             <button onClick={this.props.userSignOut}>Sign out</button>
           </div>
         </div>
