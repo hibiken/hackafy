@@ -1,13 +1,14 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { getCurrentUser } from '../store/rootReducer';
+import { userUpdate } from '../actions';
 
 
 class ProfileEditForm extends React.Component {
   render() {
-    const { fields: { username }, handleSubmit } = this.props;
+    const { fields: { username }, handleSubmit, userUpdate } = this.props;
     return (
-      <form className="ProfileEditForm__root" onSubmit={handleSubmit}>
+      <form className="ProfileEditForm__root" onSubmit={handleSubmit(userUpdate)}>
         <fieldset>
           <label>Username</label>
           <input
@@ -33,7 +34,13 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  userUpdate({username}) {
+    dispatch(userUpdate({username}))
+  },
+});
+
 export default reduxForm({
   form: 'ProfileEdit',
   fields: ['username']
-}, mapStateToProps)(ProfileEditForm);
+}, mapStateToProps, mapDispatchToProps)(ProfileEditForm);

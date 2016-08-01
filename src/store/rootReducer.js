@@ -16,6 +16,10 @@ export const getIsSignedIn = (state) => {
 
 export const getCurrentUser = (state) => {
   return fromCurrentUser.getCurrentUser(state.currentUser);
+};
+
+export const getAuthToken = (state) => {
+  return fromCurrentUser.getAuthToken(state.currentUser);
 }
 
 export default rootReducer;
