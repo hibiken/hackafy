@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../containers/Header';
 import '../styles/MainLayout.css';
 
 const MainLayout = (props) => {
