@@ -7,7 +7,7 @@ import rootReducer from '../reducers';
 const configureStore = (initialState = {}) => {
   let middleware = applyMiddleware(thunk, routerMiddleware(browserHistory));
 
-  if (window.devToolsExtension) {
+  if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
     const devtools = window.devToolsExtension();
     middleware = compose(middleware, devtools);
   }
