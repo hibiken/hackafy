@@ -4,15 +4,17 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import MainLayout from '../components/MainLayout';
 import Home from '../components/Home';
+import SignIn from '../components/SignIn';
 import Profile from '../components/Profile';
 
 const createRoutes = (store) => {
   // Create an enhanced history that syncs navigation events with the store
-  const history = syncHistoryWithStore(browserHistory, store)
+  const history = syncHistoryWithStore(browserHistory, store);
   return (
     <Router history={history}>
       <Route path="/" component={MainLayout}>
         <IndexRoute component={Home} />
+        <Route path="/signin" component={SignIn} />
         <Route path="/profile" component={Profile} />
       </Route>
     </Router>
