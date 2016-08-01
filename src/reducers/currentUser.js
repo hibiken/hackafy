@@ -23,4 +23,9 @@ const currentUser = (state = initialState, action) => {
   }
 };
 
+/*** Selectors ***/
+export const getCurrentUser = (state) => {
+  return state;
+}
+
 export default currentUser;

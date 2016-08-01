@@ -1,0 +1,10 @@
+.Profile__avatar-img-wrapper {
+  width: 180px;
+  margin: 0 auto;
+}
+
+.Profile__avatar-img {
+  display: inline-block;
+  width: 100%;
+  border-radius: 50%;
+}
