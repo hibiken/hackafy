@@ -4,6 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import MainLayout from '../components/MainLayout';
 import Home from '../views/Home';
+import SignUp from '../views/SignUp';
 import SignIn from '../views/SignIn';
 import Profile from '../views/Profile';
 
@@ -16,6 +17,7 @@ const createRoutes = (store) => {
     <Router history={history}>
       <Route path="/" component={MainLayout}>
         <IndexRoute component={requireAuth(Home)} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/profile" component={requireAuth(Profile)} />
       </Route>
