@@ -3,7 +3,8 @@ import { push } from 'react-router-redux';
 import { API_URL } from '../config/constants';
 import {
   USER_SIGN_IN_SUCCESS,
-  USER_SIGN_IN_FAILURE
+  USER_SIGN_IN_FAILURE,
+  USER_SIGN_OUT
 } from './actionTypes';
 
 export const userSignIn = (credentials) => (dispatch) => {
@@ -31,4 +32,8 @@ export const userSignIn = (credentials) => (dispatch) => {
       type: USER_SIGN_IN_FAILURE,
     })
   });
-}
+};
+
+export const userSignOut = () => ({
+  type: USER_SIGN_OUT,
+});

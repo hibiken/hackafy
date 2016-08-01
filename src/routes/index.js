@@ -3,9 +3,9 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import MainLayout from '../components/MainLayout';
-import Home from '../components/Home';
-import SignIn from '../components/SignIn';
-import Profile from '../components/Profile';
+import Home from '../views/Home';
+import SignIn from '../views/SignIn';
+import Profile from '../views/Profile';
 
 import requireAuth from './requireAuth';
 

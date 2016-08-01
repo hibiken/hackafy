@@ -1,5 +1,6 @@
 import {
-  USER_SIGN_IN_SUCCESS
+  USER_SIGN_IN_SUCCESS,
+  USER_SIGN_OUT
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -12,7 +13,9 @@ const currentUser = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload
-      }
+      };
+    case USER_SIGN_OUT:
+      return initialState;
     default:
       return state;
   }
