@@ -1,21 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { getCurrentUser } from '../store/rootReducer';
+import ProfileEditForm from '../containers/ProfileEditForm';
 
 class ProfileEdit extends React.Component {
   render() {
     return (
       <div className="ProfileEdit__root">
-        Profile Edit
+        <ProfileEditForm />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: getCurrentUser(state),
-});
-
-export default connect(
-  mapStateToProps
-)(ProfileEdit);
+export default ProfileEdit;
