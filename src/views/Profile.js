@@ -6,8 +6,6 @@ import { getCurrentUser } from '../store/rootReducer';
 import { getAvatarUrl } from '../utils/helpers';
 import '../styles/Profile.css';
 
-import defaultAvatar from '../images/default-avatar.png';
-
 class Profile extends React.Component {
   render() {
     const { username, avatarUrl } = this.props.currentUser;

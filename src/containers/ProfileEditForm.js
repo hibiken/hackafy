@@ -3,6 +3,9 @@ import { reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import { getCurrentUser } from '../store/rootReducer';
 import { userUpdate } from '../actions';
+import { getAvatarUrl } from '../utils/helpers';
+
+import '../styles/ProfileEditForm.css';
 
 
 class ProfileEditForm extends React.Component {
@@ -22,19 +25,30 @@ class ProfileEditForm extends React.Component {
   }
 
   renderDropzone() {
+    const { avatarUrl } = this.props.currentUser;
     if (this.state.files.length > 0) {
       const preview = this.state.files[0].preview
       return (
         <Dropzone multiple={false} accept="image/*" onDrop={this.onDrop}>
           <div
-            style={{backgroundImage: `url(${preview})`, backgroundSize: 'cover', width: '100%', height: '100%'}}
-          />
+            className="ProfileEditForm__avatar-img"
+            style={{backgroundImage: `url(${preview})`}}>
+            <div className="ProfileEditForm__avatar-img-overlay">
+              <i className="fa fa-camera ProfileEditForm__camera-icon"/>
+            </div>
+          </div>
         </Dropzone>
       );
     } else {
       return (
         <Dropzone multiple={false} accept="image/*" onDrop={this.onDrop}>
-          <div>Upload profile picture</div>
+        <div
+          className="ProfileEditForm__avatar-img"
+          style={{backgroundImage: `url(${getAvatarUrl(avatarUrl)})`}}>
+          <div className="ProfileEditForm__avatar-img-overlay">
+            <i className="fa fa-camera ProfileEditForm__camera-icon"/>
+          </div>
+        </div>
         </Dropzone>
       );
     }
@@ -74,7 +88,8 @@ const mapStateToProps = (state) => {
   return {
     initialValues: {
       username: currentUser.username,
-    }
+    },
+    currentUser,
   }
 }
 
