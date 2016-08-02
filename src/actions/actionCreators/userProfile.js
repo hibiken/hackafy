@@ -7,7 +7,7 @@ import {
 import { getAuthToken } from '../../store/rootReducer';
 import { push } from 'react-router-redux';
 
-export const userUpdate = ({ username }, file) => (dispatch, getState) => {
+export const userUpdate = ({ username, email }, file) => (dispatch, getState) => {
   // TODO: show spinner
 
   const authToken = getAuthToken(getState());
@@ -17,6 +17,7 @@ export const userUpdate = ({ username }, file) => (dispatch, getState) => {
     formData.append('avatar', file);
   }
   formData.append('username', username);
+  formData.append('email', email);
 
   return axios({
     method: 'patch',

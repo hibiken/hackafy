@@ -1,7 +1,44 @@
+.ProfileEditForm__root {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #efefef;
+  border-radius: 2px;
+}
+
+.ProfileEditForm__dropzone {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #d3d3d3;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.ProfileEditForm__profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.ProfileEditForm__profile-username {
+  margin-left: 20px;
+}
+
+.ProfileEditForm__form-group {
+  margin: 10px 0;
+}
+
+.ProfileEditForm__input-label {
+  color: #262626;
+}
+
+.ProfileEditForm__input-field {
+  width: 100%;
+}
+
 .ProfileEditForm__avatar-img {
   background-size: cover;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 
 .ProfileEditForm__avatar-img-overlay {
@@ -9,6 +46,7 @@
   height: 100%;
   background-color: rgba(0,0,0,.4);
   position: relative;
+  border-radius: 50%;
 }
 
 .ProfileEditForm__camera-icon.fa {
@@ -17,5 +55,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 36px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 150ms;
+}
+
+.ProfileEditForm__avatar-img-overlay:hover .ProfileEditForm__camera-icon {
+  color: rgba(255, 255, 255, 1);
 }
