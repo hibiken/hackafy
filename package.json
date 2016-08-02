@@ -20,7 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-prebuild": "npm install -g create-react-app",
+    "postinstall": "npm run build"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
