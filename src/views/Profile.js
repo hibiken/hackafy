@@ -3,20 +3,21 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { userSignOut } from '../actions';
 import { getCurrentUser } from '../store/rootReducer';
+import { getAvatarUrl } from '../utils/helpers';
 import '../styles/Profile.css';
 
 import defaultAvatar from '../images/default-avatar.png';
 
 class Profile extends React.Component {
   render() {
-    const { username } = this.props.currentUser;
+    const { username, avatarUrl } = this.props.currentUser;
     return (
       <div className="Profile__root">
         <div className="row">
           <div className="four columns">
             <div className="Profile__avatar-img-wrapper">
               <img
-                src={defaultAvatar}
+                src={getAvatarUrl(avatarUrl)}
                 className="Profile__avatar-img"
                 alt={`${username} profile`}
               />
