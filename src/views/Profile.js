@@ -11,7 +11,7 @@ class Profile extends React.Component {
     const { username, avatarUrl } = this.props.currentUser;
     return (
       <div className="Profile__root">
-        <div className="row">
+        <div className="row Profile__user-info-container">
           <div className="four columns">
             <div className="Profile__avatar-img-wrapper">
               <img
@@ -22,8 +22,10 @@ class Profile extends React.Component {
             </div>
           </div>
           <div className="eight columns">
-            <h3>{username}</h3>
-            <button><Link to="/profile/edit">Edit Profile</Link></button>
+            <h3 className="Profile__username">{username}</h3>
+            <button className="Profile__edit-button">
+              <Link to="/profile/edit">Edit Profile</Link>
+            </button>
             <button onClick={this.props.userSignOut}>Sign out</button>
           </div>
         </div>
