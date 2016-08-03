@@ -27,7 +27,7 @@ class ProfileEditForm extends React.Component {
   renderDropzone() {
     const { avatarUrl } = this.props.currentUser;
     if (this.state.files.length > 0) {
-      const preview = this.state.files[0].preview
+      const preview = this.state.files[0].preview;
       return (
         <Dropzone
           className="ProfileEditForm__dropzone"
