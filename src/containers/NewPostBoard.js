@@ -35,9 +35,11 @@ class NewPostBoard extends React.Component {
     this.state = {
       files: [],
       filter: '',
+      caption: '',
     }
 
     this.onDrop = this._onDrop.bind(this);
+    this.onCaptionChange = (e) => this.setState({ caption: e.target.value })
   }
 
   _onDrop(files) {
@@ -90,6 +92,23 @@ class NewPostBoard extends React.Component {
     }
   }
 
+  renderCaptionField() {
+    if (this.state.files.length > 0) {
+      return (
+        <div>
+          <textarea
+            value={this.state.caption}
+            onChange={this.onCaptionChange}
+            placeholder="Caption(optional)"
+          />
+          <button>
+            Post
+          </button>
+        </div>
+      )
+    }
+  }
+
   render() {
     console.log('this.state', this.state)
     return (
@@ -97,6 +116,8 @@ class NewPostBoard extends React.Component {
         {this.renderDropzone()}
 
         {this.renderFilterOptions()}
+
+        {this.renderCaptionField()}
       </div>
     )
   }
