@@ -8,3 +8,8 @@ export const USER_SIGN_OUT = 'USER_SIGN_OUT';
 /*** Profile Update ***/
 export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
 export const PROFILE_UPDATE_FAILURE = 'PROFILE_UPDATE_FAILURE';
+
+/*** Post Create ***/
+export const POST_UPLOAD_START = 'POST_UPLOAD_START';
+export const POST_UPLOAD_SUCCESS = 'POST_UPLOAD_SUCCESS';
+export const POST_UPLOAD_FAILURE = 'POST_UPLOAD_FAILURE';

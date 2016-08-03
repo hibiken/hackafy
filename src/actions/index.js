@@ -8,10 +8,16 @@ import {
   userUpdate
 } from './actionCreators/userProfile';
 
+import {
+  uploadPost
+} from './actionCreators/postUpload';
+
 export {
   userSignUp,
   userSignIn,
   userSignOut,
 
-  userUpdate
+  userUpdate,
+
+  uploadPost
 };

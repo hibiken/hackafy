@@ -1,5 +1,7 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
+import { uploadPost } from '../actions';
 import FilterButton from  '../components/FilterButton';
 
 import '../styles/NewPostBoard.css';
@@ -39,11 +41,21 @@ class NewPostBoard extends React.Component {
     }
 
     this.onDrop = this._onDrop.bind(this);
-    this.onCaptionChange = (e) => this.setState({ caption: e.target.value })
+    this.onCaptionChange = (e) => this.setState({ caption: e.target.value });
+    this.onSubmit = this._onSubmit.bind(this);
   }
 
   _onDrop(files) {
     this.setState({ files });
+  }
+
+  _onSubmit(e) {
+    e.preventDefault();
+    if (this.state.files.length === 0) {
+      return false;
+    }
+    const { caption, filter, files } = this.state;
+    this.props.uploadPost({ caption, filter }, files[0]);
   }
 
   renderDropzone() {
@@ -101,7 +113,7 @@ class NewPostBoard extends React.Component {
             onChange={this.onCaptionChange}
             placeholder="Caption(optional)"
           />
-          <button>
+          <button onClick={this.onSubmit}>
             Post
           </button>
         </div>
@@ -111,6 +123,7 @@ class NewPostBoard extends React.Component {
 
   render() {
     console.log('this.state', this.state)
+    console.log('this.props', this.props);
     return (
       <div className="NewPostBoard__root">
         {this.renderDropzone()}
@@ -123,4 +136,13 @@ class NewPostBoard extends React.Component {
   }
 }
 
-export default NewPostBoard
+const mapDispatchToProps = (dispatch) => ({
+  uploadPost({ caption, filter }, file) {
+    dispatch(uploadPost({caption, filter}, file));
+  }
+})
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(NewPostBoard);
