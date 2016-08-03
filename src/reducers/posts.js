@@ -58,3 +58,13 @@ export default combineReducers({
   isFetching,
   isUploading,
 });
+
+/*** Selectors ***/
+export const getPostsByIds = (state, ids) => {
+  return ids.map(id => state.byId[id]);
+}
+
+export const getAllPosts = (state) => {
+  const { allIds, byId } = state;
+  return allIds.map(id => byId[id]);
+}

@@ -41,4 +41,8 @@ export const getAuthToken = (state) => {
   return state.authenticationToken;
 };
 
+export const getPostIds = (state) => {
+  return state.postIds;
+};
+
 export default currentUser;

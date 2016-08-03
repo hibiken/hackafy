@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 import { reducer as form } from 'redux-form';
 import currentUser, * as fromCurrentUser from '../reducers/currentUser';
-import posts from '../reducers/posts';
+import posts, * as fromPosts from '../reducers/posts';
 
 const rootReducer = combineReducers({
   routing,
@@ -22,6 +22,11 @@ export const getCurrentUser = (state) => {
 
 export const getAuthToken = (state) => {
   return fromCurrentUser.getAuthToken(state.currentUser);
-}
+};
+
+export const getCurrentUsersPosts = (state) => {
+  const postIds = fromCurrentUser.getPostIds(state.currentUser);
+  return fromPosts.getPostsByIds(state.posts, postIds);
+};
 
 export default rootReducer;
