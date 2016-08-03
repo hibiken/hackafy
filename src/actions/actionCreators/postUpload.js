@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'react-router-redux';
 import {
   POST_UPLOAD_START,
   POST_UPLOAD_SUCCESS,
@@ -29,9 +30,9 @@ export const uploadPost = ({ caption, filter }, file) => (dispatch, getState) =>
     console.log('successfully uploaded post', data);
     dispatch({
       type: POST_UPLOAD_SUCCESS,
-      payload: data.post,
-    })
-    // TODO: write reducer
+      payload: data,
+    });
+    dispatch(push('/'));    
   })
   .catch(response => {
     console.log('post upload failed', response);

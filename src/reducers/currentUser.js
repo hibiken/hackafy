@@ -3,10 +3,12 @@ import {
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
+  POST_UPLOAD_SUCCESS
 } from '../actions/actionTypes';
 
 const initialState = {
   authenticationToken: null,
+  postIds: [],
 };
 
 const currentUser = (state = initialState, action) => {
@@ -18,6 +20,11 @@ const currentUser = (state = initialState, action) => {
         ...state,
         ...action.payload
       };
+    case POST_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        postIds: [...state.postIds, action.payload.id],
+      }
     case USER_SIGN_OUT:
       return initialState;
     default:
