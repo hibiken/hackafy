@@ -1,5 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import FilterButton from  '../components/FilterButton';
 
 import '../styles/NewPostBoard.css';
 
@@ -75,12 +76,14 @@ class NewPostBoard extends React.Component {
     if (this.state.files.length > 0) {
       return (
         <div className="NewPostBoard__filters">
-          {filters.map(f => (
-            <button
+          {filters.map((f, idx) => (
+            <FilterButton
+              key={idx}
+              active={this.state.filter === f.className}
               onMouseDown={() => this.setState({ filter: f.className })}
               >
               {f.label}
-            </button>
+            </FilterButton>
           ))}
         </div>
       )

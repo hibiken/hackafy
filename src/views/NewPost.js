@@ -6,7 +6,7 @@ import '../styles/NewPost.css';
 const NewPost = (props) => {
   return (
     <div className="NewPost__root">
-      <div clasName="row">
+      <div className="row">
         <div className="six columns offset-by-three">
           <NewPostBoard />
         </div>
