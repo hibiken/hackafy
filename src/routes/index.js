@@ -8,6 +8,7 @@ import SignUp from '../views/SignUp';
 import SignIn from '../views/SignIn';
 import Profile from '../views/Profile';
 import ProfileEdit from '../views/ProfileEdit';
+import NewPost from '../views/NewPost';
 
 import requireAuth from './requireAuth';
 
@@ -22,6 +23,7 @@ const createRoutes = (store) => {
         <Route path="/signin" component={SignIn} />
         <Route path="/profile" component={requireAuth(Profile)} />
         <Route path="/profile/edit" component={requireAuth(ProfileEdit)} />
+        <Route path="/new-post" component={requireAuth(NewPost)} />
       </Route>
     </Router>
   );

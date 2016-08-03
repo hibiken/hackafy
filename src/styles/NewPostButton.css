@@ -1,0 +1,23 @@
+.NewPostButton__root {
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  margin: 0;
+  background-color: #3fc380;
+  border-radius: 50%;
+  font-size: 24px;
+  position: fixed;
+  bottom: 30px;
+  right: 10%;
+  border: none;
+  font-weight: 300;
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+}
+
+.NewPostButton__link {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  bottom: 2px;
+}
