@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import NewPostButton from '../components/NewPostButton';
 import { userSignOut } from '../actions';
 import { getCurrentUser, getCurrentUsersPosts } from '../store/rootReducer';
-import { getAvatarUrl } from '../utils/helpers';
+import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import '../styles/Profile.css';
 
 class Profile extends React.Component {
   render() {
     console.log('props.posts', this.props.posts);
     const { username, avatarUrl } = this.props.currentUser;
+    const { posts } = this.props;
     return (
       <div className="Profile__root">
         <div className="row Profile__user-info-container">
@@ -30,6 +32,17 @@ class Profile extends React.Component {
             <button onClick={this.props.userSignOut}>Sign out</button>
           </div>
         </div>
+        <div className="Profile__photo-gallery">
+          {posts.map(post => (
+            <div className="Profile__photo-gallery-item">
+              <div
+                style={{backgroundImage: `url(${getImageUrl(post.photoUrl)})`}}
+                className={`Profile__photo-image ${post.filter}`}
+              />
+            </div>
+          ))}
+        </div>
+        <NewPostButton />
       </div>
     )
   }

@@ -30,9 +30,9 @@ export const uploadPost = ({ caption, filter }, file) => (dispatch, getState) =>
     console.log('successfully uploaded post', data);
     dispatch({
       type: POST_UPLOAD_SUCCESS,
-      payload: data,
+      payload: data.post,
     });
-    dispatch(push('/'));    
+    dispatch(push('/'));
   })
   .catch(response => {
     console.log('post upload failed', response);
