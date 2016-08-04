@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
-
 import '../styles/NewPostButton.css';
 
 class NewPostButton extends React.Component {

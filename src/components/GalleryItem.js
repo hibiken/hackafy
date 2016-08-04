@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 
 import '../styles/GalleryItem.css';
 
@@ -9,7 +10,7 @@ class GalleryItem extends React.Component {
         <div className="GalleryItem-header">
           <div className="GalleryItem-header__avatar-container">
             <img
-              src={this.props.avatarUrl}
+              src={getAvatarUrl(this.props.avatarUrl)}
               className="GalleryItem-header__avatar-img"
               alt={`${this.propsusername} profile`}
             />
@@ -19,8 +20,8 @@ class GalleryItem extends React.Component {
           </div>
 
         </div>
-        <div className="GalleryItem__body">
-          <img src={this.props.photoUrl} role="presentation" />
+        <div className={`GalleryItem__body ${this.props.filter || ''}`}>
+          <img src={getImageUrl(this.props.photoUrl)} role="presentation" />
         </div>
         <div className="GalleryItem__footer">
           <div>

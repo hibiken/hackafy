@@ -29,4 +29,12 @@ export const getCurrentUsersPosts = (state) => {
   return fromPosts.getPostsByIds(state.posts, postIds);
 };
 
+export const getAllPosts = (state) => {
+  return fromPosts.getAllPosts(state.posts);
+}
+
+export const getIsFetchingPosts = (state) => {
+  return fromPosts.getIsFetching(state.posts);
+}
+
 export default rootReducer;

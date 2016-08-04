@@ -5,6 +5,9 @@ import {
   POST_UPLOAD_FAILURE,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_UP_SUCCESS,
+  FETCH_POSTS_START,
+  FETCH_POSTS_SUCCESS,
+  FETCH_POSTS_FAILURE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,6 +19,8 @@ const initialState = {
 
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
+    case FETCH_POSTS_SUCCESS:
+      return action.payload.map(post => post.id);
     case USER_SIGN_IN_SUCCESS:
     case USER_SIGN_UP_SUCCESS:
       return [...state, ...action.payload.postIds];
@@ -28,6 +33,11 @@ const allIds = (state = initialState.allIds, action) => {
 
 const byId = (state = initialState.byId, action) => {
   switch (action.type) {
+    case FETCH_POSTS_SUCCESS:
+      return action.payload.reduce((nextState, post) => {
+        nextState[post.id] = post;
+        return nextState;
+      }, {});
     case USER_SIGN_IN_SUCCESS:
     case USER_SIGN_UP_SUCCESS:
       return action.payload.posts.reduce((nextState, post) => {
@@ -46,6 +56,11 @@ const byId = (state = initialState.byId, action) => {
 
 const isFetching = (state = initialState.isFetching, action) => {
   switch (action.type) {
+    case FETCH_POSTS_START:
+      return true;
+    case FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS_FAILURE:
+      return false;
     default:
       return state;
   }
@@ -78,4 +93,8 @@ export const getPostsByIds = (state, ids) => {
 export const getAllPosts = (state) => {
   const { allIds, byId } = state;
   return allIds.map(id => byId[id]);
+}
+
+export const getIsFetching = (state) => {
+  return state.isFetching;
 }

@@ -4,13 +4,9 @@ import {
   userSignOut
 } from './actionCreators/userAuth';
 
-import {
-  userUpdate
-} from './actionCreators/userProfile';
-
-import {
-  uploadPost
-} from './actionCreators/postUpload';
+import { userUpdate } from './actionCreators/userProfile';
+import { uploadPost } from './actionCreators/postUpload';
+import { fetchPosts } from './actionCreators/fetchPosts';
 
 export {
   userSignUp,
@@ -19,5 +15,7 @@ export {
 
   userUpdate,
 
-  uploadPost
+  uploadPost,
+
+  fetchPosts
 };
