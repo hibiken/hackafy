@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import {
   POST_UPLOAD_START,
   POST_UPLOAD_SUCCESS,
-  POST_UPLOAD_FAILURE
+  POST_UPLOAD_FAILURE,
+  USER_SIGN_IN_SUCCESS,
+  USER_SIGN_UP_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -14,6 +16,9 @@ const initialState = {
 
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
+    case USER_SIGN_IN_SUCCESS:
+    case USER_SIGN_UP_SUCCESS:
+      return [...state, ...action.payload.postIds];
     case POST_UPLOAD_SUCCESS:
       return [...state, action.payload.id];
     default:
@@ -23,6 +28,12 @@ const allIds = (state = initialState.allIds, action) => {
 
 const byId = (state = initialState.byId, action) => {
   switch (action.type) {
+    case USER_SIGN_IN_SUCCESS:
+    case USER_SIGN_UP_SUCCESS:
+      return action.payload.posts.reduce((nextState, post) => {
+        nextState[post.id] = post;
+        return nextState;
+      }, {...state});
     case POST_UPLOAD_SUCCESS:
       return {
         ...state,

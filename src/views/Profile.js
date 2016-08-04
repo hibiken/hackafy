@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { userSignOut } from '../actions';
-import { getCurrentUser } from '../store/rootReducer';
+import { getCurrentUser, getCurrentUsersPosts } from '../store/rootReducer';
 import { getAvatarUrl } from '../utils/helpers';
 import '../styles/Profile.css';
 
 class Profile extends React.Component {
   render() {
+    console.log('props.posts', this.props.posts);
     const { username, avatarUrl } = this.props.currentUser;
     return (
       <div className="Profile__root">
@@ -35,7 +36,8 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: getCurrentUser(state)
+  currentUser: getCurrentUser(state),
+  posts: getCurrentUsersPosts(state),
 })
 
 export default connect(

@@ -17,7 +17,7 @@ const configureStore = (initialState = {}) => {
   const persistedState = loadState();
 
   const store = createStore(rootReducer, { ...persistedState, ...initialState }, middleware);
-  
+
   /* ==============================================================
   Every time store is updated, persist the state to local storage.
   Wrapping with throttle to make sure it doesn't get called more
@@ -27,6 +27,7 @@ const configureStore = (initialState = {}) => {
     const state = store.getState();
     const stateToPersist = {
       currentUser: state.currentUser,
+      posts: state.posts,
     };
     saveState(stateToPersist);
   }, 1000));

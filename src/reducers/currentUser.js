@@ -7,8 +7,10 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
+  id: null,
   authenticationToken: null,
   postIds: [],
+  attributes: {},
 };
 
 const currentUser = (state = initialState, action) => {
@@ -18,7 +20,10 @@ const currentUser = (state = initialState, action) => {
     case PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        id: action.payload.id,
+        authenticationToken: action.payload.authenticationToken,
+        attributes: action.payload.attrs,
+        postIds: action.payload.postIds,
       };
     case POST_UPLOAD_SUCCESS:
       return {
@@ -34,7 +39,7 @@ const currentUser = (state = initialState, action) => {
 
 /*** Selectors ***/
 export const getCurrentUser = (state) => {
-  return state;
+  return state.attributes;
 };
 
 export const getAuthToken = (state) => {
