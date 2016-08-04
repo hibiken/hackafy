@@ -13,11 +13,9 @@
   border: none;
   font-weight: 300;
   box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+  color: white;
 }
 
-.NewPostButton__link {
+.NewPostButton__root:hover {
   color: white;
-  text-decoration: none;
-  position: relative;
-  bottom: 2px;
 }

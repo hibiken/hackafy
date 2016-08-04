@@ -3,14 +3,29 @@ import { Link } from 'react-router';
 
 import '../styles/NewPostButton.css';
 
-const NewPostButton = (props) => {
-  return (
-    <button className="NewPostButton__root">
-      <Link to="/new-post" className="NewPostButton__link">
+class NewPostButton extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.onButtonClick = this._onButtonClick.bind(this);
+  }
+
+  _onButtonClick(event) {
+    event.preventDefault();
+    this.context.router.push('/new-post');
+  }
+  render() {
+    return (
+      <button
+        onClick={this.onButtonClick}
+        className="NewPostButton__root">
         +
-      </Link>
-    </button>
-  );
+      </button>
+    );
+  }
 }
 
 export default NewPostButton
