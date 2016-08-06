@@ -8,6 +8,7 @@
   "dependencies": {
     "axios": "0.13.1",
     "lodash": "4.14.1",
+    "moment": "2.14.1",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-dropzone": "3.5.3",

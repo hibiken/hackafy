@@ -10,19 +10,26 @@
 .GalleryItem-header {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 14px 20px;
 }
 
 .GalleryItem-header__avatar-container {
   width: 30px;
   height: 30px;
   margin-right: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
 }
 
 .GalleryItem-header__avatar-img {
   display: inline-block;
   width: 100%;
   border-radius: 50%;
+}
+
+.GalleryItem-header__timestamp {
+  margin-left: auto;
+  color: #999;
 }
 
 .GalleryItem__body img {

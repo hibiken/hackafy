@@ -27,6 +27,7 @@ class PhotoGallery extends React.Component {
             username={post.user.username}
             photoUrl={post.photoUrl}
             filter={post.filter}
+            createdAt={post.createdAt}
           />
         ))}
       </div>

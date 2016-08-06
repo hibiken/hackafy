@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
+import moment from 'moment';
 
 import '../styles/GalleryItem.css';
 
@@ -17,6 +18,9 @@ class GalleryItem extends React.Component {
           </div>
           <div className="GalleryItem-header__metadata-container">
             <strong>{this.props.username}</strong>
+          </div>
+          <div className="GalleryItem-header__timestamp">
+            {moment(this.props.createdAt).fromNow()}
           </div>
 
         </div>
