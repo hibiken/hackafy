@@ -63,10 +63,11 @@ class NewPostBoard extends React.Component {
       const preview = this.state.files[0].preview;
       return (
         <Dropzone
+          className="NewPostBoard__dropzone"
           multiple={false}
           accept="image/*"
           onDrop={this.onDrop}>
-          <figure className={`NewPostBoard__filter ${this.state.filter}`}>
+          <figure className={`NewPostBoard__preview-filter ${this.state.filter}`}>
             <div
               className="NewPostBoard__preview-img"
               style={{backgroundImage: `url(${preview})`}}>
@@ -77,6 +78,7 @@ class NewPostBoard extends React.Component {
     } else {
       return (
         <Dropzone
+          className="NewPostBoard__dropzone"
           onDrop={this.onDrop}
           multiple={false}
           accept="image/*">
@@ -88,6 +90,7 @@ class NewPostBoard extends React.Component {
 
   renderFilterOptions() {
     if (this.state.files.length > 0) {
+      const preview = this.state.files[0].preview;
       return (
         <div className="NewPostBoard__filters">
           {filters.map((f, idx) => (
@@ -95,6 +98,8 @@ class NewPostBoard extends React.Component {
               key={idx}
               active={this.state.filter === f.className}
               onMouseDown={() => this.setState({ filter: f.className })}
+              imagePath={preview}
+              filter={f.className}
               >
               {f.label}
             </FilterButton>
@@ -126,7 +131,9 @@ class NewPostBoard extends React.Component {
     console.log('this.props', this.props);
     return (
       <div className="NewPostBoard__root">
-        {this.renderDropzone()}
+        <div className="NewPostBoard__dropzone-wrapper">
+          {this.renderDropzone()}
+        </div>
 
         {this.renderFilterOptions()}
 
