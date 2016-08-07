@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { uploadPost } from '../actions';
 import FilterButton from  '../components/FilterButton';
+import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 
 import '../styles/NewPostBoard.css';
 
@@ -38,10 +39,12 @@ class NewPostBoard extends React.Component {
       files: [],
       filter: '',
       caption: '',
+      address: 'San Francisco, CA',
     }
 
     this.onDrop = this._onDrop.bind(this);
     this.onCaptionChange = (e) => this.setState({ caption: e.target.value });
+    this.onAddressChange = (address) => this.setState({ address });
     this.onSubmit = this._onSubmit.bind(this);
   }
 
@@ -54,8 +57,16 @@ class NewPostBoard extends React.Component {
     if (this.state.files.length === 0) {
       return false;
     }
-    const { caption, filter, files } = this.state;
-    this.props.uploadPost({ caption, filter }, files[0]);
+    const { caption, filter, files, address } = this.state;
+
+    geocodeByAddress(address, (err, { lat, lng }) => {
+      if (err) {
+        return false;
+        // TODO: error message
+      }
+      console.log('geocode success', lat, lng);
+      this.props.uploadPost({ caption, filter, address, lat, lng }, files[0]);
+    });
   }
 
   renderDropzone() {
@@ -113,13 +124,19 @@ class NewPostBoard extends React.Component {
     if (this.state.files.length > 0) {
       return (
         <div>
-          <textarea
-            value={this.state.caption}
-            onChange={this.onCaptionChange}
-            placeholder="Caption(optional)"
+          <div>
+            <textarea
+              value={this.state.caption}
+              onChange={this.onCaptionChange}
+              placeholder="Caption(optional)"
+            />
+          </div>
+          <PlacesAutocomplete
+            value={this.state.address}
+            onChange={this.onAddressChange}
           />
           <button onClick={this.onSubmit}>
-            Post
+            Share
           </button>
         </div>
       )
@@ -143,13 +160,7 @@ class NewPostBoard extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  uploadPost({ caption, filter }, file) {
-    dispatch(uploadPost({caption, filter}, file));
-  }
-})
-
 export default connect(
   null,
-  mapDispatchToProps,
+  { uploadPost }
 )(NewPostBoard);
