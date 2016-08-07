@@ -21,9 +21,6 @@ const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
       return action.payload.map(post => post.id);
-    case USER_SIGN_IN_SUCCESS:
-    case USER_SIGN_UP_SUCCESS:
-      return [...state, ...action.payload.postIds];
     case POST_UPLOAD_SUCCESS:
       return [...state, action.payload.id];
     default:
@@ -38,12 +35,6 @@ const byId = (state = initialState.byId, action) => {
         nextState[post.id] = post;
         return nextState;
       }, {});
-    case USER_SIGN_IN_SUCCESS:
-    case USER_SIGN_UP_SUCCESS:
-      return action.payload.posts.reduce((nextState, post) => {
-        nextState[post.id] = post;
-        return nextState;
-      }, {...state});
     case POST_UPLOAD_SUCCESS:
       return {
         ...state,
