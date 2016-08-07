@@ -3,11 +3,11 @@ import {
   POST_UPLOAD_START,
   POST_UPLOAD_SUCCESS,
   POST_UPLOAD_FAILURE,
-  USER_SIGN_IN_SUCCESS,
-  USER_SIGN_UP_SUCCESS,
   FETCH_POSTS_START,
   FETCH_POSTS_SUCCESS,
-  FETCH_POSTS_FAILURE
+  FETCH_POSTS_FAILURE,
+  LIKE_POST,
+  DISLIKE_POST
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -40,6 +40,33 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.payload.id]: action.payload,
       };
+    case LIKE_POST:
+      return {
+        ...state,
+        [action.postId]: post(state[action.postId], action),
+      }
+    case DISLIKE_POST:
+      return {
+        ...state,
+        [action.postId]: post(state[action.postId], action),
+      }
+    default:
+      return state;
+  }
+}
+
+const post = (state = {}, action) => {
+  switch (action.type) {
+    case LIKE_POST:
+      return {
+        ...state,
+        likesCount: state.likesCount + 1,
+      }
+    case DISLIKE_POST:
+      return {
+        ...state,
+        likesCount: state.likesCount - 1,
+      }
     default:
       return state;
   }

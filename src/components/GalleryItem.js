@@ -1,10 +1,22 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import moment from 'moment';
+import LikeButton from './LikeButton';
 
 import '../styles/GalleryItem.css';
 
 class GalleryItem extends React.Component {
+  renderLikes() {
+    const { likesCount } = this.props;
+    if (likesCount > 0) {
+      return (
+        <div className="GalleryItem__likes">
+          {likesCount} {likesCount === 1 ? 'like' : 'likes'}
+        </div>
+      );
+    }
+  }
+
   renderCaption() {
     const { caption, user: { username } } = this.props;
     if (caption) {
@@ -15,6 +27,7 @@ class GalleryItem extends React.Component {
       )
     }
   }
+
   render() {
     const {
       photoUrl,
@@ -49,20 +62,20 @@ class GalleryItem extends React.Component {
           <img src={getImageUrl(photoUrl)} role="presentation" />
         </div>
         <div className="GalleryItem__footer">
-          <div className="GalleryItem__likes">
-            15 Likes
-          </div>
+          {this.renderLikes()}
+
           {this.renderCaption()}
+          <div>
+            <LikeButton
+              onLike={this.props.onLike}
+              onDislike={this.props.onDislike}
+              liked={this.props.liked}
+            />
+          </div>
         </div>
       </article>
     );
   }
 }
-
-GalleryItem.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  photoUrl: PropTypes.string.isRequired,
-};
 
 export default GalleryItem;

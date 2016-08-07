@@ -7,6 +7,7 @@ import {
 import { userUpdate } from './actionCreators/userProfile';
 import { uploadPost } from './actionCreators/postUpload';
 import { fetchPosts } from './actionCreators/fetchPosts';
+import { likePost, dislikePost } from './actionCreators/postLikes';
 
 export {
   userSignUp,
@@ -17,5 +18,8 @@ export {
 
   uploadPost,
 
-  fetchPosts
+  fetchPosts,
+
+  likePost,
+  dislikePost
 };

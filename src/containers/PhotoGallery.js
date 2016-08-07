@@ -1,8 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../actions';
-import { getAllPosts, getIsFetchingPosts } from '../store/rootReducer';
+import { fetchPosts, likePost, dislikePost } from '../actions';
 import GalleryItem from '../components/GalleryItem';
+import {
+  getAllPosts,
+  getIsFetchingPosts,
+  getCurrentUsersLikedPostIds
+} from '../store/rootReducer';
+
 
 class PhotoGallery extends React.Component {
   componentWillMount() {
@@ -10,7 +15,7 @@ class PhotoGallery extends React.Component {
   }
 
   render() {
-    const { posts, isFetching } = this.props;
+    const { posts, isFetching, likedPostIds } = this.props;
     console.log('posts', posts);
     console.log('isFetching', isFetching);
     if (isFetching || !posts.length) {
@@ -24,6 +29,9 @@ class PhotoGallery extends React.Component {
           <GalleryItem
             key={idx}
             {...post}
+            onLike={() => this.props.likePost(post.id)}
+            onDislike={() => this.props.dislikePost(post.id)}
+            liked={likedPostIds.indexOf(post.id) >= 0}
           />
         ))}
       </div>
@@ -34,9 +42,10 @@ class PhotoGallery extends React.Component {
 const mapStateToProps = (state) => ({
   posts: getAllPosts(state),
   isFetching: getIsFetchingPosts(state),
+  likedPostIds: getCurrentUsersLikedPostIds(state),
 });
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  { fetchPosts, likePost, dislikePost }
 )(PhotoGallery);

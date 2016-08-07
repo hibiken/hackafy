@@ -3,13 +3,16 @@ import {
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
-  POST_UPLOAD_SUCCESS
+  POST_UPLOAD_SUCCESS,
+  LIKE_POST,
+  DISLIKE_POST
 } from '../actions/actionTypes';
 
 const initialState = {
   id: null,
   authenticationToken: null,
   postIds: [],
+  likedPostIds: [],
   attributes: {},
 };
 
@@ -24,11 +27,22 @@ const currentUser = (state = initialState, action) => {
         authenticationToken: action.payload.authenticationToken,
         attributes: action.payload.attrs,
         postIds: action.payload.postIds,
+        likedPostIds: action.payload.likedPostIds,
       };
     case POST_UPLOAD_SUCCESS:
       return {
         ...state,
         postIds: [...state.postIds, action.payload.id],
+      }
+    case LIKE_POST:
+      return {
+        ...state,
+        likedPostIds: [...state.likedPostIds, action.postId],
+      }
+    case DISLIKE_POST:
+      return {
+        ...state,
+        likedPostIds: state.likedPostIds.filter(id => id !== action.postId)
       }
     case USER_SIGN_OUT:
       return initialState;
@@ -49,5 +63,9 @@ export const getAuthToken = (state) => {
 export const getPostIds = (state) => {
   return state.postIds;
 };
+
+export const getLikedPostIds = (state) => {
+  return state.likedPostIds;
+}
 
 export default currentUser;

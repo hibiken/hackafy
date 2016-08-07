@@ -18,3 +18,7 @@ export const POST_UPLOAD_FAILURE = 'POST_UPLOAD_FAILURE';
 export const FETCH_POSTS_START = 'FETCH_POSTS_START';
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE';
+
+/*** Post Like ***/
+export const LIKE_POST = 'LIKE_POST';
+export const DISLIKE_POST = 'DISLIKE_POST';

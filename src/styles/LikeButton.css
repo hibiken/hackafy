@@ -1,0 +1,11 @@
+.LikeButton__root {
+  border: none;
+  outline: none;
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.LikeButton__icon--liked {
+  color: #ED4956;
+}
