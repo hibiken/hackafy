@@ -59,3 +59,26 @@
   line-height: 1;
   margin-bottom: 8px;
 }
+
+.GalleryItem__heart-animtaion-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.GalleryItem__heart-animation-icon {
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  animation: heart 500ms ease-in-out;
+}
+
+@keyframes heart {
+  0% { font-size: 40px; opacity: 0; z-index: 0; }
+  50% { font-size: 80px; opacity: 0.8; z-index: 1; }
+  100% { font-size: 80px; opacity: 0.8; z-index: 1; }
+}

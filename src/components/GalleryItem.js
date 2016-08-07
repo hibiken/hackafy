@@ -6,6 +6,30 @@ import LikeButton from './LikeButton';
 import '../styles/GalleryItem.css';
 
 class GalleryItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showHeartAnimation: false,
+    };
+
+    this.onImageDoubleClick = this._onImageDoubleClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.liked) {
+      this.setState({ showHeartAnimation: false })
+    }
+  }
+
+  _onImageDoubleClick(event) {
+    event.preventDefault();
+    if (!this.props.liked) {
+      this.props.onLike()
+        .then(() => this.setState({ showHeartAnimation: true }));
+    }
+  }
+
   renderLikes() {
     const { likesCount } = this.props;
     if (likesCount > 0) {
@@ -25,6 +49,14 @@ class GalleryItem extends React.Component {
           <strong>{username}</strong> {caption}
         </div>
       )
+    }
+  }
+
+  renderHeartAnimation() {
+    if (this.state.showHeartAnimation) {
+      return (
+        <i className="fa fa-heart GalleryItem__heart-animation-icon" />
+      );
     }
   }
 
@@ -58,8 +90,11 @@ class GalleryItem extends React.Component {
           </div>
 
         </div>
-        <div className={`GalleryItem__body ${filter || ''}`}>
+        <div
+          onDoubleClick={this.onImageDoubleClick}
+          className={`GalleryItem__body ${filter || ''}`}>
           <img src={getImageUrl(photoUrl)} role="presentation" />
+          {this.renderHeartAnimation()}
         </div>
         <div className="GalleryItem__footer">
           {this.renderLikes()}
