@@ -2,11 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts, likePost, dislikePost } from '../actions';
 import GalleryItem from '../components/GalleryItem';
+import Spinner from '../components/Spinner';
 import {
   getAllPosts,
   getIsFetchingPosts,
   getCurrentUsersLikedPostIds
 } from '../store/rootReducer';
+
+import '../styles/PhotoGallery.css'
 
 
 class PhotoGallery extends React.Component {
@@ -20,7 +23,9 @@ class PhotoGallery extends React.Component {
     console.log('isFetching', isFetching);
     if (isFetching || !posts.length) {
       return (
-        <div>Loading ... </div>
+        <div className="PhotoGallery__spinner-container">
+          <Spinner />
+        </div>
       );
     }
     return (

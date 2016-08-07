@@ -28,6 +28,23 @@ const allIds = (state = initialState.allIds, action) => {
   }
 }
 
+const post = (state = {}, action) => {
+  switch (action.type) {
+    case LIKE_POST:
+      return {
+        ...state,
+        likesCount: state.likesCount + 1,
+      }
+    case DISLIKE_POST:
+      return {
+        ...state,
+        likesCount: state.likesCount - 1,
+      }
+    default:
+      return state;
+  }
+}
+
 const byId = (state = initialState.byId, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
@@ -49,23 +66,6 @@ const byId = (state = initialState.byId, action) => {
       return {
         ...state,
         [action.postId]: post(state[action.postId], action),
-      }
-    default:
-      return state;
-  }
-}
-
-const post = (state = {}, action) => {
-  switch (action.type) {
-    case LIKE_POST:
-      return {
-        ...state,
-        likesCount: state.likesCount + 1,
-      }
-    case DISLIKE_POST:
-      return {
-        ...state,
-        likesCount: state.likesCount - 1,
       }
     default:
       return state;
