@@ -27,6 +27,20 @@
   border-radius: 50%;
 }
 
+.GalleryItem-header__metadata-container {
+  line-height: 1.3;
+  color: #262626;
+}
+
+.GalleryItem-header__username {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.GalleryItem-header__address {
+  font-size: 14px;
+}
+
 .GalleryItem-header__timestamp {
   margin-left: auto;
   color: #999;
@@ -38,5 +52,10 @@
 }
 
 .GalleryItem__footer {
-  padding: 1rem;
+  padding: 14px 24px;
+}
+
+.GalleryItem__likes {
+  line-height: 1;
+  margin-bottom: 8px;
 }

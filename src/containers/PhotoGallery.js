@@ -23,11 +23,7 @@ class PhotoGallery extends React.Component {
         {posts.map((post, idx) => (
           <GalleryItem
             key={idx}
-            avatarUrl={post.user.avatarUrl}
-            username={post.user.username}
-            photoUrl={post.photoUrl}
-            filter={post.filter}
-            createdAt={post.createdAt}
+            {...post}
           />
         ))}
       </div>

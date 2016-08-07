@@ -5,32 +5,54 @@ import moment from 'moment';
 import '../styles/GalleryItem.css';
 
 class GalleryItem extends React.Component {
+  renderCaption() {
+    const { caption, user: { username } } = this.props;
+    if (caption) {
+      return (
+        <div className="GalleryItem__caption">
+          <strong>{username}</strong> {caption}
+        </div>
+      )
+    }
+  }
   render() {
+    const {
+      photoUrl,
+      createdAt,
+      filter,
+      address,
+      user: {
+        username,
+        avatarUrl
+      }
+    } = this.props;
     return (
       <article className="GalleryItem__root">
         <div className="GalleryItem-header">
           <div className="GalleryItem-header__avatar-container">
             <img
-              src={getAvatarUrl(this.props.avatarUrl)}
+              src={getAvatarUrl(avatarUrl)}
               className="GalleryItem-header__avatar-img"
-              alt={`${this.propsusername} profile`}
+              alt={`${username} profile`}
             />
           </div>
           <div className="GalleryItem-header__metadata-container">
-            <strong>{this.props.username}</strong>
+            <div className="GalleryItem-header__username">{username}</div>
+            {address ? (<div className="GalleryItem-header__address">{address}</div>) : null}
           </div>
           <div className="GalleryItem-header__timestamp">
-            {moment(this.props.createdAt).fromNow()}
+            {moment(createdAt).fromNow()}
           </div>
 
         </div>
-        <div className={`GalleryItem__body ${this.props.filter || ''}`}>
-          <img src={getImageUrl(this.props.photoUrl)} role="presentation" />
+        <div className={`GalleryItem__body ${filter || ''}`}>
+          <img src={getImageUrl(photoUrl)} role="presentation" />
         </div>
         <div className="GalleryItem__footer">
-          <div>
+          <div className="GalleryItem__likes">
             15 Likes
           </div>
+          {this.renderCaption()}
         </div>
       </article>
     );
