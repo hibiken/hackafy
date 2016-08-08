@@ -7,12 +7,15 @@ import {
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_FAILURE,
   LIKE_POST,
-  DISLIKE_POST
+  DISLIKE_POST,
+  ADD_COMMENT,
 } from '../actions/actionTypes';
 
 const initialState = {
   allIds: [],
-  byId: {},
+  byId: {
+    comments: [],
+  },
   isFetching: false,
   isUploading: false,
 };
@@ -40,6 +43,12 @@ const post = (state = {}, action) => {
         ...state,
         likesCount: state.likesCount - 1,
       }
+    case ADD_COMMENT:
+      return {
+        ...state,
+        commentsCount: state.commentsCount + 1,
+        comments: [...state.comments, action.payload],
+      }
     default:
       return state;
   }
@@ -63,6 +72,11 @@ const byId = (state = initialState.byId, action) => {
         [action.postId]: post(state[action.postId], action),
       }
     case DISLIKE_POST:
+      return {
+        ...state,
+        [action.postId]: post(state[action.postId], action),
+      }
+    case ADD_COMMENT:
       return {
         ...state,
         [action.postId]: post(state[action.postId], action),

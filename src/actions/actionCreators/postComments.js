@@ -22,6 +22,8 @@ export const addComment = (postId, commentBody) => (dispatch, getState) => {
     console.log('successfully created comment', data);
     dispatch({
       type: ADD_COMMENT,
+      payload: data.comment,
+      postId,
     })
   })
   .catch(response => {

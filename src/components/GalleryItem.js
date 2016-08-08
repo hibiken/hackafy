@@ -2,6 +2,7 @@ import React from 'react';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import moment from 'moment';
 import LikeButton from './LikeButton';
+import CommentBox from './CommentBox';
 
 import '../styles/GalleryItem.css';
 
@@ -52,6 +53,14 @@ class GalleryItem extends React.Component {
     }
   }
 
+  renderComments() {
+    return this.props.comments.map(comment => (
+      <div key={comment.id} className="GalleryItem__comment">
+        <strong>{comment.username}</strong> {comment.body}
+      </div>
+    ))
+  }
+
   renderHeartAnimation() {
     if (this.state.showHeartAnimation) {
       return (
@@ -100,11 +109,17 @@ class GalleryItem extends React.Component {
           {this.renderLikes()}
 
           {this.renderCaption()}
+          {this.renderComments()}
           <div>
             <LikeButton
               onLike={this.props.onLike}
               onDislike={this.props.onDislike}
               liked={this.props.liked}
+            />
+          </div>
+          <div>
+            <CommentBox
+              onSubmit={this.props.onCommentSubmit}
             />
           </div>
         </div>

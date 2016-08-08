@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts, likePost, dislikePost } from '../actions';
+import { fetchPosts, likePost, dislikePost, addComment } from '../actions';
 import GalleryItem from '../components/GalleryItem';
 import Spinner from '../components/Spinner';
 import {
@@ -19,8 +19,6 @@ class PhotoGallery extends React.Component {
 
   render() {
     const { posts, isFetching, likedPostIds } = this.props;
-    console.log('posts', posts);
-    console.log('isFetching', isFetching);
     if (isFetching || !posts.length) {
       return (
         <div className="PhotoGallery__spinner-container">
@@ -37,6 +35,7 @@ class PhotoGallery extends React.Component {
             onLike={() => this.props.likePost(post.id)}
             onDislike={() => this.props.dislikePost(post.id)}
             liked={likedPostIds.indexOf(post.id) >= 0}
+            onCommentSubmit={(commentBody) => this.props.addComment(post.id, commentBody)}
           />
         ))}
       </div>
@@ -52,5 +51,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchPosts, likePost, dislikePost }
+  { fetchPosts, likePost, dislikePost, addComment }
 )(PhotoGallery);
