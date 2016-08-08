@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CommentBox.css';
 
 class CommentBox extends React.Component {
   constructor(props) {
@@ -22,8 +23,9 @@ class CommentBox extends React.Component {
     return (
       <div className="CommentBox__root">
         <input
+          className="CommentBox__input"
           type="text"
-          placeholder="Add a comment"
+          placeholder="Add a comment..."
           value={this.state.commentBody}
           onChange={this.onCommentChange}
           onKeyDown={this.handleKeyDown}

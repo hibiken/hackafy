@@ -54,11 +54,15 @@ class GalleryItem extends React.Component {
   }
 
   renderComments() {
-    return this.props.comments.map(comment => (
-      <div key={comment.id} className="GalleryItem__comment">
-        <strong>{comment.username}</strong> {comment.body}
+    return (
+      <div className="GalleryItem__comments">
+        {this.props.comments.map(comment => (
+          <div key={comment.id} className="GalleryItem__comment">
+          <strong>{comment.username}</strong> {comment.body}
+          </div>
+        ))}
       </div>
-    ))
+    );
   }
 
   renderHeartAnimation() {
@@ -110,17 +114,19 @@ class GalleryItem extends React.Component {
 
           {this.renderCaption()}
           {this.renderComments()}
-          <div>
-            <LikeButton
-              onLike={this.props.onLike}
-              onDislike={this.props.onDislike}
-              liked={this.props.liked}
-            />
-          </div>
-          <div>
-            <CommentBox
-              onSubmit={this.props.onCommentSubmit}
-            />
+          <div className="GalleryItem__action-box">
+            <div className="GalleryItem__like-button">
+              <LikeButton
+                onLike={this.props.onLike}
+                onDislike={this.props.onDislike}
+                liked={this.props.liked}
+              />
+            </div>
+            <div className="GalleryItem__comment-box">
+              <CommentBox
+                onSubmit={this.props.onCommentSubmit}
+              />
+            </div>
           </div>
         </div>
       </article>

@@ -55,9 +55,27 @@
   padding: 14px 24px;
 }
 
+.GalleryItem__comments {
+  padding-bottom: 10px;
+}
+
 .GalleryItem__likes {
   line-height: 1;
   margin-bottom: 8px;
+}
+
+.GalleryItem__action-box {
+  display: flex;
+  border-top: 1px solid #efefef;
+  padding-top: 10px;
+}
+
+.GalleryItem__like-button {
+  margin-right: 8px;
+}
+
+.GalleryItem__comment-box {
+  flex-grow: 1;
 }
 
 .GalleryItem__heart-animtaion-container {
