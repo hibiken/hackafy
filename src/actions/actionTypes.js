@@ -22,3 +22,6 @@ export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE';
 /*** Post Like ***/
 export const LIKE_POST = 'LIKE_POST';
 export const DISLIKE_POST = 'DISLIKE_POST';
+
+/*** Post Comments ***/
+export const ADD_COMMENT = 'ADD_COMMENT';
