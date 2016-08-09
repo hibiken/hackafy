@@ -9,6 +9,7 @@ import { uploadPost } from './actionCreators/postUpload';
 import { fetchPosts } from './actionCreators/fetchPosts';
 import { likePost, dislikePost } from './actionCreators/postLikes';
 import { addComment } from './actionCreators/postComments';
+import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
 
 export {
   userSignUp,
@@ -24,5 +25,8 @@ export {
   likePost,
   dislikePost,
 
-  addComment
+  addComment,
+
+  fetchPublicProfile,
+  fetchPostsByUsername
 };

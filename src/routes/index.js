@@ -21,9 +21,9 @@ const createRoutes = (store) => {
         <IndexRoute component={requireAuth(Home)} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/profile" component={requireAuth(Profile)} />
         <Route path="/profile/edit" component={requireAuth(ProfileEdit)} />
         <Route path="/new-post" component={requireAuth(NewPost)} />
+        <Route path="/:username" component={requireAuth(Profile)} />
       </Route>
     </Router>
   );
