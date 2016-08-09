@@ -53,6 +53,7 @@ export const fetchPostsByUsername = (username) => (dispatch, getState) => {
     dispatch({
       type: FETCH_POSTS_BY_USERNAME_SUCCESS,
       payload: data.posts,
+      username,
     })
   },  (response) => {
     console.log('could not fetch public profile', response);

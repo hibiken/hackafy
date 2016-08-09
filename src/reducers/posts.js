@@ -9,6 +9,9 @@ import {
   LIKE_POST,
   DISLIKE_POST,
   ADD_COMMENT,
+  FETCH_POSTS_BY_USERNAME_START,
+  FETCH_POSTS_BY_USERNAME_SUCCESS,
+  FETCH_POSTS_BY_USERNAME_FAILURE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -26,6 +29,8 @@ const allIds = (state = initialState.allIds, action) => {
       return action.payload.map(post => post.id);
     case POST_UPLOAD_SUCCESS:
       return [...state, action.payload.id];
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
+      return [...state, ...(action.payload.map(post => post.id))];
     default:
       return state;
   }
@@ -81,6 +86,11 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.postId]: post(state[action.postId], action),
       }
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
+      return action.payload.reduce((nextState, post) => {
+        nextState[post.id] = post;
+        return nextState;
+      }, {...state});
     default:
       return state;
   }
@@ -89,9 +99,12 @@ const byId = (state = initialState.byId, action) => {
 const isFetching = (state = initialState.isFetching, action) => {
   switch (action.type) {
     case FETCH_POSTS_START:
+    case FETCH_POSTS_BY_USERNAME_START:
       return true;
     case FETCH_POSTS_SUCCESS:
     case FETCH_POSTS_FAILURE:
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
+    case FETCH_POSTS_BY_USERNAME_FAILURE:
       return false;
     default:
       return state;

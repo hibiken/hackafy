@@ -3,12 +3,14 @@ import { routerReducer as routing } from 'react-router-redux';
 import { reducer as form } from 'redux-form';
 import currentUser, * as fromCurrentUser from '../reducers/currentUser';
 import posts, * as fromPosts from '../reducers/posts';
+import publicProfiles from '../reducers/publicProfiles';
 
 const rootReducer = combineReducers({
   routing,
   form,
   currentUser,
   posts,
+  publicProfiles,
 });
 
 /*** Selectors ***/
