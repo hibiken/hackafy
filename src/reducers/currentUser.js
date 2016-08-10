@@ -13,6 +13,8 @@ const initialState = {
   authenticationToken: null,
   postIds: [],
   likedPostIds: [],
+  followerIds: [],
+  followingIds: [],
   attributes: {},
 };
 
@@ -28,6 +30,8 @@ const currentUser = (state = initialState, action) => {
         attributes: action.payload.attrs,
         postIds: action.payload.postIds,
         likedPostIds: action.payload.likedPostIds,
+        followerIds: action.payload.followerIds,
+        followingIds: action.payload.followingIds,
       };
     case POST_UPLOAD_SUCCESS:
       return {
