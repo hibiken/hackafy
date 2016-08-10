@@ -5,7 +5,9 @@ import {
   PROFILE_UPDATE_SUCCESS,
   POST_UPLOAD_SUCCESS,
   LIKE_POST,
-  DISLIKE_POST
+  DISLIKE_POST,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -47,6 +49,16 @@ const currentUser = (state = initialState, action) => {
       return {
         ...state,
         likedPostIds: state.likedPostIds.filter(id => id !== action.postId)
+      }
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followingIds: [...state.followingIds, action.userId],
+      }
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        followingIds: state.followingIds.filter(id => id !== action.userId)
       }
     case USER_SIGN_OUT:
       return initialState;
