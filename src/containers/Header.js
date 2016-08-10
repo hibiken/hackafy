@@ -1,6 +1,6 @@
 import React from 'react';
 import  { connect } from 'react-redux';
-import { getIsSignedIn } from '../store/rootReducer';
+import { getIsSignedIn, getCurrentUser } from '../store/rootReducer';
 import { Link } from 'react-router';
 import NavLink from '../components/NavLink';
 
@@ -18,7 +18,7 @@ class Header extends React.Component {
             <NavLink to="/likes">Likes</NavLink>
           </li>
           <li className="Header__nav-link">
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to={`/${this.props.currentUser.username}`}>Profile</NavLink>
           </li>
         </ul>
       )
@@ -58,6 +58,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   isSignedIn: getIsSignedIn(state),
+  currentUser: getCurrentUser(state),
 });
 
 export default connect(

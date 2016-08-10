@@ -3,6 +3,7 @@ import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import moment from 'moment';
 import LikeButton from './LikeButton';
 import CommentBox from './CommentBox';
+import { Link } from 'react-router';
 
 import '../styles/GalleryItem.css';
 
@@ -95,7 +96,9 @@ class GalleryItem extends React.Component {
             />
           </div>
           <div className="GalleryItem-header__metadata-container">
-            <div className="GalleryItem-header__username">{username}</div>
+            <div className="GalleryItem-header__username">
+              <Link to={`/${username}`}>{username}</Link>
+            </div>
             {address ? (<div className="GalleryItem-header__address">{address}</div>) : null}
           </div>
           <div className="GalleryItem-header__timestamp">

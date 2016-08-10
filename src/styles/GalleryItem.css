@@ -37,6 +37,15 @@
   font-size: 15px;
 }
 
+.GalleryItem-header__username a {
+  color: #262626;
+  text-decoration: none;
+}
+
+.GalleryItem-header__username a:hover {
+  color: #262626;
+}
+
 .GalleryItem-header__address {
   font-size: 14px;
 }

@@ -1,3 +1,8 @@
+.Profile__spinner-container {
+  padding-top: 20vh;
+  text-align: center;
+}
+
 .Profile__avatar-img-wrapper {
   width: 150px;
   margin: 0 auto;

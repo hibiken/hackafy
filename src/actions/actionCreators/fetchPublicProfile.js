@@ -23,13 +23,11 @@ export const fetchPublicProfile = (username) => (dispatch, getState) => {
     },
   })
   .then(({data}) => {
-    console.log('successfully fetched public profile', data);
     dispatch({
       type: FETCH_PUBLIC_PROFILE_SUCCESS,
       payload: data.user,
     })
   },  (response) => {
-    console.log('could not fetch public profile', response);
     dispatch({
       type: FETCH_PUBLIC_PROFILE_FAILURE,
     })
@@ -49,14 +47,12 @@ export const fetchPostsByUsername = (username) => (dispatch, getState) => {
     },
   })
   .then(({data}) => {
-    console.log('successfully fetched posts', data);
     dispatch({
       type: FETCH_POSTS_BY_USERNAME_SUCCESS,
       payload: data.posts,
       username,
     })
   },  (response) => {
-    console.log('could not fetch public profile', response);
     dispatch({
       type: FETCH_POSTS_BY_USERNAME_FAILURE,
     })

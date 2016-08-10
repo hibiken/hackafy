@@ -32,7 +32,10 @@ const byUsername = (state = initialState.byUsername, action) => {
     case FETCH_PUBLIC_PROFILE_SUCCESS:
       return {
         ...state,
-        [action.payload.username]: action.payload,
+        [action.payload.username]: {
+          ...state[action.payload.username],
+          ...action.payload,
+        }
       }
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
       return {
@@ -66,3 +69,20 @@ const publicProfiles = combineReducers({
 });
 
 export default publicProfiles;
+
+/*** Selectors ***/
+export const getPostIdsByUsername = (state, username) => {
+  const user = state.byUsername[username];
+  if (user) {
+    return user.postIds || [];
+  } else {
+    return [];
+  }
+}
+
+export const getPublicProfileByUsername = (state, username) => {
+  const user = state.byUsername[username];
+  return user || false;
+}
+
+export const getIsFetchingPublicProfile = (state) => state.isFetching;

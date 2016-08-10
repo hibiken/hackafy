@@ -4,7 +4,7 @@ import {
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAILURE
 } from '../actionTypes';
-import { getAuthToken } from '../../store/rootReducer';
+import { getAuthToken, getCurrentUser } from '../../store/rootReducer';
 import { push } from 'react-router-redux';
 
 export const userUpdate = ({ username, email }, file) => (dispatch, getState) => {
@@ -33,7 +33,8 @@ export const userUpdate = ({ username, email }, file) => (dispatch, getState) =>
       type: PROFILE_UPDATE_SUCCESS,
       payload: data.user,
     });
-    dispatch(push('/profile'));
+    const currentUser = getCurrentUser(getState());
+    dispatch(push(`/${currentUser.username}`));
   })
   .catch(response => {
     console.log('profile update failed', response);

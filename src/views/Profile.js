@@ -2,8 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import NewPostButton from '../components/NewPostButton';
+import Spinner from '../components/Spinner';
 import { userSignOut, fetchPublicProfile, fetchPostsByUsername } from '../actions';
-import { getCurrentUser, getCurrentUsersPosts } from '../store/rootReducer';
+import {
+  getPublicProfileByUsername,
+  getPostsByUsername,
+  getIsFetchingPublicProfile,
+  getCurrentUser
+} from '../store/rootReducer';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import '../styles/Profile.css';
 
@@ -13,10 +19,33 @@ class Profile extends React.Component {
     this.props.fetchPostsByUsername(this.props.params.username);
   }
 
+  renderActionButton() {
+    if (this.props.isCurrentUser) {
+      return (
+        <button className="Profile__edit-button">
+          <Link to="/profile/edit">Edit Profile</Link>
+        </button>
+      );
+    } else {
+      // TODO: implement this feature.
+      return (
+        <button>
+          Follow
+        </button>
+      );
+    }
+  }
+
   render() {
-    console.log('props.posts', this.props.posts);
-    const { username, avatarUrl } = this.props.currentUser;
-    const { posts } = this.props;
+    const { isFetching, user, posts, isCurrentUser } = this.props;
+    if (isFetching || !user) {
+      return (
+        <div className="Profile__spinner-container">
+          <Spinner />
+        </div>
+      );
+    }
+    const { username, avatarUrl } = this.props.user;
     return (
       <div className="Profile__root">
         <div className="row Profile__user-info-container">
@@ -31,10 +60,8 @@ class Profile extends React.Component {
           </div>
           <div className="eight columns">
             <h3 className="Profile__username">{username}</h3>
-            <button className="Profile__edit-button">
-              <Link to="/profile/edit">Edit Profile</Link>
-            </button>
-            <button onClick={this.props.userSignOut}>Sign out</button>
+            {this.renderActionButton()}
+            {isCurrentUser ? (<button onClick={this.props.userSignOut}>Sign out</button>) : null }
           </div>
         </div>
         <div className="Profile__photo-gallery">
@@ -53,9 +80,11 @@ class Profile extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: getCurrentUser(state),
-  posts: getCurrentUsersPosts(state),
+const mapStateToProps = (state, {params}) => ({
+  user: getPublicProfileByUsername(state, params.username),
+  posts: getPostsByUsername(state, params.username),
+  isFetching: getIsFetchingPublicProfile(state),
+  isCurrentUser: (params.username === getCurrentUser(state).username),
 })
 
 export default connect(
