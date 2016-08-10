@@ -35,6 +35,10 @@ export const getCurrentUsersLikedPostIds = (state) => {
   return fromCurrentUser.getLikedPostIds(state.currentUser);
 };
 
+export const getCurrentUsersFollowingIds = (state) => {
+  return fromCurrentUser.getFollowingIds(state.currentUser);
+}
+
 export const getAllPosts = (state) => {
   return fromPosts.getAllPosts(state.posts);
 };

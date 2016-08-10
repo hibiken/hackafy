@@ -3,12 +3,20 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
-import { userSignOut, fetchPublicProfile, fetchPostsByUsername } from '../actions';
+import FollowButton from '../components/FollowButton';
+import {
+  userSignOut,
+  fetchPublicProfile,
+  fetchPostsByUsername,
+  followUser,
+  unfollowUser
+} from '../actions';
 import {
   getPublicProfileByUsername,
   getPostsByUsername,
   getIsFetchingPublicProfile,
-  getCurrentUser
+  getCurrentUser,
+  getCurrentUsersFollowingIds
 } from '../store/rootReducer';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import '../styles/Profile.css';
@@ -28,10 +36,13 @@ class Profile extends React.Component {
       );
     } else {
       // TODO: implement this feature.
+      const { id } = this.props.user;
       return (
-        <button>
-          Follow
-        </button>
+        <FollowButton
+          isFollowing={this.props.isFollowing}
+          onFollowClick={() => this.props.followUser(id)}
+          onUnfollowClick={() => this.props.unfollowUser(id)}
+        />
       );
     }
   }
@@ -80,14 +91,27 @@ class Profile extends React.Component {
   }
 }
 
-const mapStateToProps = (state, {params}) => ({
-  user: getPublicProfileByUsername(state, params.username),
-  posts: getPostsByUsername(state, params.username),
-  isFetching: getIsFetchingPublicProfile(state),
-  isCurrentUser: (params.username === getCurrentUser(state).username),
-})
+const mapStateToProps = (state, {params}) => {
+  const user = getPublicProfileByUsername(state, params.username);
+  const currentUser = getCurrentUser(state);
+  const currentUserFollowingIds = getCurrentUsersFollowingIds(state);
+  return {
+    user,
+    posts: getPostsByUsername(state, params.username),
+    isFetching: getIsFetchingPublicProfile(state),
+    isCurrentUser: (params.username === currentUser.username),
+    isFollowing: (currentUserFollowingIds.indexOf(user.id) >= 0),
+  }
+
+}
 
 export default connect(
   mapStateToProps,
-  { userSignOut, fetchPublicProfile, fetchPostsByUsername }
+  {
+    userSignOut,
+    fetchPublicProfile,
+    fetchPostsByUsername,
+    followUser,
+    unfollowUser
+  }
 )(Profile);

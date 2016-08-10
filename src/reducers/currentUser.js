@@ -82,6 +82,10 @@ export const getPostIds = (state) => {
 
 export const getLikedPostIds = (state) => {
   return state.likedPostIds;
-}
+};
+
+export const getFollowingIds = (state) => {
+  return state.followingIds;
+};
 
 export default currentUser;

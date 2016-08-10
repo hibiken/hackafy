@@ -1,0 +1,12 @@
+.FollowButton--following {
+  background-color: #70c050;
+  color: #fff;
+}
+.FollowButton--following:hover,
+.FollowButton--following:active {
+  color: #fff;
+}
+
+.FollowButton__root:active {
+  opacity: .5;
+}
