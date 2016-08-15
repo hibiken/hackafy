@@ -10,3 +10,8 @@ export const getAvatarUrl = (avatarUrl) => {
 export const getImageUrl = (imageUrl) => {
   return imageUrl ? `${process.env.NODE_ENV !== 'production' ? 'http://localhost:5000' : ''}${imageUrl}` : noImage;
 }
+
+// Helper function for pluralization
+export const pluralize = (count, singular, plural) => {
+  return count === 1 ? singular : plural;
+}

@@ -3,14 +3,14 @@ import {
   FETCH_PUBLIC_PROFILE_START,
   FETCH_PUBLIC_PROFILE_SUCCESS,
   FETCH_PUBLIC_PROFILE_FAILURE,
-  FETCH_POSTS_BY_USERNAME_SUCCESS
+  FETCH_POSTS_BY_USERNAME_SUCCESS,
+  FOLLOW_USER,
+  UNFOLLOW_USER
 } from '../actions/actionTypes'
 
 const initialState = {
   allUsernames: [],
-  byUsername: {
-    postIds: [],
-  },
+  byUsername: {},
   isFetching: false,
 };
 
@@ -21,6 +21,23 @@ const allUsernames = (state = initialState.allUsernames, action) => {
         return [...state, action.payload.username];
       } else {
         return state;
+      }
+    default:
+      return state;
+  }
+}
+
+const _user = (state = {}, action) => {
+  switch (action.type) {
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followersCount: state.followersCount + 1,
+      }
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        followersCount: state.followersCount - 1,
       }
     default:
       return state;
@@ -44,6 +61,16 @@ const byUsername = (state = initialState.byUsername, action) => {
           ...state[action.username],
           postIds: action.payload.map(post => post.id),
         }
+      }
+    case FOLLOW_USER:
+      return {
+        ...state,
+        [action.username]: _user(state[action.username], action),
+      }
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        [action.username]: _user(state[action.username], action),
       }
     default:
       return state;

@@ -15,10 +15,10 @@ export const followUser = (userId) => (dispatch, getState) => {
       'Authorization': `Token ${authToken}`,
     },
   })
-  .then(() => {
-    console.log('successfully followed!');
+  .then(({data}) => {
     dispatch({
       type: FOLLOW_USER,
+      username: data.user.username,
       userId,
     });
   });
@@ -33,10 +33,10 @@ export const unfollowUser = (userId) => (dispatch, getState) => {
       'Authorization': `Token ${authToken}`,
     },
   })
-  .then(() => {
-    console.log('successfully unfollowed!');
+  .then(({data}) => {
     dispatch({
       type: UNFOLLOW_USER,
+      username: data.user.username,
       userId,
     });
   });

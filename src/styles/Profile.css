@@ -41,3 +41,15 @@
   background-size: cover;
   background-position: center center;
 }
+
+.Profile__stats-item {
+  color: #262626;
+  display: inline-block;
+  margin-right: 40px;
+  font-size: 17px;
+}
+
+.Profile__stats-count {
+  font-weight: bold;
+
+}

@@ -18,13 +18,20 @@ import {
   getCurrentUser,
   getCurrentUsersFollowingIds
 } from '../store/rootReducer';
-import { getAvatarUrl, getImageUrl } from '../utils/helpers';
+import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import '../styles/Profile.css';
 
 class Profile extends React.Component {
   componentDidMount() {
     this.props.fetchPublicProfile(this.props.params.username);
     this.props.fetchPostsByUsername(this.props.params.username);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.params.username !== nextProps.params.username) {
+      this.props.fetchPublicProfile(nextProps.params.username);
+      this.props.fetchPostsByUsername(nextProps.params.username);
+    }
   }
 
   renderActionButton() {
@@ -35,7 +42,6 @@ class Profile extends React.Component {
         </button>
       );
     } else {
-      // TODO: implement this feature.
       const { id } = this.props.user;
       return (
         <FollowButton
@@ -69,10 +75,21 @@ class Profile extends React.Component {
               />
             </div>
           </div>
-          <div className="eight columns">
+          <div className="five columns">
             <h3 className="Profile__username">{username}</h3>
             {this.renderActionButton()}
             {isCurrentUser ? (<button onClick={this.props.userSignOut}>Sign out</button>) : null }
+            <div className="Profile__stats">
+              <div className="Profile__stats-item">
+                <span className="Profile__stats-count">{user.postIds.length}</span> {pluralize(user.postIds.length, 'post', 'posts')}
+              </div>
+              <div className="Profile__stats-item">
+                <span className="Profile__stats-count">{user.followersCount}</span> {pluralize(user.followersCount, 'follower', 'followers')}
+              </div>
+              <div className="Profile__stats-item">
+                <span className="Profile__stats-count">{user.followingCount}</span> {pluralize(user.followingCount, 'following', 'following')}
+              </div>
+            </div>
           </div>
         </div>
         <div className="Profile__photo-gallery">
