@@ -11,14 +11,15 @@ import {
   ADD_COMMENT,
   FETCH_POSTS_BY_USERNAME_START,
   FETCH_POSTS_BY_USERNAME_SUCCESS,
-  FETCH_POSTS_BY_USERNAME_FAILURE
+  FETCH_POSTS_BY_USERNAME_FAILURE,
+  FETCH_POSTS_BY_LOCATION_SUCCESS,
+  FETCH_POSTS_BY_LOCATION_FAILURE
 } from '../actions/actionTypes';
 
 const initialState = {
   allIds: [],
-  byId: {
-    comments: [],
-  },
+  idsByPlaceId: {},
+  byId: {},
   isFetching: false,
   isUploading: false,
 };
@@ -31,6 +32,18 @@ const allIds = (state = initialState.allIds, action) => {
       return [...state, action.payload.id];
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
       return [...state, ...(action.payload.map(post => post.id))];
+    default:
+      return state;
+  }
+}
+
+const idsByPlaceId = (state = initialState.idsByPlaceId, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_BY_LOCATION_SUCCESS:
+      return {
+        ...state,
+        [action.placeId]: action.payload.map(post => post.id)
+      }
     default:
       return state;
   }
@@ -105,6 +118,8 @@ const isFetching = (state = initialState.isFetching, action) => {
     case FETCH_POSTS_FAILURE:
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
     case FETCH_POSTS_BY_USERNAME_FAILURE:
+    case FETCH_POSTS_BY_LOCATION_SUCCESS:
+    case FETCH_POSTS_BY_LOCATION_FAILURE:
       return false;
     default:
       return state;
@@ -125,6 +140,7 @@ const isUploading = (state = initialState.isUploading, action) => {
 
 export default combineReducers({
   allIds,
+  idsByPlaceId,
   byId,
   isFetching,
   isUploading,
@@ -142,4 +158,13 @@ export const getAllPosts = (state) => {
 
 export const getIsFetching = (state) => {
   return state.isFetching;
+}
+
+export const getPostsByPlaceId = (state, placeId) => {
+  const ids = state.idsByPlaceId[placeId];
+  if (!ids) {
+    return [];
+  }
+
+  return ids.map(id => state.byId[id]);
 }

@@ -80,6 +80,7 @@ class GalleryItem extends React.Component {
       createdAt,
       filter,
       address,
+      placeId,
       user: {
         username,
         avatarUrl
@@ -99,7 +100,10 @@ class GalleryItem extends React.Component {
             <div className="GalleryItem-header__username">
               <Link to={`/${username}`}>{username}</Link>
             </div>
-            {address ? (<div className="GalleryItem-header__address">{address}</div>) : null}
+            {address ?
+            (<div className="GalleryItem-header__address">
+              <Link to={`/explore/locations/${placeId}`}>{address}</Link>
+            </div>) : null}
           </div>
           <div className="GalleryItem-header__timestamp">
             {moment(createdAt).fromNow()}

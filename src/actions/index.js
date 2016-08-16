@@ -6,7 +6,7 @@ import {
 
 import { userUpdate } from './actionCreators/userProfile';
 import { uploadPost } from './actionCreators/postUpload';
-import { fetchPosts } from './actionCreators/fetchPosts';
+import { fetchPosts, fetchPostsByPlaceId } from './actionCreators/fetchPosts';
 import { likePost, dislikePost } from './actionCreators/postLikes';
 import { addComment } from './actionCreators/postComments';
 import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
@@ -22,6 +22,7 @@ export {
   uploadPost,
 
   fetchPosts,
+  fetchPostsByPlaceId,
 
   likePost,
   dislikePost,

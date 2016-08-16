@@ -61,4 +61,8 @@ export const getIsFetchingPublicProfile = (state) => {
   return fromPublicProfiles.getIsFetchingPublicProfile(state.publicProfiles);
 }
 
+export const getPostsByPlaceId = (state, placeId) => {
+  return fromPosts.getPostsByPlaceId(state.posts, placeId);
+}
+
 export default rootReducer;

@@ -1,0 +1,23 @@
+.Locations__spinner-container {
+  padding-top: 20vh;
+  text-align: center;
+}
+
+.Locations__photo-gallery {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Locations__photo-gallery-item {
+  width: 270px;
+  height: 270px;
+  margin: 20px;
+}
+
+.Locations__photo-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+}
