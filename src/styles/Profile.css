@@ -5,8 +5,11 @@
 
 .Profile__avatar-img-wrapper {
   width: 150px;
+  height: 150px;
   margin: 0 auto;
   text-align: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
 }
 
 .Profile__user-info-container {
@@ -16,6 +19,7 @@
 .Profile__avatar-img {
   display: inline-block;
   width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 
