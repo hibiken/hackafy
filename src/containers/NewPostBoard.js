@@ -59,14 +59,19 @@ class NewPostBoard extends React.Component {
     }
     const { caption, filter, files, address } = this.state;
 
-    geocodeByAddress(address, (err, { lat, lng }) => {
-      if (err) {
-        return false;
-        // TODO: error message
-      }
-      console.log('geocode success', lat, lng);
-      this.props.uploadPost({ caption, filter, address, lat, lng }, files[0]);
-    });
+    if (address) {
+      geocodeByAddress(address, (err, { lat, lng }, placeId) => {
+        if (err) {
+          return false;
+          // TODO: error message
+        }
+        console.log('geocode success', lat, lng, placeId);
+        this.props.uploadPost({ caption, filter, address, lat, lng, placeId }, files[0]);
+      });
+    } else {
+      this.props.uploadPost({ caption, filter }, files[0]);
+    }
+
   }
 
   renderDropzone() {
