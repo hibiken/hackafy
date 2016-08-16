@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import Modal from 'react-modal';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
@@ -22,6 +23,16 @@ import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import '../styles/Profile.css';
 
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalIsOpen: false,
+    };
+
+    this.openModal = () => this.setState({ modalIsOpen: true });
+    this.closeModal = () => this.setState({ modalIsOpen: false });
+  }
   componentDidMount() {
     this.props.fetchPublicProfile(this.props.params.username);
     this.props.fetchPostsByUsername(this.props.params.username);
@@ -53,8 +64,65 @@ class Profile extends React.Component {
     }
   }
 
+  renderMenuButton() {
+    if (this.props.isCurrentUser) {
+      return (
+        <button className="Profile__menu-button" onClick={this.openModal}>
+          <i className="fa fa-ellipsis-h" aria-hidden="true" />
+        </button>
+      );
+    }
+  }
+
+  renderModal() {
+    const customStyles = {
+      overlay : {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.45)'
+      },
+      content : {
+        position: 'absolute',
+        top: '45%',
+        left: '50%',
+        right: 'initial',
+        bottom: 'initial',
+        transform: 'translate(-50%, -50%)',
+        border: '1px solid #ccc',
+        background: '#fff',
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '4px',
+        outline: 'none',
+        padding: '0px',
+      }
+    };
+    return (
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal}
+        style={customStyles}>
+        <div>
+          <button
+            className="Profile__modal-button"
+            onClick={this.props.userSignOut}>
+            Log Out
+          </button>
+          <button
+            className="Profile__modal-button"
+              onClick={this.closeModal}>
+              Cancel
+          </button>
+        </div>
+      </Modal>
+    );
+  }
+
   render() {
-    const { isFetching, user, posts, isCurrentUser } = this.props;
+    const { isFetching, user, posts } = this.props;
     if (isFetching || !user) {
       return (
         <div className="Profile__spinner-container">
@@ -78,7 +146,7 @@ class Profile extends React.Component {
           <div className="five columns">
             <h3 className="Profile__username">{username}</h3>
             {this.renderActionButton()}
-            {isCurrentUser ? (<button onClick={this.props.userSignOut}>Sign out</button>) : null }
+            {this.renderMenuButton()}
             <div className="Profile__stats">
               <div className="Profile__stats-item">
                 <span className="Profile__stats-count">{user.postIds.length}</span> {pluralize(user.postIds.length, 'post', 'posts')}
@@ -103,6 +171,7 @@ class Profile extends React.Component {
           ))}
         </div>
         <NewPostButton />
+        {this.renderModal()}
       </div>
     )
   }
