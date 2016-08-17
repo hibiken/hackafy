@@ -15,8 +15,6 @@ class Locations extends React.Component {
 
   render() {
     const { posts, isFetching } = this.props;
-    console.log('isFetching', isFetching);
-    console.log('posts', posts);
     if (isFetching || !posts.length) {
       return (
         <div className="Locations__spinner-container">
@@ -40,7 +38,7 @@ class Locations extends React.Component {
             googleMapElement={
               <GoogleMap
                 ref={(map) => console.log(map)}
-                defaultZoom={10}
+                defaultZoom={13}
                 defaultCenter={latLng}
                 options={{styles: mapStyle}}>
                 <Marker
