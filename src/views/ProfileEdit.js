@@ -6,7 +6,7 @@ import '../styles/ProfileEdit.css';
 class ProfileEdit extends React.Component {
   render() {
     return (
-      <div className="ProfileEdit__root">
+      <div className="ProfileEdit__root container">
         <div className="row ProfileEdit__form-container">
           <div className="six columns offset-by-three">
             <ProfileEditForm />

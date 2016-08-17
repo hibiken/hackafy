@@ -132,7 +132,7 @@ class Profile extends React.Component {
     }
     const { username, avatarUrl } = this.props.user;
     return (
-      <div className="Profile__root">
+      <div className="Profile__root container">
         <div className="row Profile__user-info-container">
           <div className="four columns">
             <div className="Profile__avatar-img-wrapper">
