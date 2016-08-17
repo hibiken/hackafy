@@ -27,11 +27,16 @@ class Profile extends React.Component {
     super(props);
 
     this.state = {
-      modalIsOpen: false,
+      logoutModalIsOpen: false,
+      postModalIsOpen: false,
+      activePostIndex: null,
     };
 
-    this.openModal = () => this.setState({ modalIsOpen: true });
-    this.closeModal = () => this.setState({ modalIsOpen: false });
+    this.openLogoutModal = () => this.setState({ logoutModalIsOpen: true });
+    this.closeLogoutModal = () => this.setState({ logoutModalIsOpen: false });
+    this.closePostModal = () => this.setState({ postModalIsOpen: false, activePostIndex: null });
+    this.onPrevPostClick = this._onPrevPostClick.bind(this);
+    this.onNextPostClick = this._onNextPostClick.bind(this);
   }
   componentDidMount() {
     this.props.fetchPublicProfile(this.props.params.username);
@@ -43,6 +48,13 @@ class Profile extends React.Component {
       this.props.fetchPublicProfile(nextProps.params.username);
       this.props.fetchPostsByUsername(nextProps.params.username);
     }
+  }
+
+  _openPostModal(index) {
+    this.setState({
+      postModalIsOpen: true,
+      activePostIndex: index,
+    });
   }
 
   renderActionButton() {
@@ -67,14 +79,14 @@ class Profile extends React.Component {
   renderMenuButton() {
     if (this.props.isCurrentUser) {
       return (
-        <button className="Profile__menu-button" onClick={this.openModal}>
+        <button className="Profile__menu-button" onClick={this.openLogoutModal}>
           <i className="fa fa-ellipsis-h" aria-hidden="true" />
         </button>
       );
     }
   }
 
-  renderModal() {
+  renderLogoutModal() {
     const customStyles = {
       overlay : {
         position: 'fixed',
@@ -102,8 +114,8 @@ class Profile extends React.Component {
     };
     return (
       <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal}
+        isOpen={this.state.logoutModalIsOpen}
+        onRequestClose={this.closeLogoutModal}
         style={customStyles}>
         <div>
           <button
@@ -113,7 +125,7 @@ class Profile extends React.Component {
           </button>
           <button
             className="Profile__modal-button"
-              onClick={this.closeModal}>
+              onClick={this.closeLogoutModal}>
               Cancel
           </button>
         </div>
@@ -121,7 +133,104 @@ class Profile extends React.Component {
     );
   }
 
+  _onPrevPostClick() {
+    if (this.state.activePostIndex === 0) {
+      return false;
+    }
+    this.setState({
+      activePostIndex: this.state.activePostIndex - 1,
+    });
+  }
+
+  _onNextPostClick() {
+    if (this.state.activePostIndex === this.props.posts.length - 1) {
+      return false;
+    }
+    this.setState({
+      activePostIndex: this.state.activePostIndex + 1,
+    });
+  }
+
+  renderPostModal() {
+    const customStyles = {
+      overlay : {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+      },
+      content : {
+        position: 'absolute',
+        top: '45%',
+        left: '50%',
+        right: 'initial',
+        bottom: 'initial',
+        transform: 'translate(-50%, -50%)',
+        border: '1px solid #ccc',
+        background: '#fff',
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '0px',
+        outline: 'none',
+        padding: '0px',
+        width: '65vw',
+      }
+    }
+    const { activePostIndex } = this.state;
+    let modalContent;
+    if (activePostIndex === null) {
+      modalContent = null;
+    } else {
+      const activePost = this.props.posts[activePostIndex];
+      console.log('activePost', activePost);
+      modalContent = (
+        <div className="Profile__post-modal-root">
+
+          <div className="row">
+            <div className="Profile__post-modal-image-wrapper eight columns">
+              <button onClick={this.onPrevPostClick} className="Profile__modal-prev-btn">
+                <i className="fa fa-angle-left" />
+              </button>
+              <img
+                src={getImageUrl(activePost.photoUrl)}
+                role="presentation"
+                className="Profile__post-modal-image"
+              />
+              <button onClick={this.onNextPostClick} className="Profile__modal-next-btn">
+                <i className="fa fa-angle-right"/>
+              </button>
+            </div>
+            <div className="Profile__post-modal-info-container four columns">
+              <div className="Profile__modal-user-info">
+                <div className="Profile__modal-user-avatar-wrapper">
+                  <img src={getAvatarUrl(activePost.user.avatarUrl)} alt={activePost.user.username} />
+                </div>
+                <div className="Profile__modal-user-username">
+                  {activePost.user.username}
+                </div>
+              </div>
+              <div>
+                <span>{activePost.likesCount} {pluralize(activePost.likesCount, 'like', 'likes')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <Modal
+        isOpen={this.state.postModalIsOpen}
+        onRequestClose={this.closePostModal}
+        style={customStyles}>
+        {modalContent}
+      </Modal>
+    );
+  }
+
   render() {
+    console.log('state',this.state);
     const { isFetching, user, posts } = this.props;
     if (isFetching || !user) {
       return (
@@ -161,8 +270,8 @@ class Profile extends React.Component {
           </div>
         </div>
         <div className="Profile__photo-gallery">
-          {posts.map(post => (
-            <div key={post.id} className="Profile__photo-gallery-item">
+          {posts.map((post, idx) => (
+            <div key={post.id} className="Profile__photo-gallery-item" onClick={() => this._openPostModal(idx)}>
               <div
                 style={{backgroundImage: `url(${getImageUrl(post.photoUrl)})`}}
                 className={`Profile__photo-image ${post.filter}`}
@@ -171,7 +280,8 @@ class Profile extends React.Component {
           ))}
         </div>
         <NewPostButton />
-        {this.renderModal()}
+        {this.renderLogoutModal()}
+        {this.renderPostModal()}
       </div>
     )
   }
