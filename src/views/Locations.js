@@ -24,7 +24,7 @@ class Locations extends React.Component {
         </div>
       );
     }
-    const { latLng } = posts[0];
+    const { latLng, address } = posts[0];
     return (
       <div className="Locations__root">
         <section style={{height: "350px"}}>
@@ -52,6 +52,7 @@ class Locations extends React.Component {
         </section>
 
         <div className="container">
+          <h3 className="Locations__main-header">{address}</h3>
           <div className="Locations__photo-gallery">
             {posts.map(post => (
               <div key={post.id} className="Locations__photo-gallery-item">

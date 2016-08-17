@@ -50,6 +50,12 @@
   font-size: 14px;
 }
 
+.GalleryItem-header__address a,
+.GalleryItem-header__address a:hover {
+  color: #262626;
+  text-decoration: none;
+}
+
 .GalleryItem-header__timestamp {
   margin-left: auto;
   color: #999;
