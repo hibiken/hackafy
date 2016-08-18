@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
+import LikeButton from './LikeButton';
+import CommentBox from './CommentBox';
 import '../styles/PostModal.css';
 
 class PostModal extends React.Component {
@@ -34,7 +36,7 @@ class PostModal extends React.Component {
   }
 
   renderModalContent() {
-    if (this.props.post === null) {
+    if (!this.props.post.id) {
       return null;
     } else {
       const { post } = this.props;
@@ -80,6 +82,19 @@ class PostModal extends React.Component {
                     <strong>{comment.username}</strong> {comment.body}
                   </div>
                 ))}
+              </div>
+
+              <div className="PostModal__action-box">
+                <div className="PostModal__like-button">
+                  <LikeButton
+                    onLike={this.props.onLike}
+                    onDislike={this.props.onDislike}
+                    liked={this.props.liked}
+                  />
+                </div>
+                <div className="PostModal__comment-box">
+                  <CommentBox onSubmit={this.props.onCommentSubmit} />
+                </div>
               </div>
             </div>
           </div>

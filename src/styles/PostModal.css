@@ -70,3 +70,19 @@
   height: 100%;
   border-radius: 50%;
 }
+
+.PostModal__action-box {
+  position: absolute;
+  bottom: 0;
+  width: calc(30.6666666667% - 15px);
+  padding: 10px 0;
+  border-top: 1px solid #efefef;
+}
+
+.PostModal__like-button,
+.PostModal__comment-box {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}

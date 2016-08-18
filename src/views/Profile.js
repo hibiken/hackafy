@@ -11,14 +11,18 @@ import {
   fetchPublicProfile,
   fetchPostsByUsername,
   followUser,
-  unfollowUser
+  unfollowUser,
+  likePost,
+  dislikePost,
+  addComment
 } from '../actions';
 import {
   getPublicProfileByUsername,
   getPostsByUsername,
   getIsFetchingPublicProfile,
   getCurrentUser,
-  getCurrentUsersFollowingIds
+  getCurrentUsersFollowingIds,
+  getCurrentUsersLikedPostIds
 } from '../store/rootReducer';
 import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import '../styles/Profile.css';
@@ -154,7 +158,7 @@ class Profile extends React.Component {
 
   renderPostModal() {
     const { activePostIndex } = this.state;
-    const activePost = (activePostIndex === null ? null : this.props.posts[activePostIndex]);
+    const activePost = (activePostIndex === null ? {} : this.props.posts[activePostIndex]);
     console.log('activePost', activePost);
     return (
       <PostModal
@@ -163,6 +167,10 @@ class Profile extends React.Component {
         post={activePost}
         onNextClick={this.onNextPostClick}
         onPrevClick={this.onPrevPostClick}
+        onLike={() => this.props.likePost(activePost.id)}
+        onDislike={() => this.props.dislikePost(activePost.id)}
+        liked={this.props.likedPostIds.indexOf(activePost.id) >= 0}
+        onCommentSubmit={(commentBody) => this.props.addComment(activePost.id, commentBody)}
       />
     );
   }
@@ -235,6 +243,7 @@ const mapStateToProps = (state, {params}) => {
     isFetching: getIsFetchingPublicProfile(state),
     isCurrentUser: (params.username === currentUser.username),
     isFollowing: (currentUserFollowingIds.indexOf(user.id) >= 0),
+    likedPostIds: getCurrentUsersLikedPostIds(state),
   }
 
 }
@@ -246,6 +255,9 @@ export default connect(
     fetchPublicProfile,
     fetchPostsByUsername,
     followUser,
-    unfollowUser
+    unfollowUser,
+    likePost,
+    dislikePost,
+    addComment
   }
 )(Profile);
