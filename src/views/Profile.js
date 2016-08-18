@@ -6,6 +6,7 @@ import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import PostModal from '../components/PostModal';
+import PhotoThumbnailItem from '../components/PhotoThumbnailItem';
 import {
   userSignOut,
   fetchPublicProfile,
@@ -217,22 +218,14 @@ class Profile extends React.Component {
         </div>
         <div className="Profile__photo-gallery">
           {posts.map((post, idx) => (
-            <div key={post.id} className="Profile__photo-gallery-item" onClick={() => this._openPostModal(idx)}>
-              <div
-                style={{backgroundImage: `url(${getImageUrl(post.photoUrl)})`}}
-                className={`Profile__photo-image ${post.filter}`}
-              />
-              <div className="Profile__photo-gallery-item-overlay">
-                <div className="Profile__photo-gallery-item-overlay-icons">
-                  <div className="Profile__photo-gallery-item-like-count">
-                    <i className="fa fa-heart"/> <span className="Profile__photo-gallery-count">{post.likesCount}</span>
-                  </div>
-                  <div className="Profile__photo-gallery-item--comment-count">
-                    <i className="fa fa-comment" /> <span className="Profile__photo-gallery-count">{post.comments.length}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PhotoThumbnailItem
+              key={post.id}
+              onClick={() => this._openPostModal(idx)}
+              avatarUrl={getImageUrl(post.photoUrl)}
+              filter={post.filter}
+              likesCount={post.likesCount}
+              commentsCount={post.comments.length}
+            />
           ))}
         </div>
         <NewPostButton />

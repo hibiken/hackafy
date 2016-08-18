@@ -1,0 +1,42 @@
+.PhotoThumbnailItem__root {
+  width: 270px;
+  height: 270px;
+  margin: 20px;
+}
+
+.PhotoThumbnailItem__overlay {
+  display: none;
+}
+
+.PhotoThumbnailItem__root:hover .PhotoThumbnailItem__overlay {
+  display: block;
+  background: rgba(0,0,0,0.35);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: -100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.PhotoThumbnailItem__overlay-icons {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.PhotoThumbnailItem__likes-count,
+.PhotoThumbnailItem__comments-count {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+}
+
+.PhotoThumbnailItem__count {
+  font-size: 16px;
+  line-height: 20px;
+  margin-left: 5px;
+}
