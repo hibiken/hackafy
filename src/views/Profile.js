@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
+import PostModal from '../components/PostModal';
 import {
   userSignOut,
   fetchPublicProfile,
@@ -152,80 +153,17 @@ class Profile extends React.Component {
   }
 
   renderPostModal() {
-    const customStyles = {
-      overlay : {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)'
-      },
-      content : {
-        position: 'absolute',
-        top: '45%',
-        left: '50%',
-        right: 'initial',
-        bottom: 'initial',
-        transform: 'translate(-50%, -50%)',
-        border: '1px solid #ccc',
-        background: '#fff',
-        overflow: 'auto',
-        WebkitOverflowScrolling: 'touch',
-        borderRadius: '0px',
-        outline: 'none',
-        padding: '0px',
-        width: '65vw',
-      }
-    }
     const { activePostIndex } = this.state;
-    let modalContent;
-    if (activePostIndex === null) {
-      modalContent = null;
-    } else {
-      const activePost = this.props.posts[activePostIndex];
-      console.log('activePost', activePost);
-      modalContent = (
-        <div className="Profile__post-modal-root">
-
-          <div className="row">
-            <div className="Profile__post-modal-image-wrapper eight columns">
-              <button onClick={this.onPrevPostClick} className="Profile__modal-prev-btn">
-                <i className="fa fa-angle-left" />
-              </button>
-              <img
-                src={getImageUrl(activePost.photoUrl)}
-                role="presentation"
-                className="Profile__post-modal-image"
-              />
-              <button onClick={this.onNextPostClick} className="Profile__modal-next-btn">
-                <i className="fa fa-angle-right"/>
-              </button>
-            </div>
-            <div className="Profile__post-modal-info-container four columns">
-              <div className="Profile__modal-user-info">
-                <div className="Profile__modal-user-avatar-wrapper">
-                  <img src={getAvatarUrl(activePost.user.avatarUrl)} alt={activePost.user.username} />
-                </div>
-                <div className="Profile__modal-user-username">
-                  {activePost.user.username}
-                </div>
-              </div>
-              <div>
-                <span>{activePost.likesCount} {pluralize(activePost.likesCount, 'like', 'likes')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+    const activePost = (activePostIndex === null ? null : this.props.posts[activePostIndex]);
+    console.log('activePost', activePost);
     return (
-      <Modal
+      <PostModal
         isOpen={this.state.postModalIsOpen}
         onRequestClose={this.closePostModal}
-        style={customStyles}>
-        {modalContent}
-      </Modal>
+        post={activePost}
+        onNextClick={this.onNextPostClick}
+        onPrevClick={this.onPrevPostClick}
+      />
     );
   }
 

@@ -62,7 +62,7 @@
 }
 
 .GalleryItem__body img {
-  display: inline-block;
+  display: block;
   width: 100%;
 }
 

@@ -1,0 +1,72 @@
+.PostModal__root {
+  width: 100%;
+}
+
+.PostModal__photo-wrapper {
+  position: relative;
+}
+
+.PostModal__prev-btn,
+.PostModal__next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+  line-height: 1;
+  font-size: 45px;
+  height: inherit;
+  color: white;
+  background-color: transparent;
+  border: none;
+  z-index: 5;
+}
+
+.PostModal__prev-btn {
+  left: 0;
+}
+
+.PostModal__next-btn {
+  right: 0;
+}
+
+.PostModal__prev-btn:hover,
+.PostModal__prev-btn:active,
+.PostModal__prev-btn:focus {
+  color: #fff;
+}
+
+.PostModal__next-btn:hover,
+.PostModal__next-btn:active,
+.PostModal__next-btn:focus {
+  color: #fff;
+}
+
+.PostModal__photo-image {
+  display: block;
+  width: 100%;
+}
+
+.PostModal__info-container {
+  background-color: #fff;
+  padding: 15px 15px 15px 0;
+  margin-left: 26px !important;
+}
+
+.PostModal__user-info {
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+.PostModal__avatar-wrapper {
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
+.PostModal__avatar-wrapper img {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
