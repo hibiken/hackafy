@@ -222,6 +222,16 @@ class Profile extends React.Component {
                 style={{backgroundImage: `url(${getImageUrl(post.photoUrl)})`}}
                 className={`Profile__photo-image ${post.filter}`}
               />
+              <div className="Profile__photo-gallery-item-overlay">
+                <div className="Profile__photo-gallery-item-overlay-icons">
+                  <div className="Profile__photo-gallery-item-like-count">
+                    <i className="fa fa-heart"/> <span className="Profile__photo-gallery-count">{post.likesCount}</span>
+                  </div>
+                  <div className="Profile__photo-gallery-item--comment-count">
+                    <i className="fa fa-comment" /> <span className="Profile__photo-gallery-count">{post.comments.length}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
