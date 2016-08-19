@@ -177,7 +177,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log('state',this.state);
     const { isFetching, user, posts } = this.props;
     if (isFetching || !user) {
       return (
