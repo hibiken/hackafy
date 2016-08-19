@@ -159,8 +159,16 @@ class Profile extends React.Component {
 
   renderPostModal() {
     const { activePostIndex } = this.state;
-    const activePost = (activePostIndex === null ? {} : this.props.posts[activePostIndex]);
-    console.log('activePost', activePost);
+    if (activePostIndex === null) {
+      return (
+        <PostModal
+          isOpen={this.state.postModalIsOpen}
+          onRequestClose={this.closePostModal}
+          post={false}
+        />
+      )
+    }
+    const activePost = this.props.posts[activePostIndex];
     return (
       <PostModal
         isOpen={this.state.postModalIsOpen}
@@ -172,6 +180,10 @@ class Profile extends React.Component {
         onDislike={() => this.props.dislikePost(activePost.id)}
         liked={this.props.likedPostIds.indexOf(activePost.id) >= 0}
         onCommentSubmit={(commentBody) => this.props.addComment(activePost.id, commentBody)}
+        showFollowButton={!this.props.isCurrentUser}
+        isFollowing={this.props.isFollowing}
+        onFollowClick={() => this.props.followUser(activePost.user.id)}
+        onUnfollowClick={() => this.props.unfollowUser(activePost.user.id)}
       />
     );
   }

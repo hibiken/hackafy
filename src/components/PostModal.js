@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import LikeButton from './LikeButton';
 import CommentBox from './CommentBox';
+import FollowButton from './FollowButton';
 import '../styles/PostModal.css';
 
 class PostModal extends React.Component {
@@ -35,8 +36,23 @@ class PostModal extends React.Component {
     }
   }
 
+  renderFollowButton(){
+    console.log('showFollowButton', this.props.showFollowButton)
+    if (this.props.showFollowButton) {
+      return (
+        <div className="PostModal__follow-button">
+          <FollowButton
+            isFollowing={this.props.isFollowing}
+            onFollowClick={this.props.onFollowClick}
+            onUnfollowClick={this.props.onUnfollowClick}
+          />
+        </div>
+      );
+    }
+  }
+
   renderModalContent() {
-    if (!this.props.post.id) {
+    if (!this.props.post) {
       return null;
     } else {
       const { post } = this.props;
@@ -66,6 +82,7 @@ class PostModal extends React.Component {
                 <div className="Profile__modal-user-username">
                   {post.user.username}
                 </div>
+                {this.renderFollowButton()}
               </div>
 
               <div className="PostModal__post-stats">

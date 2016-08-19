@@ -56,12 +56,22 @@
   display: flex;
   padding-bottom: 10px;
   border-bottom: 1px solid #efefef;
+  align-items: center;
 }
 
 .PostModal__avatar-wrapper {
   width: 35px;
   height: 35px;
   margin-right: 10px;
+}
+
+.PostModal__follow-button {
+  margin-left: auto;
+}
+
+.PostModal__follow-button button {
+  padding: 0 15px;
+  margin: 0;
 }
 
 .PostModal__avatar-wrapper img {

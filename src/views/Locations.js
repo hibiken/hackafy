@@ -4,12 +4,16 @@ import {
   fetchPostsByPlaceId,
   likePost,
   dislikePost,
-  addComment
+  addComment,
+  followUser,
+  unfollowUser
 } from '../actions';
 import {
   getPostsByPlaceId,
   getIsFetchingPosts,
-  getCurrentUsersLikedPostIds
+  getCurrentUsersLikedPostIds,
+  getCurrentUser,
+  getCurrentUsersFollowingIds
 } from '../store/rootReducer';
 import { getImageUrl } from '../utils/helpers';
 import Spinner from '../components/Spinner';
@@ -68,7 +72,16 @@ class Locations extends React.Component {
 
   renderPostModal() {
     const { activePostIndex } = this.state;
-    const activePost = (activePostIndex === null ? {} : this.props.posts[activePostIndex]);
+    if (activePostIndex === null) {
+      return (
+        <PostModal
+          isOpen={this.state.postModalIsOpen}
+          onRequestClose={this.closePostModal}
+          post={false}
+        />
+      )
+    }
+    const activePost = this.props.posts[activePostIndex];
     return (
       <PostModal
         isOpen={this.state.postModalIsOpen}
@@ -80,6 +93,10 @@ class Locations extends React.Component {
         onDislike={() => this.props.dislikePost(activePost.id)}
         liked={this.props.likedPostIds.indexOf(activePost.id) >= 0}
         onCommentSubmit={(commentBody) => this.props.addComment(activePost.id, commentBody)}
+        showFollowButton={this.props.currentUser.username !== activePost.user.username}
+        isFollowing={this.props.currentUserFollowingIds.indexOf(activePost.user.id) >= 0}
+        onFollowClick={() => this.props.followUser(activePost.user.id)}
+        onUnfollowClick={() => this.props.unfollowUser(activePost.user.id)}
       />
     );
   }
@@ -146,6 +163,8 @@ const mapStateToProps = (state, {params}) => ({
   posts: getPostsByPlaceId(state, params.placeId),
   isFetching: getIsFetchingPosts(state),
   likedPostIds: getCurrentUsersLikedPostIds(state),
+  currentUserFollowingIds: getCurrentUsersFollowingIds(state),
+  currentUser: getCurrentUser(state),
 })
 export default connect(
   mapStateToProps,
@@ -153,6 +172,8 @@ export default connect(
     fetchPostsByPlaceId,
     likePost,
     dislikePost,
-    addComment
+    addComment,
+    followUser,
+    unfollowUser
   }
 )(Locations);
