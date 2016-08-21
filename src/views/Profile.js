@@ -7,6 +7,7 @@ import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import PostModal from '../components/PostModal';
 import PhotoThumbnailItem from '../components/PhotoThumbnailItem';
+import UsersModal from '../components/UsersModal';
 import {
   userSignOut,
   fetchPublicProfile,
@@ -35,15 +36,19 @@ class Profile extends React.Component {
     this.state = {
       logoutModalIsOpen: false,
       postModalIsOpen: false,
+      usersModalIsOpen: false,
       activePostIndex: null,
+      modalUserType: null,
     };
 
     this.openLogoutModal = () => this.setState({ logoutModalIsOpen: true });
     this.closeLogoutModal = () => this.setState({ logoutModalIsOpen: false });
     this.closePostModal = () => this.setState({ postModalIsOpen: false, activePostIndex: null });
+    this.closeUsersModal = () => this.setState({ usersModalIsOpen: false });
     this.onPrevPostClick = this._onPrevPostClick.bind(this);
     this.onNextPostClick = this._onNextPostClick.bind(this);
   }
+
   componentDidMount() {
     this.props.fetchPublicProfile(this.props.params.username);
     this.props.fetchPostsByUsername(this.props.params.username);
@@ -60,6 +65,13 @@ class Profile extends React.Component {
     this.setState({
       postModalIsOpen: true,
       activePostIndex: index,
+    });
+  }
+
+  _openUsersModal(modalUserType) {
+    this.setState({
+      usersModalIsOpen: true,
+      modalUserType,
     });
   }
 
@@ -188,6 +200,17 @@ class Profile extends React.Component {
     );
   }
 
+  renderUsersModal() {
+    return (
+      <UsersModal
+        isOpen={this.state.usersModalIsOpen}
+        onRequestClose={this.closeUsersModal}
+        username={this.props.params.username}
+        usersType={this.state.modalUserType}
+      />
+    )
+  }
+
   render() {
     const { isFetching, user, posts } = this.props;
     if (isFetching || !user) {
@@ -218,10 +241,14 @@ class Profile extends React.Component {
               <div className="Profile__stats-item">
                 <span className="Profile__stats-count">{user.postIds.length}</span> {pluralize(user.postIds.length, 'post', 'posts')}
               </div>
-              <div className="Profile__stats-item">
+              <div
+                className="Profile__stats-item"
+                onClick={() => this._openUsersModal('followers')}>
                 <span className="Profile__stats-count">{user.followersCount}</span> {pluralize(user.followersCount, 'follower', 'followers')}
               </div>
-              <div className="Profile__stats-item">
+              <div
+                className="Profile__stats-item"
+                onClick={() => this._openUsersModal('following')}>
                 <span className="Profile__stats-count">{user.followingCount}</span> {pluralize(user.followingCount, 'following', 'following')}
               </div>
             </div>
@@ -242,6 +269,7 @@ class Profile extends React.Component {
         <NewPostButton />
         {this.renderLogoutModal()}
         {this.renderPostModal()}
+        {this.renderUsersModal()}
       </div>
     )
   }

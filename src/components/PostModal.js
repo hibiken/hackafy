@@ -37,7 +37,6 @@ class PostModal extends React.Component {
   }
 
   renderFollowButton(){
-    console.log('showFollowButton', this.props.showFollowButton)
     if (this.props.showFollowButton) {
       return (
         <div className="PostModal__follow-button">

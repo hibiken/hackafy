@@ -11,6 +11,7 @@ import { likePost, dislikePost } from './actionCreators/postLikes';
 import { addComment } from './actionCreators/postComments';
 import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
 import { followUser, unfollowUser } from './actionCreators/followUsers';
+import { fetchFollowers, fetchFollowing } from './actionCreators/fetchFollowers';
 
 export {
   userSignUp,
@@ -33,5 +34,8 @@ export {
   fetchPostsByUsername,
 
   followUser,
-  unfollowUser
+  unfollowUser,
+
+  fetchFollowers,
+  fetchFollowing
 };

@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form';
 import currentUser, * as fromCurrentUser from '../reducers/currentUser';
 import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
+import followersFollowing from '../reducers/followersFollowing';
 
 const rootReducer = combineReducers({
   routing,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   currentUser,
   posts,
   publicProfiles,
+  followersFollowing,
 });
 
 /*** Selectors ***/
