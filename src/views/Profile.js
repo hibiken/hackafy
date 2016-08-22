@@ -250,12 +250,12 @@ class Profile extends React.Component {
                 <span className="Profile__stats-count">{user.postIds.length}</span> {pluralize(user.postIds.length, 'post', 'posts')}
               </div>
               <div
-                className="Profile__stats-item"
+                className="Profile__stats-item Profile__stats-item--link"
                 onClick={() => this._openUsersModal('followers')}>
                 <span className="Profile__stats-count">{user.followersCount}</span> {pluralize(user.followersCount, 'follower', 'followers')}
               </div>
               <div
-                className="Profile__stats-item"
+                className="Profile__stats-item Profile__stats-item--link"
                 onClick={() => this._openUsersModal('following')}>
                 <span className="Profile__stats-count">{user.followingCount}</span> {pluralize(user.followingCount, 'following', 'following')}
               </div>

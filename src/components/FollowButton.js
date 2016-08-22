@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/FollowButton.css';
 
-
 const FollowButton = (props) => {
   if (props.isFollowing) {
     return (

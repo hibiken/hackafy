@@ -81,6 +81,10 @@
   font-size: 17px;
 }
 
+.Profile__stats-item--link {
+  cursor: pointer;
+}
+
 .Profile__stats-count {
   font-weight: bold;
 }
