@@ -5,6 +5,7 @@ import currentUser, * as fromCurrentUser from '../reducers/currentUser';
 import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
 import followersFollowing, * as fromFollowersFollowing from '../reducers/followersFollowing';
+import notifications, * as fromNotifications from '../reducers/notifications';
 
 const rootReducer = combineReducers({
   routing,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   posts,
   publicProfiles,
   followersFollowing,
+  notifications,
 });
 
 /*** Selectors ***/
@@ -77,6 +79,10 @@ export const getFollowingByUsername = (state, username) => {
 
 export const getIsFetchingFollowersFollowing = (state) => {
   return fromFollowersFollowing.getIsFetching(state.followersFollowing);
+};
+
+export const getNotifications = (state) => {
+  return fromNotifications.getNotifications(state.notifications);
 };
 
 export default rootReducer;
