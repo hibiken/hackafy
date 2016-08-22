@@ -1,3 +1,7 @@
+.FollowButton__root {
+  margin: 0;
+}
+
 .FollowButton--following {
   background-color: #70c050;
   color: #fff;

@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import PostModal from '../components/PostModal';
 import PhotoThumbnailItem from '../components/PhotoThumbnailItem';
-import UsersModal from '../components/UsersModal';
+import UsersModal from '../containers/UsersModal';
 import {
   userSignOut,
   fetchPublicProfile,
@@ -47,6 +47,13 @@ class Profile extends React.Component {
     this.closeUsersModal = () => this.setState({ usersModalIsOpen: false });
     this.onPrevPostClick = this._onPrevPostClick.bind(this);
     this.onNextPostClick = this._onNextPostClick.bind(this);
+    this.resetState = () => this.setState({
+      logoutModalIsOpen: false,
+      postModalIsOpen: false,
+      usersModalIsOpen: false,
+      activePostIndex: null,
+      modalUserType: null,
+    });
   }
 
   componentDidMount() {
@@ -58,6 +65,7 @@ class Profile extends React.Component {
     if (this.props.params.username !== nextProps.params.username) {
       this.props.fetchPublicProfile(nextProps.params.username);
       this.props.fetchPostsByUsername(nextProps.params.username);
+      this.resetState();
     }
   }
 

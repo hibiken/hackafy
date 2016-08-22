@@ -1,0 +1,51 @@
+.UsersModal__header {
+  padding: 15px;
+  border-bottom: 2px solid #dbdbdb;
+}
+
+.UsersModal__heading {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: .1px;
+  color: #262626;
+  font-weight: 600;
+}
+
+.UsersModal__list-item {
+  padding: 15px;
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.UsersModal__avatar-wrapper {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
+}
+
+.UsersModal__avatar-wrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.UsersModal__username {
+  text-decoration: none;
+  color: #262626;
+}
+
+.UsersModal__follow-button-wrapper {
+  margin-left: auto;
+}
+
+.UsersModal__spinner-container {
+  text-align: center;
+  padding: 30px 15px;
+}

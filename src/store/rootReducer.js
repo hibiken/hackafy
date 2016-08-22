@@ -4,7 +4,7 @@ import { reducer as form } from 'redux-form';
 import currentUser, * as fromCurrentUser from '../reducers/currentUser';
 import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
-import followersFollowing from '../reducers/followersFollowing';
+import followersFollowing, * as fromFollowersFollowing from '../reducers/followersFollowing';
 
 const rootReducer = combineReducers({
   routing,
@@ -61,10 +61,22 @@ export const getPostsByUsername = (state, username) => {
 
 export const getIsFetchingPublicProfile = (state) => {
   return fromPublicProfiles.getIsFetchingPublicProfile(state.publicProfiles);
-}
+};
 
 export const getPostsByPlaceId = (state, placeId) => {
   return fromPosts.getPostsByPlaceId(state.posts, placeId);
-}
+};
+
+export const getFollowersByUsername = (state, username) => {
+  return fromFollowersFollowing.getFollowersByUsername(state.followersFollowing, username);
+};
+
+export const getFollowingByUsername = (state, username) => {
+  return fromFollowersFollowing.getFollowingByUsername(state.followersFollowing, username);
+};
+
+export const getIsFetchingFollowersFollowing = (state) => {
+  return fromFollowersFollowing.getIsFetching(state.followersFollowing);
+};
 
 export default rootReducer;

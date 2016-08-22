@@ -75,3 +75,34 @@ const followersFollowing = combineReducers({
 });
 
 export default followersFollowing;
+
+/*** Selectors ***/
+const getFollowerIds = (state, username) => {
+  const followerIds = state.followerIdsByUsername[username];
+  if (!followerIds) {
+    return [];
+  } else {
+    return followerIds;
+  }
+};
+
+const getFollowingIds = (state, username) => {
+  const followingIds = state.followingIdsByUsername[username];
+  if (!followingIds) {
+    return [];
+  } else {
+    return followingIds;
+  }
+};
+
+export const getFollowersByUsername = (state, username) => {
+  const followerIds = getFollowerIds(state, username);
+  return followerIds.map(id => state.usersById[id]);
+};
+
+export const getFollowingByUsername = (state, username) => {
+  const followingIds = getFollowingIds(state, username);
+  return followingIds.map(id => state.usersById[id]);
+};
+
+export const getIsFetching = (state) => state.isFetching;
