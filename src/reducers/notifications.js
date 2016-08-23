@@ -29,7 +29,7 @@ const byId = (state = initialState.byId, action) => {
     case FETCH_NOTIFICATIONS_SUCCESS:
       return action.payload.reduce((nextState, notification) => {
         nextState[notification.id] = notification;
-        return notification;
+        return nextState;
       }, {...state});
     case USER_SIGN_OUT:
       return {};
@@ -61,5 +61,7 @@ export default notifications;
 /*** Selectors ***/
 export const getNotifications = (state) => {
   const { allIds, byId } = state;
-  return allIds.map(id => byId);
+  return allIds.map(id => byId[id]);
 };
+
+export const getIsFetchingNotifications = (state) => state.isFetching;

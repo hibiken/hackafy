@@ -38,3 +38,27 @@
   padding-bottom: 2px;
   border-bottom: 2px solid;
 }
+
+.Header__dropdown-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.Header__dropdown-container {
+  background-color: white;
+  position: absolute;
+  border: 1px solid #dbdbdb;
+  top: 50px;
+  right: 80px;
+  z-index: 11;
+  min-width: 500px;
+}
+
+.Header__notifications-spinner-container {
+  text-align: center;
+  padding: 15px;
+}

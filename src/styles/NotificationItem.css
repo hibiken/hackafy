@@ -1,0 +1,35 @@
+.NotificationItem__root {
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  border-bottom: 1px solid #dbdbdb;
+  cursor: pointer;
+}
+
+.NotificationItem__root:hover {
+  background-color: #fafafa;
+}
+
+.NotificationItem__avatar-wrapper {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 1px solid #dbdbdb;
+}
+
+.NotificationItem__avatar-wrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.NotificationItem__photo-wrapper {
+  width: 50px;
+  margin-left: auto;
+}
+
+.NotificationItem__photo-wrapper img {
+  width: 100%;
+  border: 1px solid #dbdbdb;
+}
