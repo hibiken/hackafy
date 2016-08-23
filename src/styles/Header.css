@@ -62,3 +62,24 @@
   text-align: center;
   padding: 15px;
 }
+
+.Header__notification-nav {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #dbdbdb;
+  line-height: 2;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.Header__notification-link {
+  display: block
+}
+
+.Header__notification-link--active {
+  background-color: #6559ca;
+  color: white !important;
+  border-radius: 50%;
+}

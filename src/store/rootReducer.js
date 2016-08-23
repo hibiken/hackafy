@@ -89,4 +89,8 @@ export const getIsFetchingNotifications = (state) => {
   return fromNotifications.getIsFetchingNotifications(state.notifications);
 };
 
+export const getNotificationCount = (state) => {
+  return fromNotifications.getCount(state.notifications);
+};
+
 export default rootReducer;

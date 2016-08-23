@@ -12,7 +12,7 @@ import { addComment } from './actionCreators/postComments';
 import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
 import { followUser, unfollowUser } from './actionCreators/followUsers';
 import { fetchFollowers, fetchFollowing } from './actionCreators/fetchFollowers';
-import { fetchNotifcations } from './actionCreators/fetchNotifications';
+import { fetchNotifcations, fetchNotificationCount, clearNotifications } from './actionCreators/fetchNotifications';
 
 export {
   userSignUp,
@@ -40,5 +40,7 @@ export {
   fetchFollowers,
   fetchFollowing,
 
-  fetchNotifcations
+  fetchNotifcations,
+  fetchNotificationCount,
+  clearNotifications
 };

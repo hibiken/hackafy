@@ -6,7 +6,7 @@ import {
   getNotifications,
   getIsFetchingNotifications
 } from '../store/rootReducer';
-import { fetchNotifcations } from '../actions';
+import { fetchNotifcations, clearNotifications } from '../actions';
 import { Link } from 'react-router';
 import NavLink from '../components/NavLink';
 import Spinner from '../components/Spinner';
@@ -27,6 +27,7 @@ class Header extends React.Component {
   }
 
   _handleNotificationsClick() {
+    this.props.clearNotifications();
     this.props.fetchNotifcations();
     this.setState({
       dropdownExpanded: true,
@@ -55,7 +56,7 @@ class Header extends React.Component {
           <NotificationItem
             key={notification.id}
             notification={notification}
-            itemClickCallback={this.closeNotificaions} 
+            itemClickCallback={this.closeNotificaions}
           />
         ))}
       </div>
@@ -74,6 +75,19 @@ class Header extends React.Component {
       )
     }
   }
+
+  renderNotificationIcon() {
+    if (this.props.notificationCount === 0) {
+      return (<a className="Header__notification-link" href="#"><i className="fa fa-bell-o" aria-hidden="true"/></a>);
+    } else {
+      return (
+        <a className="Header__notification-link Header__notification-link--active" href="#">
+          {this.props.notificationCount}
+        </a>
+      );
+    }
+  }
+
   renderNavs() {
     if (this.props.isSignedIn) {
       return (
@@ -81,8 +95,8 @@ class Header extends React.Component {
           <li className="Header__nav-link">
             <NavLink to="/explore">Explore</NavLink>
           </li>
-          <li className="Header__nav-link" onClick={this.handleNotificationsClick}>
-            <a href="#">Notifications</a>
+          <li className="Header__nav-link Header__notification-nav" onClick={this.handleNotificationsClick}>
+            {this.renderNotificationIcon()}
             {this.renderDropdown()}
           </li>
           <li className="Header__nav-link">
@@ -133,5 +147,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchNotifcations }
+  { fetchNotifcations, clearNotifications }
 )(Header);

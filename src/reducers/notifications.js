@@ -3,13 +3,15 @@ import {
   FETCH_NOTIFICATIONS_START,
   FETCH_NOTIFICATIONS_SUCCESS,
   FETCH_NOTIFICATIONS_FAILURE,
+  FETCH_NOTIFICATION_COUNT,
+  CLEAR_NOTIFICATIONS,
   USER_SIGN_OUT
 } from '../actions/actionTypes';
 
 const initialState = {
   allIds: [],
   byId: {},
-  unreadCount: 0,
+  count: 0,
   isFetching: false,
 };
 
@@ -38,6 +40,18 @@ const byId = (state = initialState.byId, action) => {
   }
 };
 
+const count = (state = initialState.count, action) => {
+  switch (action.type) {
+    case FETCH_NOTIFICATION_COUNT:
+      return action.count;
+    case USER_SIGN_OUT:
+    case CLEAR_NOTIFICATIONS:
+      return 0;
+    default:
+        return state;
+  }
+};
+
 const isFetching = (state = initialState.isFetching, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATIONS_START:
@@ -53,6 +67,7 @@ const isFetching = (state = initialState.isFetching, action) => {
 const notifications = combineReducers({
   allIds,
   byId,
+  count,
   isFetching,
 });
 
@@ -65,3 +80,5 @@ export const getNotifications = (state) => {
 };
 
 export const getIsFetchingNotifications = (state) => state.isFetching;
+
+export const getCount = (state) => state.count;
