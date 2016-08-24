@@ -4,7 +4,8 @@ import {
   FETCH_NOTIFICATIONS_SUCCESS,
   FETCH_NOTIFICATIONS_FAILURE,
   FETCH_NOTIFICATION_COUNT,
-  CLEAR_NOTIFICATIONS
+  CLEAR_NOTIFICATIONS,
+  TOUCH_NOTIFICATION
 } from '../actionTypes';
 import { getAuthToken } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
@@ -71,4 +72,22 @@ export const clearNotifications = () => (dispatch, getState) => {
       type: CLEAR_NOTIFICATIONS,
     });
   })
+};
+
+export const touchNotification = (id) => (dispatch, getState) => {
+  const authToken = getAuthToken(getState());
+
+  return axios({
+    method: 'patch',
+    url: `${API_URL}/users/notifications/${id}`,
+    headers: {
+      'Authorization': `Token ${authToken}`
+    }
+  })
+  .then(() => {
+    dispatch({
+      type: TOUCH_NOTIFICATION,
+      id,
+    });
+  });
 }

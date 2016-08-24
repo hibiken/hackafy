@@ -6,7 +6,7 @@ import {
   getNotifications,
   getIsFetchingNotifications
 } from '../store/rootReducer';
-import { fetchNotifcations, clearNotifications } from '../actions';
+import { fetchNotifcations, clearNotifications, touchNotification } from '../actions';
 import { Link } from 'react-router';
 import NavLink from '../components/NavLink';
 import Spinner from '../components/Spinner';
@@ -56,6 +56,7 @@ class Header extends React.Component {
           <NotificationItem
             key={notification.id}
             notification={notification}
+            touchNotification={() => this.props.touchNotification(notification.id)}
             itemClickCallback={this.closeNotificaions}
           />
         ))}
@@ -147,5 +148,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchNotifcations, clearNotifications }
+  { fetchNotifcations, clearNotifications, touchNotification }
 )(Header);

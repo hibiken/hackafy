@@ -5,6 +5,7 @@ import {
   FETCH_NOTIFICATIONS_FAILURE,
   FETCH_NOTIFICATION_COUNT,
   CLEAR_NOTIFICATIONS,
+  TOUCH_NOTIFICATION,
   USER_SIGN_OUT
 } from '../actions/actionTypes';
 
@@ -26,6 +27,18 @@ const allIds = (state = initialState.allIds, action) => {
   }
 };
 
+const _notification = (state = {}, action) => {
+  switch (action.type) {
+    case TOUCH_NOTIFICATION:
+      return {
+        ...state,
+        readAt: Date.now(),
+      };
+    default:
+      return state;
+  }
+}
+
 const byId = (state = initialState.byId, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATIONS_SUCCESS:
@@ -35,6 +48,11 @@ const byId = (state = initialState.byId, action) => {
       }, {...state});
     case USER_SIGN_OUT:
       return {};
+    case TOUCH_NOTIFICATION:
+      return {
+        ...state,
+        [action.id]: _notification(state[action.id], action)
+      };
     default:
       return state;
   }

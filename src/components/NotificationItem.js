@@ -1,5 +1,6 @@
 import React from 'react';
 import { getAvatarUrl, getImageUrl } from '../utils/helpers';
+import classNames from 'classnames';
 import '../styles/NotificationItem.css';
 
 class NotificationItem extends React.Component {
@@ -14,6 +15,7 @@ class NotificationItem extends React.Component {
 
   _handleItemClick(event) {
     event.stopPropagation();
+    this.props.touchNotification();
     const { notifiableType, actor } = this.props.notification;
     switch (notifiableType) {
       case 'User':
@@ -52,9 +54,14 @@ class NotificationItem extends React.Component {
   }
 
   render() {
-    const { actor } = this.props.notification;
+    const { actor, readAt } = this.props.notification;
+    const className = classNames({
+      'NotificationItem__root': true,
+      'NotificationItem__root--unread': !readAt,
+    });
+
     return (
-      <div className="NotificationItem__root" onClick={this.handleItemClick}>
+      <div className={className} onClick={this.handleItemClick}>
         <div className="NotificationItem__avatar-wrapper">
           <img
             src={getAvatarUrl(actor.avatarUrl)}
