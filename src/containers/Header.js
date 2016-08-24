@@ -69,6 +69,8 @@ class Header extends React.Component {
       return (
         <div>
           <div className="Header__dropdown-overlay" onClick={this.closeNotificaions}/>
+          <div className="Header__dropdown-arrow" />
+          <div className="Header__dropdown-arrow-connect" />
           <div className="Header__dropdown-container">
             {this._renderNotifications()}
           </div>

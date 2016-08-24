@@ -56,6 +56,10 @@
   right: 80px;
   z-index: 11;
   min-width: 500px;
+  background: #fff;
+  border: solid 1px #efefef;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,.13);
 }
 
 .Header__notifications-spinner-container {
@@ -82,4 +86,26 @@
   background-color: #6559ca;
   color: white !important;
   border-radius: 50%;
+}
+
+.Header__dropdown-arrow {
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border: 1px solid #efefef;
+  z-index: 11;
+  transform: rotate(45deg);
+  position: relative;
+  left: 7px;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.13);
+}
+
+.Header__dropdown-arrow-connect {
+  border-color: transparent transparent #fff;
+  border-style: solid;
+  border-width: 0 10px 10px;
+  height: 0;
+  position: relative;
+  bottom: 14px;
+  z-index: 12;
 }

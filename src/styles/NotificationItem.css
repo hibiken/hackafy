@@ -10,10 +10,6 @@
   border-left: 5px solid #6559ca;
 }
 
-.NotificationItem__root:hover {
-  background-color: #fafafa;
-}
-
 .NotificationItem__avatar-wrapper {
   width: 30px;
   height: 30px;

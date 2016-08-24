@@ -94,7 +94,8 @@ export default notifications;
 /*** Selectors ***/
 export const getNotifications = (state) => {
   const { allIds, byId } = state;
-  return allIds.map(id => byId[id]);
+  const sortedIds = allIds.sort((a, b) => a -b);
+  return sortedIds.map(id => byId[id]);
 };
 
 export const getIsFetchingNotifications = (state) => state.isFetching;
