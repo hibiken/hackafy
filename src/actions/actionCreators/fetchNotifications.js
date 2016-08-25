@@ -7,17 +7,22 @@ import {
   CLEAR_NOTIFICATIONS,
   TOUCH_NOTIFICATION
 } from '../actionTypes';
-import { getAuthToken } from '../../store/rootReducer';
+import { getAuthToken, getNotificationsNextPage } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
 
 export const fetchNotifcations = () => (dispatch, getState) => {
   dispatch({type: FETCH_NOTIFICATIONS_START});
 
-  const authToken = getAuthToken(getState());
+  const state = getState();
+  const authToken = getAuthToken(state);
+  const nextPage = getNotificationsNextPage(state);
+  const url = (nextPage === null) ?
+              `${API_URL}/users/notifications` :
+              `${API_URL}/users/notifications?page=${nextPage}`
 
   return axios({
     method: 'get',
-    url: `${API_URL}/users/notifications`,
+    url,
     headers: {
       'Authorization': `Token ${authToken}`,
     },
@@ -27,6 +32,7 @@ export const fetchNotifcations = () => (dispatch, getState) => {
     dispatch({
       type: FETCH_NOTIFICATIONS_SUCCESS,
       payload: data.notifications,
+      pagination: data.meta,
     });
   }, (error) => {
     console.log('fetch notifications failed', error);

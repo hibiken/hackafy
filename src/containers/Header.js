@@ -4,7 +4,9 @@ import {
   getIsSignedIn,
   getCurrentUser,
   getNotifications,
-  getIsFetchingNotifications
+  getIsFetchingNotifications,
+  getNotificationsCurrentPage,
+  getNotificationsTotalPages
 } from '../store/rootReducer';
 import { fetchNotifcations, clearNotifications, touchNotification } from '../actions';
 import { Link } from 'react-router';
@@ -24,11 +26,14 @@ class Header extends React.Component {
 
     this.closeNotificaions = this._closeNotifications.bind(this);
     this.handleNotificationsClick = this._handleNotificationsClick.bind(this);
+    this.handleScroll = this._handleScroll.bind(this);
   }
 
   _handleNotificationsClick() {
     this.props.clearNotifications();
-    this.props.fetchNotifcations();
+    if (this._shouldFetchNotifcations()) {
+      this.props.fetchNotifcations();
+    };
     this.setState({
       dropdownExpanded: true,
     });
@@ -39,16 +44,28 @@ class Header extends React.Component {
     this.setState({ dropdownExpanded: false })
   }
 
+  _shouldFetchNotifcations() {
+    const {
+      isFetchingNotifications,
+      notificationsCurrentPage,
+      notificationsTotalPages
+    } = this.props;
+    return (
+      !isFetchingNotifications &&
+      (notificationsCurrentPage === null || notificationsCurrentPage < notificationsTotalPages)
+    );
+  }
+
+  _handleScroll(event) {
+    const { scrollTop, scrollHeight, clientHeight } = this.refs.notificationDropdown;
+    const offset = 50;
+    if (scrollHeight - scrollTop <= clientHeight + offset && this._shouldFetchNotifcations()) {
+      this.props.fetchNotifcations();
+    }
+  }
+
   _renderNotifications() {
     const { notifications, isFetchingNotifications } = this.props;
-    console.log('notifications', notifications);
-    if (isFetchingNotifications) {
-      return (
-        <div className="Header__notifications-spinner-container">
-          <Spinner />
-        </div>
-      );
-    }
 
     return (
       <div className="Header__notifications-container">
@@ -60,6 +77,11 @@ class Header extends React.Component {
             itemClickCallback={this.closeNotificaions}
           />
         ))}
+        {isFetchingNotifications ? (
+          <div className="Header__notifications-spinner-container">
+            <Spinner />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -71,7 +93,10 @@ class Header extends React.Component {
           <div className="Header__dropdown-overlay" onClick={this.closeNotificaions}/>
           <div className="Header__dropdown-arrow" />
           <div className="Header__dropdown-arrow-connect" />
-          <div className="Header__dropdown-container">
+          <div
+            className="Header__dropdown-container"
+            onScroll={this.handleScroll}
+            ref="notificationDropdown">
             {this._renderNotifications()}
           </div>
         </div>
@@ -146,7 +171,10 @@ const mapStateToProps = (state) => ({
   currentUser: getCurrentUser(state),
   notifications: getNotifications(state),
   isFetchingNotifications: getIsFetchingNotifications(state),
+  notificationsCurrentPage: getNotificationsCurrentPage(state),
+  notificationsTotalPages: getNotificationsTotalPages(state),
 });
+
 
 export default connect(
   mapStateToProps,

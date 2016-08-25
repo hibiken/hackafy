@@ -93,4 +93,16 @@ export const getNotificationCount = (state) => {
   return fromNotifications.getCount(state.notifications);
 };
 
+export const getNotificationsNextPage = (state) => {
+  return fromNotifications.getNextPage(state.notifications);
+};
+
+export const getNotificationsTotalPages = (state) => {
+  return fromNotifications.getTotalPages(state.notifications);
+};
+
+export const getNotificationsCurrentPage = (state) => {
+  return fromNotifications.getCurrentPage(state.notifications);
+};
+
 export default rootReducer;

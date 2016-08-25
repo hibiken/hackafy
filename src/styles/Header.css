@@ -60,6 +60,10 @@
   border: solid 1px #efefef;
   border-radius: 3px;
   box-shadow: 0 0 5px rgba(0,0,0,.13);
+  max-height: 362px;
+  min-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .Header__notifications-spinner-container {

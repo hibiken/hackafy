@@ -14,12 +14,19 @@ const initialState = {
   byId: {},
   count: 0,
   isFetching: false,
+  pagination: {
+    currentPage: null,
+    nextPage: null,
+    prevPage: null,
+    totalPages: null,
+    totalCount: null,
+  },
 };
 
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATIONS_SUCCESS:
-      return action.payload.map(notification => notification.id)
+      return [...state, ...action.payload.map(notification => notification.id)];
     case USER_SIGN_OUT:
       return [];
     default:
@@ -82,11 +89,23 @@ const isFetching = (state = initialState.isFetching, action) => {
   }
 };
 
+const pagination = (state = initialState.pagination, action) => {
+  switch (action.type) {
+    case FETCH_NOTIFICATIONS_SUCCESS:
+      return action.pagination;
+    case USER_SIGN_OUT:
+      return initialState.pagination;
+    default:
+      return state;
+  }
+}
+
 const notifications = combineReducers({
   allIds,
   byId,
   count,
   isFetching,
+  pagination,
 });
 
 export default notifications;
@@ -94,10 +113,13 @@ export default notifications;
 /*** Selectors ***/
 export const getNotifications = (state) => {
   const { allIds, byId } = state;
-  const sortedIds = allIds.sort((a, b) => a -b);
-  return sortedIds.map(id => byId[id]);
+  return allIds.map(id => byId[id]);
 };
 
 export const getIsFetchingNotifications = (state) => state.isFetching;
 
 export const getCount = (state) => state.count;
+
+export const getNextPage = (state) => state.pagination.nextPage;
+export const getTotalPages = (state) => state.pagination.totalPages;
+export const getCurrentPage = (state) => state.pagination.currentPage;

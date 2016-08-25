@@ -37,6 +37,8 @@ class NotificationItem extends React.Component {
         return `${actor.username} started following you`;
       case 'LIKE_POST':
         return `${actor.username} likes your post`;
+      case 'COMMENT_ON_POST':
+        return `${actor.username} commented on your post`;
       default:
         return null;
     }
