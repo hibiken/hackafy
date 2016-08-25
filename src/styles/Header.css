@@ -110,6 +110,8 @@
   border-width: 0 10px 10px;
   height: 0;
   position: relative;
-  bottom: 14px;
+  bottom: 19px;
+  left: 5px;
   z-index: 12;
+  width: 0;
 }
