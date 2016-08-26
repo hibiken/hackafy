@@ -6,7 +6,9 @@ import Spinner from '../components/Spinner';
 import {
   getAllPosts,
   getIsFetchingPosts,
-  getCurrentUsersLikedPostIds
+  getCurrentUsersLikedPostIds,
+  getPostsCurrentPage,
+  getPostsTotalPages
 } from '../store/rootReducer';
 
 import '../styles/PhotoGallery.css'
@@ -17,15 +19,25 @@ class PhotoGallery extends React.Component {
     this.props.fetchPosts();
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight } = window.document.body;
+      const offset = window.innerHeight * 0.8;
+
+      if (scrollHeight - scrollTop <= window.innerHeight + offset && this._shouldFetchPosts()) {
+        this.props.fetchPosts();
+      }
+    });
+  }
+
+  _shouldFetchPosts() {
+    const { isFetching, currentPage, totalPages } = this.props;
+    return !isFetching && (currentPage === null || currentPage < totalPages);
+  }
+
   render() {
     const { posts, isFetching, likedPostIds } = this.props;
-    if (isFetching || !posts.length) {
-      return (
-        <div className="PhotoGallery__spinner-container">
-          <Spinner />
-        </div>
-      );
-    }
+
     return (
       <div className="PhotoGallery__root">
         {posts.map((post, idx) => (
@@ -38,6 +50,11 @@ class PhotoGallery extends React.Component {
             onCommentSubmit={(commentBody) => this.props.addComment(post.id, commentBody)}
           />
         ))}
+        {isFetching ? (
+          <div className="PhotoGallery__spinner-container">
+            <Spinner />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -47,6 +64,8 @@ const mapStateToProps = (state) => ({
   posts: getAllPosts(state),
   isFetching: getIsFetchingPosts(state),
   likedPostIds: getCurrentUsersLikedPostIds(state),
+  currentPage: getPostsCurrentPage(state),
+  totalPages: getPostsTotalPages(state),
 });
 
 export default connect(

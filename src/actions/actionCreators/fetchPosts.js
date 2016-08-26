@@ -6,17 +6,19 @@ import {
   FETCH_POSTS_BY_LOCATION_SUCCESS,
   FETCH_POSTS_BY_LOCATION_FAILURE
 } from '../actionTypes';
-import { getAuthToken } from '../../store/rootReducer';
+import { getAuthToken, getPostsNextPage } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
 
 export const fetchPosts = () => (dispatch, getState) => {
   dispatch({type: FETCH_POSTS_START});
 
   const authToken = getAuthToken(getState());
+  const nextPage = getPostsNextPage(getState());
+  const url = (nextPage === null) ? `${API_URL}/posts` : `${API_URL}/posts?page=${nextPage}`
 
   return axios({
     method: 'get',
-    url: `${API_URL}/posts`,
+    url,
     headers: {
       'Authorization': `Token ${authToken}`
     },
@@ -26,6 +28,7 @@ export const fetchPosts = () => (dispatch, getState) => {
     dispatch({
       type: FETCH_POSTS_SUCCESS,
       payload: data.posts,
+      pagination: data.meta,
     })
   })
   .catch(response => {

@@ -31,7 +31,7 @@ const createRoutes = (store) => {
         <Route path="/signin" component={SignIn} />
         <Route path="/profile/edit" component={requireAuth(ProfileEdit)} />
         <Route path="/new-post" component={requireAuth(NewPost)} />
-        <Route path="/explore/locations/:placeId" component={Locations} />
+        <Route path="/explore/locations/:placeId" component={requireAuth(Locations)} />
         <Route path="/:username" component={requireAuth(Profile)} />
       </Route>
     </Router>

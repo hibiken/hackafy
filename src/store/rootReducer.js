@@ -51,6 +51,18 @@ export const getIsFetchingPosts = (state) => {
   return fromPosts.getIsFetching(state.posts);
 };
 
+export const getPostsCurrentPage = (state) => {
+  return fromPosts.getCurrentPage(state.posts);
+};
+
+export const getPostsNextPage = (state) => {
+  return fromPosts.getNextPage(state.posts);
+};
+
+export const getPostsTotalPages = (state) => {
+  return fromPosts.getTotalPages(state.posts);
+};
+
 /* Returns object or false ***/
 export const getPublicProfileByUsername = (state, username) => {
   return fromPublicProfiles.getPublicProfileByUsername(state.publicProfiles, username);

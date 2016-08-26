@@ -22,12 +22,24 @@ const initialState = {
   byId: {},
   isFetching: false,
   isUploading: false,
+  pagination: {
+    currentPage: null,
+    nextPage: null,
+    prevPage: null,
+    totalPages: null,
+    totalCount: null,
+  },
 };
 
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
-      return action.payload.map(post => post.id);
+      return action.payload.reduce((nextState, post) => {
+        if (nextState.indexOf(post.id) === -1) {
+          nextState.push(post.id);
+        }
+        return nextState;
+      }, [...state]);
     case POST_UPLOAD_SUCCESS:
       return [...state, action.payload.id];
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
@@ -78,7 +90,7 @@ const byId = (state = initialState.byId, action) => {
       return action.payload.reduce((nextState, post) => {
         nextState[post.id] = post;
         return nextState;
-      }, {});
+      }, {...state});
     case POST_UPLOAD_SUCCESS:
       return {
         ...state,
@@ -138,12 +150,22 @@ const isUploading = (state = initialState.isUploading, action) => {
   }
 }
 
+const pagination = (state = initialState.pagination, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_SUCCESS:
+      return action.pagination;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   allIds,
   idsByPlaceId,
   byId,
   isFetching,
   isUploading,
+  pagination,
 });
 
 /*** Selectors ***/
@@ -168,3 +190,7 @@ export const getPostsByPlaceId = (state, placeId) => {
 
   return ids.map(id => state.byId[id]);
 }
+
+export const getCurrentPage = (state) => state.pagination.currentPage;
+export const getNextPage = (state) => state.pagination.nextPage;
+export const getTotalPages = (state) => state.pagination.totalPages;

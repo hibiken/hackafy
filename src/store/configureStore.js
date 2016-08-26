@@ -27,7 +27,6 @@ const configureStore = (initialState = {}) => {
     const state = store.getState();
     const stateToPersist = {
       currentUser: state.currentUser,
-      posts: state.posts,
     };
     saveState(stateToPersist);
   }, 1000));
