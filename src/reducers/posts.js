@@ -34,6 +34,7 @@ const initialState = {
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
       return action.payload.reduce((nextState, post) => {
         if (nextState.indexOf(post.id) === -1) {
           nextState.push(post.id);
@@ -42,8 +43,6 @@ const allIds = (state = initialState.allIds, action) => {
       }, [...state]);
     case POST_UPLOAD_SUCCESS:
       return [...state, action.payload.id];
-    case FETCH_POSTS_BY_USERNAME_SUCCESS:
-      return [...state, ...(action.payload.map(post => post.id))];
     default:
       return state;
   }
@@ -87,6 +86,7 @@ const post = (state = {}, action) => {
 const byId = (state = initialState.byId, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
       return action.payload.reduce((nextState, post) => {
         nextState[post.id] = post;
         return nextState;
@@ -111,11 +111,6 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.postId]: post(state[action.postId], action),
       }
-    case FETCH_POSTS_BY_USERNAME_SUCCESS:
-      return action.payload.reduce((nextState, post) => {
-        nextState[post.id] = post;
-        return nextState;
-      }, {...state});
     default:
       return state;
   }
