@@ -17,17 +17,25 @@ import '../styles/PhotoGallery.css'
 class PhotoGallery extends React.Component {
   componentWillMount() {
     this.props.fetchPosts();
+
+    this.handleScroll = this._handleScroll.bind(this);
+  }
+
+  _handleScroll() {
+    const { scrollTop, scrollHeight } = window.document.body;
+    const offset = window.innerHeight * 0.8;
+
+    if (scrollHeight - scrollTop <= window.innerHeight + offset && this._shouldFetchPosts()) {
+      this.props.fetchPosts();
+    }
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', () => {
-      const { scrollTop, scrollHeight } = window.document.body;
-      const offset = window.innerHeight * 0.8;
+    window.addEventListener('scroll', this.handleScroll);
+  }
 
-      if (scrollHeight - scrollTop <= window.innerHeight + offset && this._shouldFetchPosts()) {
-        this.props.fetchPosts();
-      }
-    });
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   _shouldFetchPosts() {
