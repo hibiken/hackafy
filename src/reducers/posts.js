@@ -42,7 +42,7 @@ const allIds = (state = initialState.allIds, action) => {
         return nextState;
       }, [...state]);
     case POST_UPLOAD_SUCCESS:
-      return [...state, action.payload.id];
+      return [action.payload.id, ...state];
     default:
       return state;
   }
