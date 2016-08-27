@@ -26,7 +26,12 @@ const initialState = {
 const allIds = (state = initialState.allIds, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATIONS_SUCCESS:
-      return [...state, ...action.payload.map(notification => notification.id)];
+      return action.payload.reduce((nextState, notification) => {
+        if (nextState.indexOf(notification.id) === -1) {
+          nextState.push(notification.id);
+        }
+        return nextState;
+      }, [...state]);
     case USER_SIGN_OUT:
       return [];
     default:

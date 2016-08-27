@@ -31,9 +31,8 @@ class Header extends React.Component {
 
   _handleNotificationsClick() {
     this.props.clearNotifications();
-    if (this._shouldFetchNotifcations()) {
-      this.props.fetchNotifcations();
-    };
+    this.props.fetchNotifcations();
+
     this.setState({
       dropdownExpanded: true,
     });
