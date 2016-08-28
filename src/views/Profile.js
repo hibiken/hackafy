@@ -295,7 +295,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { isFetching, user, posts } = this.props;
+    const { isFetching, user } = this.props;
     if (isFetching || !user) {
       return (
         <div className="Profile__spinner-container">
