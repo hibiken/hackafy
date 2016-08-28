@@ -24,7 +24,9 @@ import {
   getIsFetchingPublicProfile,
   getCurrentUser,
   getCurrentUsersFollowingIds,
-  getCurrentUsersLikedPostIds
+  getCurrentUsersLikedPostIds,
+  getIsFetchingPosts,
+  getPaginationByUsername
 } from '../store/rootReducer';
 import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import '../styles/Profile.css';
@@ -39,6 +41,7 @@ class Profile extends React.Component {
       usersModalIsOpen: false,
       activePostIndex: null,
       modalUserType: null,
+      endlessScroll: false,
     };
 
     this.openLogoutModal = () => this.setState({ logoutModalIsOpen: true });
@@ -47,18 +50,22 @@ class Profile extends React.Component {
     this.closeUsersModal = () => this.setState({ usersModalIsOpen: false });
     this.onPrevPostClick = this._onPrevPostClick.bind(this);
     this.onNextPostClick = this._onNextPostClick.bind(this);
+    this.enableEndlessScroll = this._enableEndlessScroll.bind(this);
+    this.handleScroll = this._handleScroll.bind(this);
     this.resetState = () => this.setState({
       logoutModalIsOpen: false,
       postModalIsOpen: false,
       usersModalIsOpen: false,
       activePostIndex: null,
       modalUserType: null,
+      endlessScroll: false,
     });
   }
 
   componentDidMount() {
     this.props.fetchPublicProfile(this.props.params.username);
     this.props.fetchPostsByUsername(this.props.params.username);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,6 +74,16 @@ class Profile extends React.Component {
       this.props.fetchPostsByUsername(nextProps.params.username);
       this.resetState();
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  _enableEndlessScroll(event) {
+    event.preventDefault();
+    this.props.fetchPostsByUsername(this.props.params.username);
+    this.setState({ endlessScroll: true });
   }
 
   _openPostModal(index) {
@@ -81,6 +98,23 @@ class Profile extends React.Component {
       usersModalIsOpen: true,
       modalUserType,
     });
+  }
+
+  _handleScroll() {
+    const { scrollTop, scrollHeight } = window.document.body;
+    const offset = window.innerHeight * 0.8;
+
+    if (scrollHeight - scrollTop <= window.innerHeight + offset && this._shouldFetchPosts()) {
+      this.props.fetchPostsByUsername(this.props.params.username);
+    }
+  }
+
+  _shouldFetchPosts() {
+    const { isFetchingPosts, pagination: { currentPage, totalPages } } = this.props;
+    return (
+      this.state.endlessScroll &&
+      (!isFetchingPosts && (currentPage === null || currentPage < totalPages))
+    );
   }
 
   renderActionButton() {
@@ -219,6 +253,47 @@ class Profile extends React.Component {
     )
   }
 
+  renderLoadMoreButton() {
+    if (this.props.pagination.nextPage && !this.state.endlessScroll) {
+      return (
+        <div className="Profile__load-more-btn-container">
+          <button
+            className="Profile__load-more-btn"
+            onClick={this.enableEndlessScroll}>
+            Load more
+          </button>
+        </div>
+      );
+    }
+  }
+
+  renderPosts() {
+    const { posts } = this.props;
+    if (this.state.endlessScroll) {
+      return posts.map((post, idx) => (
+        <PhotoThumbnailItem
+          key={post.id}
+          onClick={() => this._openPostModal(idx)}
+          avatarUrl={getImageUrl(post.photoUrl)}
+          filter={post.filter}
+          likesCount={post.likesCount}
+          commentsCount={post.comments.length}
+        />
+      ));
+    } else {
+      return posts.slice(0,9).map((post, idx) => (
+        <PhotoThumbnailItem
+          key={post.id}
+          onClick={() => this._openPostModal(idx)}
+          avatarUrl={getImageUrl(post.photoUrl)}
+          filter={post.filter}
+          likesCount={post.likesCount}
+          commentsCount={post.comments.length}
+        />
+      ));
+    }
+  }
+
   render() {
     const { isFetching, user, posts } = this.props;
     if (isFetching || !user) {
@@ -263,17 +338,9 @@ class Profile extends React.Component {
           </div>
         </div>
         <div className="Profile__photo-gallery">
-          {posts.map((post, idx) => (
-            <PhotoThumbnailItem
-              key={post.id}
-              onClick={() => this._openPostModal(idx)}
-              avatarUrl={getImageUrl(post.photoUrl)}
-              filter={post.filter}
-              likesCount={post.likesCount}
-              commentsCount={post.comments.length}
-            />
-          ))}
+          {this.renderPosts()}
         </div>
+        {this.renderLoadMoreButton()}
         <NewPostButton />
         {this.renderLogoutModal()}
         {this.renderPostModal()}
@@ -294,6 +361,8 @@ const mapStateToProps = (state, {params}) => {
     isCurrentUser: (params.username === currentUser.username),
     isFollowing: (currentUserFollowingIds.indexOf(user.id) >= 0),
     likedPostIds: getCurrentUsersLikedPostIds(state),
+    isFetchingPosts: getIsFetchingPosts(state),
+    pagination: getPaginationByUsername(state, params.username),
   }
 
 }

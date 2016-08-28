@@ -77,6 +77,10 @@ export const getIsFetchingPublicProfile = (state) => {
   return fromPublicProfiles.getIsFetchingPublicProfile(state.publicProfiles);
 };
 
+export const getPaginationByUsername = (state, username) => {
+  return fromPublicProfiles.getPaginationByUsername(state.publicProfiles, username);
+}
+
 export const getPostsByPlaceId = (state, placeId) => {
   return fromPosts.getPostsByPlaceId(state.posts, placeId);
 };

@@ -98,6 +98,19 @@
   border-radius: 0;
 }
 
+.Profile__load-more-btn-container {
+  text-align: center;
+}
+
+.Profile__load-more-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  color: #3897f0;
+  padding: 0;
+  border: 2px solid #3897f0;
+}
+
 .PostModal__post-stats {
   padding: 12px 0;
 }

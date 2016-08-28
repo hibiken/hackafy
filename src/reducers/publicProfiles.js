@@ -7,6 +7,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER
 } from '../actions/actionTypes'
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
   allUsernames: [],
@@ -27,8 +28,24 @@ const allUsernames = (state = initialState.allUsernames, action) => {
   }
 }
 
-const _user = (state = {}, action) => {
+const _user = (state = {postIds: [], pagination: {}}, action) => {
   switch (action.type) {
+    case FETCH_PUBLIC_PROFILE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case FETCH_POSTS_BY_USERNAME_SUCCESS:
+      return {
+        ...state,
+        postIds: action.payload.reduce((nextState, post) => {
+          if (nextState.indexOf(post.id) === -1) {
+            nextState.push(post.id);
+          }
+          return nextState;
+        }, [...state.postIds]),
+        pagination: action.pagination,
+      };
     case FOLLOW_USER:
       return {
         ...state,
@@ -38,6 +55,11 @@ const _user = (state = {}, action) => {
       return {
         ...state,
         followersCount: state.followersCount - 1,
+      }
+    case LOCATION_CHANGE:
+      return {
+        ...state,
+        pagination: {},
       }
     default:
       return state;
@@ -49,18 +71,12 @@ const byUsername = (state = initialState.byUsername, action) => {
     case FETCH_PUBLIC_PROFILE_SUCCESS:
       return {
         ...state,
-        [action.payload.username]: {
-          ...state[action.payload.username],
-          ...action.payload,
-        }
+        [action.username]: _user(state[action.username], action),
       }
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
       return {
         ...state,
-        [action.username]: {
-          ...state[action.username],
-          postIds: action.payload.map(post => post.id),
-        }
+        [action.username]: _user(state[action.username], action),
       }
     case FOLLOW_USER:
       return {
@@ -113,3 +129,9 @@ export const getPublicProfileByUsername = (state, username) => {
 }
 
 export const getIsFetchingPublicProfile = (state) => state.isFetching;
+
+export const getPaginationByUsername = (state, username) => {
+  const user = getPublicProfileByUsername(state, username);
+  if (!user) { return {}; }
+  return user.pagination;
+}
