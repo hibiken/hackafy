@@ -88,6 +88,12 @@ const byUsername = (state = initialState.byUsername, action) => {
         ...state,
         [action.username]: _user(state[action.username], action),
       }
+    case LOCATION_CHANGE:
+      const usernames = Object.keys(state);
+      return usernames.reduce((nextState, username) => {
+        nextState[username] = _user(nextState[username], action);
+        return nextState;
+      }, {...state});
     default:
       return state;
   }
