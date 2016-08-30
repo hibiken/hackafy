@@ -22,12 +22,11 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
-  })
-  .catch(response => {
-    console.log('Signup failed', response);
+  }, ({response}) => {
     dispatch({
       type: USER_SIGN_UP_FAILURE,
-    })
+      errors: response.data.errors,
+    });
   });
 }
 
@@ -47,14 +46,12 @@ export const userSignIn = (credentials) => (dispatch) => {
       type: USER_SIGN_IN_SUCCESS,
       payload: data.user,
     });
-
     dispatch(push('/'));
-  })
-  .catch(response => {
-    console.log('signin failed', response);
+  }, ({response}) => {
     dispatch({
       type: USER_SIGN_IN_FAILURE,
-    })
+      errors: response.data.errors,
+    });
   });
 };
 

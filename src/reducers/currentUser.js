@@ -1,6 +1,8 @@
 import {
   USER_SIGN_UP_SUCCESS,
+  USER_SIGN_UP_FAILURE,
   USER_SIGN_IN_SUCCESS,
+  USER_SIGN_IN_FAILURE,
   USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
   POST_UPLOAD_SUCCESS,
@@ -9,6 +11,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER
 } from '../actions/actionTypes';
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
   id: null,
@@ -18,6 +21,9 @@ const initialState = {
   followerIds: [],
   followingIds: [],
   attributes: {},
+  errors: {
+    auth: [],
+  },
 };
 
 const currentUser = (state = initialState, action) => {
@@ -34,7 +40,17 @@ const currentUser = (state = initialState, action) => {
         likedPostIds: action.payload.likedPostIds,
         followerIds: action.payload.followerIds,
         followingIds: action.payload.followingIds,
+        errors: {},
       };
+    case USER_SIGN_UP_FAILURE:
+    case USER_SIGN_IN_FAILURE:
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          auth: action.errors,
+        },
+      }
     case POST_UPLOAD_SUCCESS:
       return {
         ...state,
@@ -62,6 +78,11 @@ const currentUser = (state = initialState, action) => {
       }
     case USER_SIGN_OUT:
       return initialState;
+    case LOCATION_CHANGE:
+      return {
+        ...state,
+        errors: initialState.errors,
+      }
     default:
       return state;
   }
@@ -87,5 +108,9 @@ export const getLikedPostIds = (state) => {
 export const getFollowingIds = (state) => {
   return state.followingIds;
 };
+
+export const getAuthErrors = (state) => {
+  return state.errors.auth;
+}
 
 export default currentUser;

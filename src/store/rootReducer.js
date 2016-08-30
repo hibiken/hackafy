@@ -30,6 +30,10 @@ export const getAuthToken = (state) => {
   return fromCurrentUser.getAuthToken(state.currentUser);
 };
 
+export const getAuthErrors = (state) => {
+  return fromCurrentUser.getAuthErrors(state.currentUser);
+}
+
 export const getCurrentUsersPosts = (state) => {
   const postIds = fromCurrentUser.getPostIds(state.currentUser);
   return fromPosts.getPostsByIds(state.posts, postIds);
