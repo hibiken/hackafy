@@ -2,23 +2,9 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { userSignUp } from '../actions';
 import { getAuthErrors } from '../store/rootReducer';
+import ErrorMessages from '../components/ErrorMessages';
 
 class SignUpForm extends React.Component {
-  // TODO: make this into a separate component.
-  renderErrorMessage() {
-    if (this.props.errorMessages.length) {
-      return (
-        <div className="ErrorMessages__root">
-          {this.props.errorMessages.map((msg, idx) => (
-            <div key={idx}>
-              {msg}
-            </div>
-          ))}
-        </div>
-      );
-    }
-  }
-
   render() {
     const { fields: { email, username, password }, handleSubmit, userSignUp } = this.props;
     return (
@@ -46,11 +32,11 @@ class SignUpForm extends React.Component {
             placeholder="Create Password"
             {...password}
           />
-        </fieldset>
-        {this.renderErrorMessage()}
+        </fieldset>  
         <button type="submit">
           Sign Up
         </button>
+        <ErrorMessages messages={this.props.errorMessages} />
       </form>
     );
   }

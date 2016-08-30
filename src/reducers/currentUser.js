@@ -40,7 +40,7 @@ const currentUser = (state = initialState, action) => {
         likedPostIds: action.payload.likedPostIds,
         followerIds: action.payload.followerIds,
         followingIds: action.payload.followingIds,
-        errors: {},
+        errors: initialState.errors,
       };
     case USER_SIGN_UP_FAILURE:
     case USER_SIGN_IN_FAILURE:
