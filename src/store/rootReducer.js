@@ -32,6 +32,10 @@ export const getAuthToken = (state) => {
 
 export const getAuthErrors = (state) => {
   return fromCurrentUser.getAuthErrors(state.currentUser);
+};
+
+export const getIsAuthenticating = (state) => {
+  return fromCurrentUser.getIsAuthenticating(state.currentUser);
 }
 
 export const getCurrentUsersPosts = (state) => {

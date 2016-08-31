@@ -32,3 +32,7 @@
   color: #ed4956;
   font-size: 14px;
 }
+
+.SignInForm__spinner {
+  font-size: 18px !important;
+}

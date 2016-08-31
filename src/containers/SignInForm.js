@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { userSignIn } from '../actions';
-import { getAuthErrors } from '../store/rootReducer';
+import { getAuthErrors, getIsAuthenticating } from '../store/rootReducer';
 import ErrorMessages from '../components/ErrorMessages';
 import '../styles/SignInForm.css';
 
@@ -17,7 +17,12 @@ class SignInForm extends React.Component {
   }
 
   render() {
-    const { fields: { email, password }, handleSubmit, userSignIn } = this.props;
+    const {
+        fields: { email, password },
+        handleSubmit,
+        userSignIn,
+        isAuthenticating
+      } = this.props;
     return (
       <form className="SignInForm__root" onSubmit={handleSubmit(userSignIn)}>
         <fieldset>
@@ -40,9 +45,11 @@ class SignInForm extends React.Component {
         </fieldset>
         <button
           className="SignInForm__button"
-          disabled={this.props.invalid}
+          disabled={this.props.invalid || isAuthenticating}
           type="submit">
-          Log In
+          {isAuthenticating ?
+          <i className="fa fa-spinner fa-pulse fa-3x fa-fw SignInForm__spinner" /> : 
+          'Log In'}
         </button>
         <ErrorMessages messages={this.props.errorMessages} />
       </form>
@@ -67,6 +74,7 @@ const validate = (values) => {
 
 const mapStateToProps = (state) => ({
   errorMessages: getAuthErrors(state),
+  isAuthenticating: getIsAuthenticating(state),
 });
 
 export default reduxForm({

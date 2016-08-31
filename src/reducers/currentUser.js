@@ -1,6 +1,8 @@
 import {
+  USER_SIGN_UP_START,
   USER_SIGN_UP_SUCCESS,
   USER_SIGN_UP_FAILURE,
+  USER_SIGN_IN_START,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILURE,
   USER_SIGN_OUT,
@@ -24,10 +26,17 @@ const initialState = {
   errors: {
     auth: [],
   },
+  isAuthenticating: false,
 };
 
 const currentUser = (state = initialState, action) => {
   switch (action.type) {
+    case USER_SIGN_UP_START:
+    case USER_SIGN_IN_START:
+      return {
+        ...state,
+        isAuthenticating: true,
+      };
     case USER_SIGN_UP_SUCCESS:
     case USER_SIGN_IN_SUCCESS:
     case PROFILE_UPDATE_SUCCESS:
@@ -41,6 +50,7 @@ const currentUser = (state = initialState, action) => {
         followerIds: action.payload.followerIds,
         followingIds: action.payload.followingIds,
         errors: initialState.errors,
+        isAuthenticating: false,
       };
     case USER_SIGN_UP_FAILURE:
     case USER_SIGN_IN_FAILURE:
@@ -50,6 +60,7 @@ const currentUser = (state = initialState, action) => {
           ...state.errors,
           auth: action.errors,
         },
+        isAuthenticating: false,
       }
     case POST_UPLOAD_SUCCESS:
       return {
@@ -82,6 +93,7 @@ const currentUser = (state = initialState, action) => {
       return {
         ...state,
         errors: initialState.errors,
+        isAuthenticating: false,
       }
     default:
       return state;
@@ -111,6 +123,10 @@ export const getFollowingIds = (state) => {
 
 export const getAuthErrors = (state) => {
   return state.errors.auth;
+};
+
+export const getIsAuthenticating = (state) => {
+  return state.isAuthenticating;
 }
 
 export default currentUser;
