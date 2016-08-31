@@ -1,0 +1,34 @@
+.SignInForm__root {
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  margin-top: 10vh;
+  padding: 30px;
+}
+
+.SignInForm__input {
+  width: 100%;
+}
+
+.SignInForm__button,
+.SignInForm__button:hover {
+  display: block;
+  width: 100%;
+  background-color: #3897f0;
+  border-color: #3897f0;
+  color: white;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  text-transform: capitalize;
+}
+
+.SignInForm__button:disabled {
+  background-color: #d3d3d3;
+  border-color: #d3d3d3;
+  cursor: not-allowed;
+  color: #fafafa;
+}
+
+.SignInForm__error-text {
+  color: #ed4956;
+  font-size: 14px;
+}

@@ -3,35 +3,66 @@ import { reduxForm } from 'redux-form';
 import { userSignIn } from '../actions';
 import { getAuthErrors } from '../store/rootReducer';
 import ErrorMessages from '../components/ErrorMessages';
+import '../styles/SignInForm.css';
 
 class SignInForm extends React.Component {
+  renderError(field) {
+    if (field.touched && field.error) {
+      return (
+        <span className="SignInForm__error-text">
+          {field.error}
+        </span>
+      );
+    }
+  }
+
   render() {
     const { fields: { email, password }, handleSubmit, userSignIn } = this.props;
     return (
-      <form onSubmit={handleSubmit(userSignIn)}>
+      <form className="SignInForm__root" onSubmit={handleSubmit(userSignIn)}>
         <fieldset>
-          <label>Email</label>
           <input
             type="text"
-            placeholder="Email or Username"
+            placeholder="Email"
+            className="SignInForm__input"
             {...email}
           />
+          {this.renderError(email)}
         </fieldset>
         <fieldset>
-          <label>Password</label>
           <input
             type="password"
             placeholder="Password"
+            className="SignInForm__input"
             {...password}
           />
+          {this.renderError(password)}
         </fieldset>
-        <button type="submit">
-          Sign In
+        <button
+          className="SignInForm__button"
+          disabled={this.props.invalid}
+          type="submit">
+          Log In
         </button>
         <ErrorMessages messages={this.props.errorMessages} />
       </form>
     );
   }
+}
+
+const validate = (values) => {
+  const errors = {};
+  if (!values.email) {
+    errors.email = 'Email is required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  if (!values.password) {
+    errors.password = 'Password is required';
+  }
+
+  return errors;
 }
 
 const mapStateToProps = (state) => ({
@@ -41,4 +72,5 @@ const mapStateToProps = (state) => ({
 export default reduxForm({
   form: 'SignIn',
   fields: ['email', 'password'],
+  validate,
 }, mapStateToProps, { userSignIn })(SignInForm);
