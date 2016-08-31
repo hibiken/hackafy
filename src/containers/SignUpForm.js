@@ -1,40 +1,64 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { userSignUp } from '../actions';
-import { getAuthErrors } from '../store/rootReducer';
+import { getAuthErrors, getIsAuthenticating } from '../store/rootReducer';
 import ErrorMessages from '../components/ErrorMessages';
+import '../styles/SignUpForm.css';
 
 class SignUpForm extends React.Component {
+  renderError(field) {
+    if (field.touched && field.error) {
+      return (
+        <span className="SignUpForm__error-text">
+          {field.error}
+        </span>
+      );
+    }
+  }
+
   render() {
-    const { fields: { email, username, password }, handleSubmit, userSignUp } = this.props;
+    const {
+      fields: { email, username, password },
+      handleSubmit,
+      userSignUp,
+      isAuthenticating
+    } = this.props;
     return (
-      <form onSubmit={handleSubmit(userSignUp)}>
+      <form className="SignUpForm__root" onSubmit={handleSubmit(userSignUp)}>
         <fieldset>
-          <label>Email</label>
           <input
             type="email"
             placeholder="Email"
+            className="SignUpForm__input"
             {...email}
           />
+          {this.renderError(email)}
         </fieldset>
         <fieldset>
-          <label>Username</label>
           <input
             type="text"
             placeholder="Username"
+            className="SignUpForm__input"
             {...username}
           />
+          {this.renderError(username)}
         </fieldset>
         <fieldset>
-          <label>Password</label>
           <input
             type="password"
             placeholder="Create Password"
+            className="SignUpForm__input"
             {...password}
           />
-        </fieldset>  
-        <button type="submit">
-          Sign Up
+          {this.renderError(password)}
+        </fieldset>
+        <button
+          className="SignUpForm__button"
+          disabled={this.props.invalid || isAuthenticating}
+          type="submit">
+          {isAuthenticating ?
+          <i className="fa fa-spinner fa-pulse fa-3x fa-fw SignUpForm__spinner" /> :
+          'Sign Up'}
         </button>
         <ErrorMessages messages={this.props.errorMessages} />
       </form>
@@ -42,11 +66,32 @@ class SignUpForm extends React.Component {
   }
 }
 
+const validate = (values) => {
+  const errors = {};
+  if (!values.email) {
+    errors.email = 'Email is required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  if (!values.username) {
+    errors.username = 'Username is required';
+  } // TODO: add min
+
+  if (!values.password) {
+    errors.password = 'Password is required';
+  } // TODO: add min
+
+  return errors;
+}
+
 const mapStateToProps = (state) => ({
   errorMessages: getAuthErrors(state),
+  isAuthenticating: getIsAuthenticating(state),
 });
 
 export default reduxForm({
   form: 'SignUp',
-  fields: ['email', 'username', 'password']
+  fields: ['email', 'username', 'password'],
+  validate,
 }, mapStateToProps, { userSignUp })(SignUpForm);
