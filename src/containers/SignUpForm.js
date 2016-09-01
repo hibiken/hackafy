@@ -76,11 +76,17 @@ const validate = (values) => {
 
   if (!values.username) {
     errors.username = 'Username is required';
-  } // TODO: add min
+  } else if (values.username.length < 3) {
+    errors.username = 'Username is too short (minimum 2 characters)';
+  } else if (values.username.length > 30) {
+    errors.username = 'Username is too long (maximum 30 characters)';
+  } // Add uniqueness
 
   if (!values.password) {
     errors.password = 'Password is required';
-  } // TODO: add min
+  } else if (values.password.length < 8) {
+    errors.password = 'Password is too short (minimum 8 characters)';
+  }
 
   return errors;
 }
