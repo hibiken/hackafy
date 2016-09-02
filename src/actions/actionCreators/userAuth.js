@@ -8,6 +8,8 @@ import {
   USER_SIGN_IN_START,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILURE,
+  FACEBOOK_LOGIN_START,
+  FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT
 } from '../actionTypes';
 
@@ -55,6 +57,28 @@ export const userSignIn = (credentials) => (dispatch) => {
       errors: response.data.errors,
     });
   });
+};
+
+export const facebookLogin = ({id, username, email}) => (dispatch) => {
+  dispatch({type: FACEBOOK_LOGIN_START});
+
+  return axios({
+    method: 'post',
+    url: `${API_URL}/users/facebook/login`,
+    data: {
+      facebookId: id,
+      username,
+      email,
+    }
+  })
+  .then(({data}) => {
+    console.log('succcessfully signed in', data);
+    dispatch({
+      type: FACEBOOK_LOGIN_SUCCESS,
+      payload: data.user,
+    });
+    dispatch(push('/'));
+  })
 };
 
 export const userSignOut = () => ({

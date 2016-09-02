@@ -3,7 +3,10 @@ import noImage from '../images/no-image.jpg';
 
 // Helper function for User avatar image
 export const getAvatarUrl = (avatarUrl) => {
-  return avatarUrl ? `${process.env.NODE_ENV !== 'production' ? 'http://localhost:5000' : ''}${avatarUrl}` : defaultAvatarImg;
+  const facebookAvatarUrl = /http:\/\/graph.facebook.com\//;
+  return avatarUrl ?
+  `${(process.env.NODE_ENV !== 'production' && !facebookAvatarUrl.test(avatarUrl)) ? 'http://localhost:5000' : ''}${avatarUrl}` :
+  defaultAvatarImg;
 }
 
 // Helper  function for Post picture image

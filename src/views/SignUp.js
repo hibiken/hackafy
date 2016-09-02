@@ -1,5 +1,6 @@
 import React from 'react';
 import SignUpForm from '../containers/SignUpForm';
+import FacebookLoginButton from '../containers/FacebookLoginButton';
 
 const SignUp = (props) => {
   return (
@@ -7,6 +8,7 @@ const SignUp = (props) => {
       <div className="row">
         <div className="six columns offset-by-three">
           <SignUpForm />
+          <FacebookLoginButton />
         </div>
       </div>
     </div>

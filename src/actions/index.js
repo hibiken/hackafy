@@ -1,6 +1,7 @@
 import {
   userSignUp,
   userSignIn,
+  facebookLogin,
   userSignOut
 } from './actionCreators/userAuth';
 
@@ -22,6 +23,7 @@ import {
 export {
   userSignUp,
   userSignIn,
+  facebookLogin,
   userSignOut,
 
   userUpdate,

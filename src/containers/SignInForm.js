@@ -6,6 +6,7 @@ import ErrorMessages from '../components/ErrorMessages';
 import '../styles/SignInForm.css';
 
 class SignInForm extends React.Component {
+
   renderError(field) {
     if (field.touched && field.error) {
       return (
@@ -48,7 +49,7 @@ class SignInForm extends React.Component {
           disabled={this.props.invalid || isAuthenticating}
           type="submit">
           {isAuthenticating ?
-          <i className="fa fa-spinner fa-pulse fa-3x fa-fw SignInForm__spinner" /> : 
+          <i className="fa fa-spinner fa-pulse fa-3x fa-fw SignInForm__spinner" /> :
           'Log In'}
         </button>
         <ErrorMessages messages={this.props.errorMessages} />

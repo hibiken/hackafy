@@ -5,6 +5,7 @@ import {
   USER_SIGN_IN_START,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILURE,
+  FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
   POST_UPLOAD_SUCCESS,
@@ -40,6 +41,7 @@ const currentUser = (state = initialState, action) => {
     case USER_SIGN_UP_SUCCESS:
     case USER_SIGN_IN_SUCCESS:
     case PROFILE_UPDATE_SUCCESS:
+    case FACEBOOK_LOGIN_SUCCESS:
       return {
         ...state,
         id: action.payload.id,
