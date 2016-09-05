@@ -5,6 +5,7 @@ import {
   USER_SIGN_IN_START,
   USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILURE,
+  FACEBOOK_LOGIN_START,
   FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
@@ -28,6 +29,7 @@ const initialState = {
     auth: [],
   },
   isAuthenticating: false,
+  isLoggingWithFB: false,
 };
 
 const currentUser = (state = initialState, action) => {
@@ -38,6 +40,11 @@ const currentUser = (state = initialState, action) => {
         ...state,
         isAuthenticating: true,
       };
+    case FACEBOOK_LOGIN_START:
+      return {
+        ...state,
+        isLoggingWithFB: true,
+      }
     case USER_SIGN_UP_SUCCESS:
     case USER_SIGN_IN_SUCCESS:
     case PROFILE_UPDATE_SUCCESS:
@@ -53,6 +60,7 @@ const currentUser = (state = initialState, action) => {
         followingIds: action.payload.followingIds,
         errors: initialState.errors,
         isAuthenticating: false,
+        isLoggingWithFB: false,
       };
     case USER_SIGN_UP_FAILURE:
     case USER_SIGN_IN_FAILURE:
@@ -96,6 +104,7 @@ const currentUser = (state = initialState, action) => {
         ...state,
         errors: initialState.errors,
         isAuthenticating: false,
+        isLoggingWithFB: false,
       }
     default:
       return state;
@@ -129,6 +138,10 @@ export const getAuthErrors = (state) => {
 
 export const getIsAuthenticating = (state) => {
   return state.isAuthenticating;
-}
+};
+
+export const getIsLoggingInWithFB = (state) => {
+  return state.isLoggingWithFB;
+};
 
 export default currentUser;

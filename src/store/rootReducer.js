@@ -36,7 +36,11 @@ export const getAuthErrors = (state) => {
 
 export const getIsAuthenticating = (state) => {
   return fromCurrentUser.getIsAuthenticating(state.currentUser);
-}
+};
+
+export const getIsLoggingInWithFB = (state) => {
+  return fromCurrentUser.getIsLoggingInWithFB(state.currentUser);
+};
 
 export const getCurrentUsersPosts = (state) => {
   const postIds = fromCurrentUser.getPostIds(state.currentUser);

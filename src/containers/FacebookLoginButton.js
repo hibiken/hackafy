@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { facebookLogin } from '../actions';
 import { statusChangeCallback } from '../utils/facebookAuth';
+import { getIsLoggingInWithFB } from '../store/rootReducer';
 import '../styles/FacebookLoginButton.css';
 
 class FacebookLoginButton extends React.Component {
@@ -64,14 +65,20 @@ class FacebookLoginButton extends React.Component {
         <button
           className="FacebookLoginButton__button"
           onClick={this.handleClick}>
-          <i className="fa fa-facebook-official FacebookLoginButton__icon"/> Log in with Facebook
+          {this.props.isLoggingWithFB ?
+          (<i className="fa fa-spinner fa-pulse fa-3x fa-fw FacebookLoginButton__spinner"/>) :
+          (<div><i className="fa fa-facebook-official FacebookLoginButton__icon"/> Log in with Facebook</div>)}
         </button>
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggingWithFB: getIsLoggingInWithFB(state),
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { facebookLogin }
 )(FacebookLoginButton);

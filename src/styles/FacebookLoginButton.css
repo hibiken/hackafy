@@ -8,3 +8,7 @@
 .FacebookLoginButton__icon {
   color: #3b5998;
 }
+
+.FacebookLoginButton__spinner {
+  font-size: 18px;
+}
