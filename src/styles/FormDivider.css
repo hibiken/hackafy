@@ -1,0 +1,17 @@
+.FormDivider__root {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  margin: 20px 0;
+}
+
+.FormDivider__line {
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 1px;
+  background-color: #dbdbdb;
+}
+
+.FormDivider__text {
+  padding: 0 15px;
+}

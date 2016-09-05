@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { facebookLogin } from '../actions';
 import { statusChangeCallback } from '../utils/facebookAuth';
+import '../styles/FacebookLoginButton.css';
 
 class FacebookLoginButton extends React.Component {
   constructor(props) {
@@ -60,8 +61,10 @@ class FacebookLoginButton extends React.Component {
 
     return (
       <div className="FacebookLoginButton__root">
-        <button onClick={this.handleClick}>
-          <i className="fa fa-facebook-official"/> Log in with facebook
+        <button
+          className="FacebookLoginButton__button"
+          onClick={this.handleClick}>
+          <i className="fa fa-facebook-official FacebookLoginButton__icon"/> Log in with Facebook
         </button>
       </div>
     );
