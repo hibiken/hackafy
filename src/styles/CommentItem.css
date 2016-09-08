@@ -1,0 +1,14 @@
+.CommentItem__root {
+  color: #262626;
+}
+
+.CommentItem__link {
+  text-decoration: none;
+  color: #003569;
+  cursor: pointer;
+}
+
+.CommentItem__link:hover,
+.CommentItem__link:active {
+  color: #003569;
+}

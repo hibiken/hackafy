@@ -3,6 +3,7 @@ import { getAvatarUrl, getImageUrl } from '../utils/helpers';
 import moment from 'moment';
 import LikeButton from './LikeButton';
 import CommentBox from './CommentBox';
+import CommentItem from './CommentItem';
 import { Link } from 'react-router';
 
 import '../styles/GalleryItem.css';
@@ -47,9 +48,7 @@ class GalleryItem extends React.Component {
     const { caption, user: { username } } = this.props;
     if (caption) {
       return (
-        <div className="GalleryItem__caption">
-          <strong>{username}</strong> {caption}
-        </div>
+        <CommentItem username={username} body={caption} />
       )
     }
   }
@@ -58,9 +57,11 @@ class GalleryItem extends React.Component {
     return (
       <div className="GalleryItem__comments">
         {this.props.comments.map(comment => (
-          <div key={comment.id} className="GalleryItem__comment">
-          <strong>{comment.username}</strong> {comment.body}
-          </div>
+          <CommentItem
+            key={comment.id}
+            username={comment.username}
+            body={comment.body}
+          />
         ))}
       </div>
     );
