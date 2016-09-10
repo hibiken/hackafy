@@ -5,18 +5,14 @@ import Modal from 'react-modal';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
-import PostModal from '../components/PostModal';
-import PhotoThumbnailItem from '../components/PhotoThumbnailItem';
 import UsersModal from '../containers/UsersModal';
+import PhotoGrid from '../containers/PhotoGrid';
 import {
   userSignOut,
   fetchPublicProfile,
   fetchPostsByUsername,
   followUser,
   unfollowUser,
-  likePost,
-  dislikePost,
-  addComment
 } from '../actions';
 import {
   getPublicProfileByUsername,
@@ -24,11 +20,10 @@ import {
   getIsFetchingPublicProfile,
   getCurrentUser,
   getCurrentUsersFollowingIds,
-  getCurrentUsersLikedPostIds,
   getIsFetchingPosts,
   getPaginationByUsername
 } from '../store/rootReducer';
-import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
+import { getAvatarUrl, pluralize } from '../utils/helpers';
 import '../styles/Profile.css';
 
 class Profile extends React.Component {
@@ -37,19 +32,14 @@ class Profile extends React.Component {
 
     this.state = {
       logoutModalIsOpen: false,
-      postModalIsOpen: false,
       usersModalIsOpen: false,
-      activePostIndex: null,
       modalUserType: null,
       endlessScroll: false,
     };
 
     this.openLogoutModal = () => this.setState({ logoutModalIsOpen: true });
     this.closeLogoutModal = () => this.setState({ logoutModalIsOpen: false });
-    this.closePostModal = () => this.setState({ postModalIsOpen: false, activePostIndex: null });
     this.closeUsersModal = () => this.setState({ usersModalIsOpen: false });
-    this.onPrevPostClick = this._onPrevPostClick.bind(this);
-    this.onNextPostClick = this._onNextPostClick.bind(this);
     this.enableEndlessScroll = this._enableEndlessScroll.bind(this);
     this.handleScroll = this._handleScroll.bind(this);
     this.resetState = () => this.setState({
@@ -84,13 +74,6 @@ class Profile extends React.Component {
     event.preventDefault();
     this.props.fetchPostsByUsername(this.props.params.username);
     this.setState({ endlessScroll: true });
-  }
-
-  _openPostModal(index) {
-    this.setState({
-      postModalIsOpen: true,
-      activePostIndex: index,
-    });
   }
 
   _openUsersModal(modalUserType) {
@@ -193,55 +176,6 @@ class Profile extends React.Component {
     );
   }
 
-  _onPrevPostClick() {
-    if (this.state.activePostIndex === 0) {
-      return false;
-    }
-    this.setState({
-      activePostIndex: this.state.activePostIndex - 1,
-    });
-  }
-
-  _onNextPostClick() {
-    if (this.state.activePostIndex === this.props.posts.length - 1) {
-      return false;
-    }
-    this.setState({
-      activePostIndex: this.state.activePostIndex + 1,
-    });
-  }
-
-  renderPostModal() {
-    const { activePostIndex } = this.state;
-    if (activePostIndex === null) {
-      return (
-        <PostModal
-          isOpen={this.state.postModalIsOpen}
-          onRequestClose={this.closePostModal}
-          post={false}
-        />
-      )
-    }
-    const activePost = this.props.posts[activePostIndex];
-    return (
-      <PostModal
-        isOpen={this.state.postModalIsOpen}
-        onRequestClose={this.closePostModal}
-        post={activePost}
-        onNextClick={this.onNextPostClick}
-        onPrevClick={this.onPrevPostClick}
-        onLike={() => this.props.likePost(activePost.id)}
-        onDislike={() => this.props.dislikePost(activePost.id)}
-        liked={this.props.likedPostIds.indexOf(activePost.id) >= 0}
-        onCommentSubmit={(commentBody) => this.props.addComment(activePost.id, commentBody)}
-        showFollowButton={!this.props.isCurrentUser}
-        isFollowing={this.props.isFollowing}
-        onFollowClick={() => this.props.followUser(activePost.user.id)}
-        onUnfollowClick={() => this.props.unfollowUser(activePost.user.id)}
-      />
-    );
-  }
-
   renderUsersModal() {
     return (
       <UsersModal
@@ -264,33 +198,6 @@ class Profile extends React.Component {
           </button>
         </div>
       );
-    }
-  }
-
-  renderPosts() {
-    const { posts } = this.props;
-    if (this.state.endlessScroll) {
-      return posts.map((post, idx) => (
-        <PhotoThumbnailItem
-          key={post.id}
-          onClick={() => this._openPostModal(idx)}
-          avatarUrl={getImageUrl(post.photoUrl)}
-          filter={post.filter}
-          likesCount={post.likesCount}
-          commentsCount={post.comments.length}
-        />
-      ));
-    } else {
-      return posts.slice(0,9).map((post, idx) => (
-        <PhotoThumbnailItem
-          key={post.id}
-          onClick={() => this._openPostModal(idx)}
-          avatarUrl={getImageUrl(post.photoUrl)}
-          filter={post.filter}
-          likesCount={post.likesCount}
-          commentsCount={post.comments.length}
-        />
-      ));
     }
   }
 
@@ -338,13 +245,13 @@ class Profile extends React.Component {
             </div>
           </div>
         </div>
-        <div className="Profile__photo-gallery">
-          {this.renderPosts()}
-        </div>
+        <PhotoGrid
+          posts={this.props.posts}
+          maxCount={(this.state.endlessScroll ? null : 9)}
+        />
         {this.renderLoadMoreButton()}
         <NewPostButton />
         {this.renderLogoutModal()}
-        {this.renderPostModal()}
         {this.renderUsersModal()}
       </div>
     )
@@ -361,7 +268,6 @@ const mapStateToProps = (state, {params}) => {
     isFetching: getIsFetchingPublicProfile(state),
     isCurrentUser: (params.username === currentUser.username),
     isFollowing: (currentUserFollowingIds.indexOf(user.id) >= 0),
-    likedPostIds: getCurrentUsersLikedPostIds(state),
     isFetchingPosts: getIsFetchingPosts(state),
     pagination: getPaginationByUsername(state, params.username),
   }
@@ -375,9 +281,6 @@ export default connect(
     fetchPublicProfile,
     fetchPostsByUsername,
     followUser,
-    unfollowUser,
-    likePost,
-    dislikePost,
-    addComment
+    unfollowUser
   }
 )(Profile);
