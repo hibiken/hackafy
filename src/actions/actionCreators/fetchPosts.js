@@ -4,7 +4,9 @@ import {
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_FAILURE,
   FETCH_POSTS_BY_LOCATION_SUCCESS,
-  FETCH_POSTS_BY_LOCATION_FAILURE
+  FETCH_POSTS_BY_LOCATION_FAILURE,
+  FETCH_POSTS_BY_TAG_SUCCESS,
+  FETCH_POSTS_BY_TAG_FAILURE
 } from '../actionTypes';
 import { getAuthToken, getPostsNextPage } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
@@ -64,5 +66,32 @@ export const fetchPostsByPlaceId = (placeId) => (dispatch, getState) => {
     dispatch({
       type: FETCH_POSTS_BY_LOCATION_FAILURE,
     });
+  });
+}
+
+export const fetchPostsByTagName = (tagName) => (dispatch, getState) => {
+  dispatch({type: FETCH_POSTS_START});
+
+  const authToken = getAuthToken(getState());
+
+  return axios({
+    method: 'get',
+    url: `${API_URL}/posts/tags/${tagName}`,
+    headers: {
+      'Authorization': `Token ${authToken}`,
+    },
+  })
+  .then(({data}) => {
+    console.log('successfully fetched posts', data);
+    dispatch({
+      type: FETCH_POSTS_BY_TAG_SUCCESS,
+      payload: data.posts,
+      tagName,
+    })
+  }, (error) => {
+    console.log('fetch posts by tagname failure', error);
+    dispatch({
+      type: FETCH_POSTS_BY_TAG_FAILURE,
+    })
   });
 }

@@ -4,10 +4,14 @@ import {
   facebookLogin,
   userSignOut
 } from './actionCreators/userAuth';
+import {
+  fetchPosts,
+  fetchPostsByPlaceId,
+  fetchPostsByTagName
+} from './actionCreators/fetchPosts';
 
 import { userUpdate } from './actionCreators/userProfile';
 import { uploadPost } from './actionCreators/postUpload';
-import { fetchPosts, fetchPostsByPlaceId } from './actionCreators/fetchPosts';
 import { likePost, dislikePost } from './actionCreators/postLikes';
 import { addComment } from './actionCreators/postComments';
 import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
@@ -32,6 +36,7 @@ export {
 
   fetchPosts,
   fetchPostsByPlaceId,
+  fetchPostsByTagName,
 
   likePost,
   dislikePost,

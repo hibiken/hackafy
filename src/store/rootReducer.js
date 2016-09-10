@@ -97,6 +97,10 @@ export const getPostsByPlaceId = (state, placeId) => {
   return fromPosts.getPostsByPlaceId(state.posts, placeId);
 };
 
+export const getPostsByTagName = (state, tagName) => {
+  return fromPosts.getPostsByTagName(state.posts, tagName);
+};
+
 export const getFollowersByUsername = (state, username) => {
   return fromFollowersFollowing.getFollowersByUsername(state.followersFollowing, username);
 };

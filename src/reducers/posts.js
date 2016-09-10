@@ -13,12 +13,15 @@ import {
   FETCH_POSTS_BY_USERNAME_SUCCESS,
   FETCH_POSTS_BY_USERNAME_FAILURE,
   FETCH_POSTS_BY_LOCATION_SUCCESS,
-  FETCH_POSTS_BY_LOCATION_FAILURE
+  FETCH_POSTS_BY_LOCATION_FAILURE,
+  FETCH_POSTS_BY_TAG_SUCCESS,
+  FETCH_POSTS_BY_TAG_FAILURE,
 } from '../actions/actionTypes';
 
 const initialState = {
   allIds: [],
   idsByPlaceId: {},
+  idsByTagName: {},
   byId: {},
   isFetching: false,
   isUploading: false,
@@ -60,6 +63,18 @@ const idsByPlaceId = (state = initialState.idsByPlaceId, action) => {
   }
 }
 
+const idsByTagName = (state = initialState.idsByTagName, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_BY_TAG_SUCCESS:
+      return {
+        ...state,
+        [action.tagName]: action.payload.map(post => post.id)
+      }
+    default:
+      return state;
+  }
+}
+
 const post = (state = {}, action) => {
   switch (action.type) {
     case LIKE_POST:
@@ -87,6 +102,8 @@ const byId = (state = initialState.byId, action) => {
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
     case FETCH_POSTS_BY_USERNAME_SUCCESS:
+    case FETCH_POSTS_BY_LOCATION_SUCCESS:
+    case FETCH_POSTS_BY_TAG_SUCCESS:
       return action.payload.reduce((nextState, post) => {
         nextState[post.id] = post;
         return nextState;
@@ -127,6 +144,8 @@ const isFetching = (state = initialState.isFetching, action) => {
     case FETCH_POSTS_BY_USERNAME_FAILURE:
     case FETCH_POSTS_BY_LOCATION_SUCCESS:
     case FETCH_POSTS_BY_LOCATION_FAILURE:
+    case FETCH_POSTS_BY_TAG_SUCCESS:
+    case FETCH_POSTS_BY_TAG_FAILURE:
       return false;
     default:
       return state;
@@ -157,6 +176,7 @@ const pagination = (state = initialState.pagination, action) => {
 export default combineReducers({
   allIds,
   idsByPlaceId,
+  idsByTagName,
   byId,
   isFetching,
   isUploading,
@@ -179,6 +199,15 @@ export const getIsFetching = (state) => {
 
 export const getPostsByPlaceId = (state, placeId) => {
   const ids = state.idsByPlaceId[placeId];
+  if (!ids) {
+    return [];
+  }
+
+  return ids.map(id => state.byId[id]);
+}
+
+export const getPostsByTagName = (state, tagName) => {
+  const ids = state.idsByTagName[tagName];
   if (!ids) {
     return [];
   }

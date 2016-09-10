@@ -11,7 +11,7 @@ class CommentItem extends React.Component {
           if (word.indexOf('#') === 0) {
             return (
               <Link
-                to={`/tags/${word.substring(1)}`}
+                to={`/explore/tags/${word.substring(1)}`}
                 key={idx}
                 className="CommentItem__link">
                 {` ${word}`}
