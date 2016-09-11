@@ -8,7 +8,11 @@ import {
   FETCH_POSTS_BY_TAG_SUCCESS,
   FETCH_POSTS_BY_TAG_FAILURE
 } from '../actionTypes';
-import { getAuthToken, getPostsNextPage } from '../../store/rootReducer';
+import {
+  getAuthToken,
+  getPostsNextPage,
+  getPaginationByTagName,
+} from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
 
 export const fetchPosts = () => (dispatch, getState) => {
@@ -73,10 +77,14 @@ export const fetchPostsByTagName = (tagName) => (dispatch, getState) => {
   dispatch({type: FETCH_POSTS_START});
 
   const authToken = getAuthToken(getState());
+  const pagination = getPaginationByTagName(getState(), tagName);
+  const url = (!pagination.nextPage) ?
+              `${API_URL}/posts/tags/${tagName}` :
+              `${API_URL}/posts/tags/${tagName}?page=${pagination.nextPage}`;
 
   return axios({
     method: 'get',
-    url: `${API_URL}/posts/tags/${tagName}`,
+    url,
     headers: {
       'Authorization': `Token ${authToken}`,
     },
@@ -86,6 +94,7 @@ export const fetchPostsByTagName = (tagName) => (dispatch, getState) => {
     dispatch({
       type: FETCH_POSTS_BY_TAG_SUCCESS,
       payload: data.posts,
+      pagination: data.meta,
       tagName,
     })
   }, (error) => {

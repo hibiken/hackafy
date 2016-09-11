@@ -1,0 +1,12 @@
+.LoadMoreButton__root {
+  text-align: center;
+}
+
+.LoadMoreButton__button {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  color: #3897f0;
+  padding: 0;
+  border: 2px solid #3897f0;
+}

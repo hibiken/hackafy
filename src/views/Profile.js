@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
+import LoadMoreButton from '../components/LoadMoreButton';
 import UsersModal from '../containers/UsersModal';
 import PhotoGrid from '../containers/PhotoGrid';
 import {
@@ -187,20 +188,6 @@ class Profile extends React.Component {
     )
   }
 
-  renderLoadMoreButton() {
-    if (this.props.pagination.nextPage && !this.state.endlessScroll) {
-      return (
-        <div className="Profile__load-more-btn-container">
-          <button
-            className="Profile__load-more-btn"
-            onClick={this.enableEndlessScroll}>
-            Load more
-          </button>
-        </div>
-      );
-    }
-  }
-
   render() {
     const { isFetching, user } = this.props;
     if (isFetching || !user) {
@@ -249,7 +236,10 @@ class Profile extends React.Component {
           posts={this.props.posts}
           maxCount={(this.state.endlessScroll ? null : 9)}
         />
-        {this.renderLoadMoreButton()}
+        <LoadMoreButton
+          show={this.props.pagination.nextPage && !this.state.endlessScroll}
+          onClick={this.enableEndlessScroll}
+        />
         <NewPostButton />
         {this.renderLogoutModal()}
         {this.renderUsersModal()}

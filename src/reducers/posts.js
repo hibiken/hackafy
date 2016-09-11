@@ -17,6 +17,7 @@ import {
   FETCH_POSTS_BY_TAG_SUCCESS,
   FETCH_POSTS_BY_TAG_FAILURE,
 } from '../actions/actionTypes';
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
   allIds: [],
@@ -32,6 +33,7 @@ const initialState = {
     totalPages: null,
     totalCount: null,
   },
+  paginationsByTagName: {},
 };
 
 const allIds = (state = initialState.allIds, action) => {
@@ -63,13 +65,29 @@ const idsByPlaceId = (state = initialState.idsByPlaceId, action) => {
   }
 }
 
+const _idsByTagName = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_POSTS_BY_TAG_SUCCESS:
+      return action.payload.reduce((nextState, post) => {
+        if (nextState.indexOf(post.id) === -1) {
+          nextState.push(post.id);
+        }
+        return nextState;
+      }, [...state]);
+    default:
+      return state;
+  }
+}
+
 const idsByTagName = (state = initialState.idsByTagName, action) => {
   switch (action.type) {
     case FETCH_POSTS_BY_TAG_SUCCESS:
       return {
         ...state,
-        [action.tagName]: action.payload.map(post => post.id)
+        [action.tagName]: _idsByTagName(state[action.tagName], action),
       }
+    case LOCATION_CHANGE:
+      return {};
     default:
       return state;
   }
@@ -173,6 +191,29 @@ const pagination = (state = initialState.pagination, action) => {
   }
 }
 
+const _tagsPagination = (state = {}, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_BY_TAG_SUCCESS:
+      return action.pagination;
+    default:
+      return state;
+  }
+}
+
+const paginationsByTagName = (state = initialState.paginationsByTagName, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_BY_TAG_SUCCESS:
+      return {
+        ...state,
+        [action.tagName]: _tagsPagination(state[action.tagName], action),
+      };
+    case LOCATION_CHANGE:
+      return {};
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   allIds,
   idsByPlaceId,
@@ -181,6 +222,7 @@ export default combineReducers({
   isFetching,
   isUploading,
   pagination,
+  paginationsByTagName,
 });
 
 /*** Selectors ***/
@@ -218,3 +260,7 @@ export const getPostsByTagName = (state, tagName) => {
 export const getCurrentPage = (state) => state.pagination.currentPage;
 export const getNextPage = (state) => state.pagination.nextPage;
 export const getTotalPages = (state) => state.pagination.totalPages;
+
+export const getPaginationByTagName = (state, tagName) => {
+  return state.paginationsByTagName[tagName] || {}
+}
