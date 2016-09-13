@@ -6,8 +6,9 @@ import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
 import followersFollowing, * as fromFollowersFollowing from '../reducers/followersFollowing';
 import notifications, * as fromNotifications from '../reducers/notifications';
+import { USER_SIGN_OUT } from '../actions/actionTypes';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   routing,
   form,
   currentUser,
@@ -16,6 +17,17 @@ const rootReducer = combineReducers({
   followersFollowing,
   notifications,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === USER_SIGN_OUT) {
+    // Reset redux state to initialState.
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+}
+
+export default rootReducer;
 
 /*** Selectors ***/
 export const getIsSignedIn = (state) => {
@@ -140,5 +152,3 @@ export const getNotificationsTotalPages = (state) => {
 export const getNotificationsCurrentPage = (state) => {
   return fromNotifications.getCurrentPage(state.notifications);
 };
-
-export default rootReducer;

@@ -7,7 +7,6 @@ import {
   USER_SIGN_IN_FAILURE,
   FACEBOOK_LOGIN_START,
   FACEBOOK_LOGIN_SUCCESS,
-  USER_SIGN_OUT,
   PROFILE_UPDATE_SUCCESS,
   POST_UPLOAD_SUCCESS,
   LIKE_POST,
@@ -97,8 +96,6 @@ const currentUser = (state = initialState, action) => {
         ...state,
         followingIds: state.followingIds.filter(id => id !== action.userId)
       }
-    case USER_SIGN_OUT:
-      return initialState;
     case LOCATION_CHANGE:
       return {
         ...state,

@@ -6,7 +6,6 @@ import {
   FETCH_NOTIFICATION_COUNT,
   CLEAR_NOTIFICATIONS,
   TOUCH_NOTIFICATION,
-  USER_SIGN_OUT
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -32,8 +31,6 @@ const allIds = (state = initialState.allIds, action) => {
         }
         return nextState;
       }, [...state]);
-    case USER_SIGN_OUT:
-      return [];
     default:
       return state;
   }
@@ -58,8 +55,6 @@ const byId = (state = initialState.byId, action) => {
         nextState[notification.id] = notification;
         return nextState;
       }, {...state});
-    case USER_SIGN_OUT:
-      return {};
     case TOUCH_NOTIFICATION:
       return {
         ...state,
@@ -74,7 +69,6 @@ const count = (state = initialState.count, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATION_COUNT:
       return action.count;
-    case USER_SIGN_OUT:
     case CLEAR_NOTIFICATIONS:
       return 0;
     default:
@@ -98,8 +92,6 @@ const pagination = (state = initialState.pagination, action) => {
   switch (action.type) {
     case FETCH_NOTIFICATIONS_SUCCESS:
       return action.pagination;
-    case USER_SIGN_OUT:
-      return initialState.pagination;
     default:
       return state;
   }
