@@ -1,0 +1,59 @@
+.NotificationDropdown__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.NotificationDropdown__arrow {
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border: 1px solid #efefef;
+  z-index: 11;
+  transform: rotate(45deg);
+  position: relative;
+  left: 7px;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.13);
+}
+
+.NotificationDropdown__arrow-connect {
+  border-color: transparent transparent #fff;
+  border-style: solid;
+  border-width: 0 10px 10px;
+  height: 0;
+  position: relative;
+  bottom: 19px;
+  left: 5px;
+  z-index: 12;
+  width: 0;
+}
+
+.NotificationDropdown__dropdown-wrapper {
+  background-color: white;
+  position: absolute;
+  border: 1px solid #dbdbdb;
+  top: 50px;
+  right: 80px;
+  z-index: 11;
+  min-width: 500px;
+  background: #fff;
+  border: solid 1px #efefef;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,.13);
+  max-height: 362px;
+  min-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.NotificationDropdown__notifications-container {
+
+}
+
+.NotificationDropdown__spinner-container {
+  text-align: center;
+  padding: 15px;
+}

@@ -1,0 +1,9 @@
+.NotificationButton__button {
+  display: block
+}
+
+.NotificationButton__button--active {
+  background-color: #6559ca;
+  color: white !important;
+  border-radius: 50%;
+}
