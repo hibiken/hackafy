@@ -1,17 +1,10 @@
-import React from 'react';
-import  { connect } from 'react-redux';
-import {
-  getIsSignedIn,
-  getCurrentUser,
-} from '../store/rootReducer';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import NavLink from '../components/NavLink';
-import NotificationContainer from './NotificationContainer';
-
+import NavLink from './NavLink';
+import NotificationContainer from '../containers/NotificationContainer';
 import '../styles/Header.css';
 
 class Header extends React.Component {
-
   renderNavs() {
     if (this.props.isSignedIn) {
       return (
@@ -61,12 +54,10 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isSignedIn: getIsSignedIn(state),
-  currentUser: getCurrentUser(state),
-});
+Header.propTypes = {
+  location: PropTypes.object.isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
+  currentUser: PropTypes.object.isRequired,
+};
 
-
-export default connect(
-  mapStateToProps
-)(Header);
+export default Header;

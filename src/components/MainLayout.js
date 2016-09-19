@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import Header from '../containers/Header';
+import HeaderContainer from '../containers/HeaderContainer';
 import '../styles/MainLayout.css';
 
 const MainLayout = (props) => {
   return (
     <div className="MainLayout__root">
-      <Header location={props.location} />
+      <HeaderContainer location={props.location} />
       <div style={{minHeight: '100vh'}}>
         {props.children}
       </div>
