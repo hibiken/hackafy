@@ -15,10 +15,12 @@ import '../styles/PhotoGallery.css'
 
 
 class PhotoGallery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleScroll = this._handleScroll.bind(this);
+  }
   componentWillMount() {
     this.props.fetchPosts();
-
-    this.handleScroll = this._handleScroll.bind(this);
   }
 
   _handleScroll() {
