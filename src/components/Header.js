@@ -23,7 +23,7 @@ class Header extends React.Component {
             </NavLink>
           </li>
         </ul>
-      )
+      );
     } else {
       return (
         <ul className="Header__nav-group">
@@ -34,7 +34,7 @@ class Header extends React.Component {
             <NavLink to="/signup">Sign Up</NavLink>
           </li>
         </ul>
-      )
+      );
     }
   }
 
