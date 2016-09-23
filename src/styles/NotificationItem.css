@@ -4,6 +4,7 @@
   align-items: center;
   border-bottom: 1px solid #dbdbdb;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .NotificationItem__root--unread {

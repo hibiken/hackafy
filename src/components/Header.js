@@ -10,13 +10,17 @@ class Header extends React.Component {
       return (
         <ul className="Header__nav-group">
           <li className="Header__nav-link">
-            <NavLink to="/explore">Explore</NavLink>
+            <NavLink to="/explore">
+              <i className="fa fa-compass" aria-hidden="true"/>
+            </NavLink>
           </li>
           <li className="Header__nav-link Header__notification-nav">
             <NotificationContainer location={this.props.location} />
           </li>
           <li className="Header__nav-link">
-            <NavLink to={`/${this.props.currentUser.username}`}>Profile</NavLink>
+            <NavLink to={`/${this.props.currentUser.username}`}>
+              <i className="fa fa-smile-o" aria-hidden="true"/>
+            </NavLink>
           </li>
         </ul>
       )
@@ -41,10 +45,11 @@ class Header extends React.Component {
           <div className="row  Header__container">
             <div className="three columns">
               <h1 className="Header__logo">
-                <Link to="/" className="Header__logo-link">Hackafy</Link>
+                <Link to="/" className="Header__logo-link">
+                  <i className="fa fa-instagram Header__instagram-icon" aria-hidden="true"/> Hackafy</Link>
               </h1>
             </div>
-            <nav className="offset-by-six three columns">
+            <nav className="offset-by-seven two columns">
               {this.renderNavs()}
             </nav>
           </div>

@@ -4,17 +4,27 @@
 }
 
 .Header__container {
-  padding: 1.3rem 0;
+  padding: 1.5rem 0;
 }
 
 .Header__logo {
-  font-size: 22px;
+  font-size: 24px;
   margin: 0;
 }
 
 .Header__logo-link {
   text-decoration: none;
   color: #262626;
+}
+
+.Header__logo-link:hover {
+  color: #262626;
+}
+
+.Header__instagram-icon {
+  padding-right: 10px;
+  border-right: 1px solid;
+  margin-right: 8px;
 }
 
 .Header__nav-group {
@@ -27,16 +37,21 @@
 
 .Header__nav-link {
   margin: 0;
+  font-size: 20px;
 }
 
 .Header__nav-link a {
   text-decoration: none;
+  color: #999;
+}
+
+.Header__nav-link a:hover,
+.Header__nav-link a:active {
   color: #262626;
 }
 
 .Header__nav-link .NavLink--active {
-  padding-bottom: 2px;
-  border-bottom: 2px solid;
+  color: #262626;
 }
 
 .Header__notification-nav {
@@ -44,8 +59,6 @@
   width: 30px;
   height: 30px;
   text-align: center;
-  border: 1px solid #dbdbdb;
-  line-height: 2;
   border-radius: 50%;
   cursor: pointer;
 }
