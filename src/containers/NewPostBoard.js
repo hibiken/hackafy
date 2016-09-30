@@ -4,32 +4,10 @@ import { connect } from 'react-redux';
 import { uploadPost } from '../actions';
 import FilterButton from  '../components/FilterButton';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
+import Slider from 'material-ui/Slider';
+import { filters, filterStyles, getFilterStyle } from '../config/filters';
 
 import '../styles/NewPostBoard.css';
-
-const filters = [
-  {label: '1977', className: '_1977' },
-  {label: 'ADEN', className: 'aden'},
-  {label: 'Brooklyn', className: 'brooklyn'},
-  {label: 'Clarendon', className: 'clarendon'},
-  {label: 'earlybird', className: 'earlybird'},
-  {label: 'Gingham', className: 'gingham'},
-  {label: 'Hudson', className: 'hudson'},
-  {label: 'Inkwell', className: 'inkwell'},
-  {label: 'lark', className: 'lark'},
-  {label: 'Lo-Fi', className: 'lofi'},
-  {label: 'Mayfair', className: 'mayfair'},
-  {label: 'Moon', className: 'moon'},
-  {label: 'Nashville', className: 'nashville'},
-  {label: 'Perpetua', className: 'perpetua'},
-  {label: 'Reyes', className: 'reyes'},
-  {label: 'Rise', className: 'rise'},
-  {label: 'Slumber', className: 'slumber'},
-  {label: 'Toaster', className: 'toaster'},
-  {label: 'Walden', className: 'walden'},
-  {label: 'Willow', className: 'willow'},
-  {label: 'X-pro II', className: 'xpro2'},
-];
 
 class NewPostBoard extends React.Component {
   constructor(props) {
@@ -40,12 +18,20 @@ class NewPostBoard extends React.Component {
       filter: '',
       caption: '',
       address: 'San Francisco, CA',
+      filterStyle: {
+        brightness: 1.0,
+        contrast: 1.0,
+        saturate: 1.0,
+      },
     }
 
     this.onDrop = this._onDrop.bind(this);
     this.onCaptionChange = (e) => this.setState({ caption: e.target.value });
     this.onAddressChange = (address) => this.setState({ address });
     this.onSubmit = this._onSubmit.bind(this);
+    this.onSaturationChange = this._onSaturationChange.bind(this);
+    this.onContrastChange = this._onContrastChange.bind(this);
+    this.onBrightnessChange = this._onBrightnessChange.bind(this);
   }
 
   _onDrop(files) {
@@ -71,7 +57,33 @@ class NewPostBoard extends React.Component {
     } else {
       this.props.uploadPost({ caption, filter }, files[0]);
     }
+  }
 
+  _onSaturationChange(event, value) {
+    this.setState({
+      filterStyle: {
+        ...this.state.filterStyle,
+        saturate: value,
+      }
+    });
+  }
+
+  _onContrastChange(event, value) {
+    this.setState({
+      filterStyle: {
+        ...this.state.filterStyle,
+        contrast: value,
+      }
+    });
+  }
+
+  _onBrightnessChange(event, value) {
+    this.setState({
+      filterStyle: {
+        ...this.state.filterStyle,
+        brightness: value,
+      }
+    });
   }
 
   renderDropzone() {
@@ -83,7 +95,9 @@ class NewPostBoard extends React.Component {
           multiple={false}
           accept="image/*"
           onDrop={this.onDrop}>
-          <figure className={`NewPostBoard__preview-filter ${this.state.filter}`}>
+          <figure
+            className={`NewPostBoard__preview-filter ${this.state.filter}`}
+            style={getFilterStyle(this.state.filterStyle)}>
             <div
               className="NewPostBoard__preview-img"
               style={{backgroundImage: `url(${preview})`}}>
@@ -113,7 +127,7 @@ class NewPostBoard extends React.Component {
             <FilterButton
               key={idx}
               active={this.state.filter === f.className}
-              onMouseDown={() => this.setState({ filter: f.className })}
+              onMouseDown={() => this.setState({ filter: f.className, filterStyle: filterStyles[f.className] })}
               imagePath={preview}
               filter={f.className}
               >
@@ -156,6 +170,36 @@ class NewPostBoard extends React.Component {
         <div className="NewPostBoard__dropzone-wrapper">
           {this.renderDropzone()}
         </div>
+
+        <Slider
+          defaultValue={1.0}
+          value={this.state.filterStyle.brightness}
+          onChange={this.onBrightnessChange}
+          min={0}
+          max={2}
+          step={0.01}
+        />
+        <div>Brightness: {this.state.filterStyle.brightness}</div>
+
+        <Slider
+          defaultValue={1.0}
+          value={this.state.filterStyle.contrast}
+          onChange={this.onContrastChange}
+          min={0}
+          max={2}
+          step={0.01}
+        />
+        <div>Contrast: {this.state.filterStyle.contrast}</div>
+
+        <Slider
+          defaultValue={1.0}
+          value={this.state.filterStyle.saturate}
+          onChange={this.onSaturationChange}
+          min={0}
+          max={2}
+          step={0.01}
+        />
+        <div>Saturation: {this.state.filterStyle.saturate}</div>
 
         {this.renderFilterOptions()}
 
