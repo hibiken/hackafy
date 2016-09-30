@@ -5,7 +5,7 @@ const NotificationButton = (props) => {
   if (props.notificationsCount === 0) {
     return (
       <a className="NotificationButton__button" href="#">
-        <i className="fa fa-heart-o" aria-hidden="true"/>
+        <i className="fa fa-heart-o Header__nav-icon" aria-hidden="true"/>
       </a>
     );
   } else {

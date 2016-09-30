@@ -37,12 +37,18 @@
 
 .Header__nav-link {
   margin: 0;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .Header__nav-link a {
   text-decoration: none;
   color: #999;
+}
+
+.Header__nav-icon.fa {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 20px;
 }
 
 .Header__nav-link a:hover,

@@ -6,4 +6,9 @@
   background-color: #6559ca;
   color: white !important;
   border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+  line-height: 2;
+  margin-top: 5px;
 }

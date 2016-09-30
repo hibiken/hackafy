@@ -11,7 +11,7 @@ class Header extends React.Component {
         <ul className="Header__nav-group">
           <li className="Header__nav-link">
             <NavLink to="/explore">
-              <i className="fa fa-compass" aria-hidden="true"/>
+              <i className="fa fa-compass Header__nav-icon" aria-hidden="true"/>
             </NavLink>
           </li>
           <li className="Header__nav-link Header__notification-nav">
@@ -19,7 +19,7 @@ class Header extends React.Component {
           </li>
           <li className="Header__nav-link">
             <NavLink to={`/${this.props.currentUser.username}`}>
-              <i className="fa fa-smile-o" aria-hidden="true"/>
+              <i className="fa fa-smile-o Header__nav-icon" aria-hidden="true"/>
             </NavLink>
           </li>
         </ul>
