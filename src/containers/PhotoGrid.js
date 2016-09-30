@@ -105,6 +105,7 @@ class PhotoGrid extends React.Component {
               filter={post.filter}
               likesCount={post.likesCount}
               commentsCount={post.comments.length}
+              filterStyle={post.filterStyle}
             />
           ))}
         </div>

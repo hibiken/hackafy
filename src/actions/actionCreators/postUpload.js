@@ -8,7 +8,7 @@ import {
 import { API_URL } from '../../config/constants';
 import { getAuthToken } from '../../store/rootReducer';
 
-export const uploadPost = ({ caption, filter, address, lat, lng, placeId }, file) => (dispatch, getState) => {
+export const uploadPost = ({ caption, filter, address, lat, lng, placeId, filterStyle }, file) => (dispatch, getState) => {
   dispatch({type: POST_UPLOAD_START});
 
   const authToken = getAuthToken(getState());
@@ -22,6 +22,7 @@ export const uploadPost = ({ caption, filter, address, lat, lng, placeId }, file
     formData.append('lat', lat);
     formData.append('lng', lng);
     formData.append('place_id', placeId);
+    formData.append('filter_style', JSON.stringify(filterStyle));
   }
 
   return axios({

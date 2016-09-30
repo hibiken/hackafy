@@ -43,7 +43,7 @@ class NewPostBoard extends React.Component {
     if (this.state.files.length === 0) {
       return false;
     }
-    const { caption, filter, files, address } = this.state;
+    const { caption, filter, files, address, filterStyle } = this.state;
 
     if (address) {
       geocodeByAddress(address, (err, { lat, lng }, placeId) => {
@@ -52,10 +52,10 @@ class NewPostBoard extends React.Component {
           // TODO: error message
         }
         console.log('geocode success', lat, lng, placeId);
-        this.props.uploadPost({ caption, filter, address, lat, lng, placeId }, files[0]);
+        this.props.uploadPost({ caption, filter, address, lat, lng, placeId, filterStyle }, files[0]);
       });
     } else {
-      this.props.uploadPost({ caption, filter }, files[0]);
+      this.props.uploadPost({ caption, filter, filterStyle }, files[0]);
     }
   }
 

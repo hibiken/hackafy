@@ -4,6 +4,7 @@ import { getAvatarUrl, getImageUrl, pluralize } from '../utils/helpers';
 import LikeButton from './LikeButton';
 import CommentBox from './CommentBox';
 import FollowButton from './FollowButton';
+import { getFilterStyle } from '../config/filters';
 import '../styles/PostModal.css';
 
 class PostModal extends React.Component {
@@ -36,6 +37,14 @@ class PostModal extends React.Component {
     }
   }
 
+  getFilterStyle = () => {
+    const { filterStyle } = this.props.post;
+    if (filterStyle === '') {
+      return {}
+    }
+    return getFilterStyle(JSON.parse(filterStyle));
+  }
+
   renderFollowButton(){
     if (this.props.showFollowButton) {
       return (
@@ -62,7 +71,7 @@ class PostModal extends React.Component {
               <button onClick={this.props.onPrevClick} className="PostModal__prev-btn">
                 <i className="fa fa-angle-left" />
               </button>
-              <div className={post.filter}>
+              <div className={post.filter} style={this.getFilterStyle()}>
                 <img
                   src={getImageUrl(post.photoUrl)}
                   role="presentation"

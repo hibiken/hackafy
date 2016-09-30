@@ -5,6 +5,7 @@ import LikeButton from './LikeButton';
 import CommentBox from './CommentBox';
 import CommentItem from './CommentItem';
 import { Link } from 'react-router';
+import { getFilterStyle } from '../config/filters';
 
 import '../styles/GalleryItem.css';
 
@@ -17,6 +18,7 @@ class GalleryItem extends React.Component {
     };
 
     this.onImageDoubleClick = this._onImageDoubleClick.bind(this);
+    this.getFilterStyle = this._getFilterStyle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,6 +33,14 @@ class GalleryItem extends React.Component {
       this.props.onLike()
         .then(() => this.setState({ showHeartAnimation: true }));
     }
+  }
+
+  _getFilterStyle() {
+    if (this.props.filterStyle === '') {
+      return {}
+    }
+
+    return getFilterStyle(JSON.parse(this.props.filterStyle));
   }
 
   renderLikes() {
@@ -87,6 +97,7 @@ class GalleryItem extends React.Component {
         avatarUrl
       }
     } = this.props;
+
     return (
       <article className="GalleryItem__root">
         <div className="GalleryItem-header">
@@ -113,7 +124,8 @@ class GalleryItem extends React.Component {
         </div>
         <div
           onDoubleClick={this.onImageDoubleClick}
-          className={`GalleryItem__body ${filter || ''}`}>
+          className={`GalleryItem__body ${filter || ''}`}
+          style={this.getFilterStyle()}>
           <img src={getImageUrl(photoUrl)} role="presentation" />
           {this.renderHeartAnimation()}
         </div>
