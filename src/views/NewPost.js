@@ -7,7 +7,7 @@ const NewPost = (props) => {
   return (
     <div className="NewPost__root container">
       <div className="row">
-        <div className="six columns offset-by-three">
+        <div className="">
           <NewPostBoard />
         </div>
       </div>

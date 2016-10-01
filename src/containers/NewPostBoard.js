@@ -167,43 +167,72 @@ class NewPostBoard extends React.Component {
     console.log('this.props', this.props);
     return (
       <div className="NewPostBoard__root">
-        <div className="NewPostBoard__dropzone-wrapper">
-          {this.renderDropzone()}
+        <div className="row">
+          <div className="six columns">
+            <div className="NewPostBoard__dropzone-wrapper">
+              {this.renderDropzone()}
+            </div>
+          </div>
+          <div className="six columns">
+            <div className="NewPostBoard__slider-wrapper">
+              <div className="NewPostBoard__slider-item">
+                <label className="NewPostBoard__slider-label">
+                  <i className="fa fa-sun-o NewPostBoard__slider-icon" aria-hidden="true"/> Brightness
+                </label>
+                <Slider
+                  defaultValue={1.0}
+                  value={this.state.filterStyle.brightness}
+                  onChange={this.onBrightnessChange}
+                  min={0.20}
+                  max={2.00}
+                  step={0.01}
+                  disabled={this.state.files.length === 0}
+                />
+              </div>
+
+              <div className="NewPostBoard__slider-item">
+                <label className="NewPostBoard__slider-label">
+                  <i className="fa fa-adjust NewPostBoard__slider-icon" aria-hidden="true"/> Contrast
+                </label>
+                <Slider
+                  defaultValue={1.0}
+                  value={this.state.filterStyle.contrast}
+                  onChange={this.onContrastChange}
+                  min={0.20}
+                  max={2.00}
+                  step={0.01}
+                  disabled={this.state.files.length === 0}
+                />
+              </div>
+
+              <div className="NewPostBoard__slider-item">
+                <label className="NewPostBoard__slider-label">
+                  <i className="fa fa-tint NewPostBoard__slider-icon" aria-hidden="true" /> Saturation
+                </label>
+                <Slider
+                  defaultValue={1.0}
+                  value={this.state.filterStyle.saturate}
+                  onChange={this.onSaturationChange}
+                  min={0.00}
+                  max={3.00}
+                  step={0.01}
+                  disabled={this.state.files.length === 0}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <Slider
-          defaultValue={1.0}
-          value={this.state.filterStyle.brightness}
-          onChange={this.onBrightnessChange}
-          min={0}
-          max={2}
-          step={0.01}
-        />
-        <div>Brightness: {this.state.filterStyle.brightness}</div>
+        <div className="row">
+          <div className="twelve columns">
+            {this.renderFilterOptions()}
+          </div>
+          <div>
+            {this.renderCaptionField()}
+          </div>
+        </div>
 
-        <Slider
-          defaultValue={1.0}
-          value={this.state.filterStyle.contrast}
-          onChange={this.onContrastChange}
-          min={0}
-          max={2}
-          step={0.01}
-        />
-        <div>Contrast: {this.state.filterStyle.contrast}</div>
 
-        <Slider
-          defaultValue={1.0}
-          value={this.state.filterStyle.saturate}
-          onChange={this.onSaturationChange}
-          min={0}
-          max={2}
-          step={0.01}
-        />
-        <div>Saturation: {this.state.filterStyle.saturate}</div>
-
-        {this.renderFilterOptions()}
-
-        {this.renderCaptionField()}
       </div>
     )
   }

@@ -12,10 +12,10 @@
 }
 
 .NewPostBoard__filters {
-  text-align: center;
 }
 
-.NewPostBoard__dropzone-wrapper {
+.NewPostBoard__dropzone-wrapper,
+.NewPostBoard__slider-wrapper {
   padding: 50px 0;
 }
 
@@ -24,5 +24,14 @@
   height: 400px;
   border: 2px dashed rgb(102, 102, 102);
   border-radius: 5px;
-  margin: auto;
+}
+
+.NewPostBoard__slider-icon {
+  width: 20px;
+  text-align: center;
+  font-size: 18px !important;
+}
+
+.NewPostBoard__slider-label {
+  color: #555;
 }
