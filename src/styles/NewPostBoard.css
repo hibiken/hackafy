@@ -11,9 +11,6 @@
   padding: 0;
 }
 
-.NewPostBoard__filters {
-}
-
 .NewPostBoard__dropzone-wrapper,
 .NewPostBoard__slider-wrapper {
   padding: 50px 0;
@@ -38,4 +35,29 @@
 
 .NewPostBoard__spinner {
   font-size: 16px;
+}
+
+.NewPostBoard__dropzone-inner-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.NewPostBoard__dropzone-inner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.NewPostBoard__dropzone-icon {
+  font-size: 40px !important;
+  color: #555;
+}
+
+.NewPostBoard__dropzone-text {
+  font-size: 20px;
+  color: #555;
 }

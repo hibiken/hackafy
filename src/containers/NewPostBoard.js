@@ -113,7 +113,14 @@ class NewPostBoard extends React.Component {
           onDrop={this.onDrop}
           multiple={false}
           accept="image/*">
-          <div>Drop file here!</div>
+          <div className="NewPostBoard__dropzone-inner-wrapper">
+            <div className="NewPostBoard__dropzone-inner-content">
+              <div>
+                <i className="fa fa-camera NewPostBoard__dropzone-icon" aria-hidden="true" />
+              </div>
+              <div className="NewPostBoard__dropzone-text">Upload Picture</div>
+            </div>
+          </div>
         </Dropzone>
       )
     }
@@ -157,7 +164,7 @@ class NewPostBoard extends React.Component {
           />
           <button onClick={this.onSubmit} disabled={this.props.isUploading}>
             {this.props.isUploading === true
-            ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>) 
+            ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>)
             : 'Submit'}
           </button>
         </div>
@@ -166,8 +173,6 @@ class NewPostBoard extends React.Component {
   }
 
   render() {
-    console.log('this.state', this.state)
-    console.log('this.props', this.props);
     return (
       <div className="NewPostBoard__root">
         <div className="row">
