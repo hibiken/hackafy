@@ -35,3 +35,7 @@
 .NewPostBoard__slider-label {
   color: #555;
 }
+
+.NewPostBoard__spinner {
+  font-size: 16px;
+}

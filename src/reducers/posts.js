@@ -239,6 +239,8 @@ export const getIsFetching = (state) => {
   return state.isFetching;
 }
 
+export const getIsUploading = (state) => state.isUploading;
+
 export const getPostsByPlaceId = (state, placeId) => {
   const ids = state.idsByPlaceId[placeId];
   if (!ids) {

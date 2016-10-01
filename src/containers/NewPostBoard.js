@@ -6,6 +6,7 @@ import FilterButton from  '../components/FilterButton';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 import Slider from 'material-ui/Slider';
 import { filters, filterStyles, getFilterStyle } from '../config/filters';
+import { getIsUploadingPost } from '../store/rootReducer';
 
 import '../styles/NewPostBoard.css';
 
@@ -154,8 +155,10 @@ class NewPostBoard extends React.Component {
             value={this.state.address}
             onChange={this.onAddressChange}
           />
-          <button onClick={this.onSubmit}>
-            Share
+          <button onClick={this.onSubmit} disabled={this.props.isUploading}>
+            {this.props.isUploading === true
+            ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>) 
+            : 'Submit'}
           </button>
         </div>
       )
@@ -231,14 +234,16 @@ class NewPostBoard extends React.Component {
             {this.renderCaptionField()}
           </div>
         </div>
-
-
       </div>
     )
   }
 }
 
+const mapStateToProps = (state) => ({
+  isUploading: getIsUploadingPost(state),
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { uploadPost }
 )(NewPostBoard);

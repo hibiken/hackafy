@@ -75,6 +75,10 @@ export const getIsFetchingPosts = (state) => {
   return fromPosts.getIsFetching(state.posts);
 };
 
+export const getIsUploadingPost = (state) => {
+  return fromPosts.getIsUploading(state.posts);
+}
+
 export const getPostsCurrentPage = (state) => {
   return fromPosts.getCurrentPage(state.posts);
 };
