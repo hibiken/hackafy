@@ -123,7 +123,7 @@ export default publicProfiles;
 export const getPostIdsByUsername = (state, username) => {
   const user = state.byUsername[username];
   if (user) {
-    return user.postIds || [];
+    return user.postIds.sort((a, b) => b - a) || [];
   } else {
     return [];
   }
