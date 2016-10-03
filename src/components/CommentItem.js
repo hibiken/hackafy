@@ -39,7 +39,7 @@ class CommentItem extends React.Component {
     const { username } = this.props;
     return (
       <div className="CommentItem__root">
-        <strong>{username}</strong> {this.renderBody()}
+        <strong><Link to={`/${username}`} className="CommentItem__username">{username}</Link></strong> {this.renderBody()}
       </div>
     );
   }

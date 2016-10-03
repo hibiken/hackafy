@@ -12,3 +12,10 @@
 .CommentItem__link:active {
   color: #003569;
 }
+
+.CommentItem__username,
+.CommentItem__username:hover,
+.CommentItem__username:active {
+  color: #262626;
+  text-decoration: none;
+}
