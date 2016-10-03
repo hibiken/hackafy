@@ -16,6 +16,7 @@ class CommentBox extends React.Component {
     if (event.which === 13 && this.state.commentBody.trim().length > 0) {
       this.props.onSubmit(this.state.commentBody);
       this.setState({ commentBody: '' });
+      this.commentInput.blur();
     }
   }
 
@@ -29,6 +30,7 @@ class CommentBox extends React.Component {
           value={this.state.commentBody}
           onChange={this.onCommentChange}
           onKeyDown={this.handleKeyDown}
+          ref={(ref) => {this.commentInput = ref}}
         />
       </div>
     );
