@@ -7,8 +7,13 @@ import { getAuthToken } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
 
 export const likePost = (postId) => (dispatch, getState) => {
-  const authToken = getAuthToken(getState());
+  // optimistic update
+  dispatch({
+    type: LIKE_POST,
+    postId,
+  });
 
+  const authToken = getAuthToken(getState());
   return axios({
     method: 'post',
     url: `${API_URL}/posts/${postId}/likes`,
@@ -17,19 +22,24 @@ export const likePost = (postId) => (dispatch, getState) => {
     },
   })
   .then(response => {
+    // request success no-op
+  }, error => {
+    // undo optimistic update
     dispatch({
-      type: LIKE_POST,
+      type: DISLIKE_POST,
       postId,
     });
-  })
-  .catch(response => {
-    console.error('could not like post', response);
+    console.log('like post request failed', error);
   });
 }
 
 export const dislikePost = (postId) => (dispatch, getState) => {
-  const authToken = getAuthToken(getState());
+  dispatch({
+    type: DISLIKE_POST,
+    postId,
+  });
 
+  const authToken = getAuthToken(getState());
   return axios({
     method: 'delete',
     url: `${API_URL}/posts/${postId}/likes`,
@@ -38,12 +48,12 @@ export const dislikePost = (postId) => (dispatch, getState) => {
     },
   })
   .then(response => {
+    // request success noop
+  }, error => {
+    // updo optimistic update
     dispatch({
-      type: DISLIKE_POST,
+      type: LIKE_POST,
       postId,
     });
-  })
-  .catch(response => {
-    console.error('could not dislike post', response);
   });
 }
