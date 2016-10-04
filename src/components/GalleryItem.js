@@ -71,6 +71,7 @@ class GalleryItem extends React.Component {
             key={comment.id}
             username={comment.username}
             body={comment.body}
+            deletable={this.props.currentUser.username === comment.username}
           />
         ))}
       </div>
@@ -143,9 +144,7 @@ class GalleryItem extends React.Component {
               />
             </div>
             <div className="GalleryItem__comment-box">
-              <CommentBox
-                onSubmit={this.props.onCommentSubmit}
-              />
+              <CommentBox onSubmit={this.props.onCommentSubmit} />
             </div>
           </div>
         </div>

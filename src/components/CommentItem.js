@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import '../styles/CommentItem.css';
 
@@ -29,7 +29,6 @@ class CommentItem extends React.Component {
           } else {
             return ` ${word}`;
           }
-
         })}
       </span>
     )
@@ -40,9 +39,20 @@ class CommentItem extends React.Component {
     return (
       <div className="CommentItem__root">
         <strong><Link to={`/${username}`} className="CommentItem__username">{username}</Link></strong> {this.renderBody()}
+        {this.props.deletable === true ? <span className="CommentItem__delete-button"><i className="fa fa-times"/></span> : null}
       </div>
     );
   }
 }
 
 export default CommentItem;
+
+CommentItem.propTypes = {
+  username: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  deletable: PropTypes.bool.isRequired,
+};
+
+CommentItem.defaultProps = {
+  deletable: false,
+};

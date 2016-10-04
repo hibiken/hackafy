@@ -19,3 +19,8 @@
   color: #262626;
   text-decoration: none;
 }
+
+.CommentItem__delete-button {
+  float: right;
+  color: #dbdbdb;
+}

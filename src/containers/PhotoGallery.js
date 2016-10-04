@@ -8,7 +8,8 @@ import {
   getIsFetchingPosts,
   getCurrentUsersLikedPostIds,
   getPostsCurrentPage,
-  getPostsTotalPages
+  getPostsTotalPages,
+  getCurrentUser,
 } from '../store/rootReducer';
 
 import '../styles/PhotoGallery.css'
@@ -46,7 +47,7 @@ class PhotoGallery extends React.Component {
   }
 
   render() {
-    const { posts, isFetching, likedPostIds } = this.props;
+    const { posts, isFetching, likedPostIds, currentUser } = this.props;
 
     return (
       <div className="PhotoGallery__root">
@@ -58,6 +59,7 @@ class PhotoGallery extends React.Component {
             onDislike={() => this.props.dislikePost(post.id)}
             liked={likedPostIds.indexOf(post.id) >= 0}
             onCommentSubmit={(commentBody) => this.props.addComment(post.id, commentBody)}
+            currentUser={currentUser}
           />
         ))}
         {isFetching ? (
@@ -76,6 +78,7 @@ const mapStateToProps = (state) => ({
   likedPostIds: getCurrentUsersLikedPostIds(state),
   currentPage: getPostsCurrentPage(state),
   totalPages: getPostsTotalPages(state),
+  currentUser: getCurrentUser(state),
 });
 
 export default connect(
