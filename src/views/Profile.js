@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Modal from 'react-modal';
 import NewPostButton from '../components/NewPostButton';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import LoadMoreButton from '../components/LoadMoreButton';
+import ConfirmationModal from '../components/ConfirmationModal';
 import UsersModal from '../containers/UsersModal';
 import PhotoGrid from '../containers/PhotoGrid';
 import {
@@ -130,53 +130,6 @@ class Profile extends React.Component {
     }
   }
 
-  renderLogoutModal() {
-    const customStyles = {
-      overlay : {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.45)'
-      },
-      content : {
-        position: 'absolute',
-        top: '45%',
-        left: '50%',
-        right: 'initial',
-        bottom: 'initial',
-        transform: 'translate(-50%, -50%)',
-        border: '1px solid #ccc',
-        background: '#fff',
-        overflow: 'auto',
-        WebkitOverflowScrolling: 'touch',
-        borderRadius: '4px',
-        outline: 'none',
-        padding: '0px',
-      }
-    };
-    return (
-      <Modal
-        isOpen={this.state.logoutModalIsOpen}
-        onRequestClose={this.closeLogoutModal}
-        style={customStyles}>
-        <div>
-          <button
-            className="Profile__modal-button"
-            onClick={this.props.userSignOut}>
-            Log Out
-          </button>
-          <button
-            className="Profile__modal-button"
-              onClick={this.closeLogoutModal}>
-              Cancel
-          </button>
-        </div>
-      </Modal>
-    );
-  }
-
   renderUsersModal() {
     return (
       <UsersModal
@@ -241,7 +194,12 @@ class Profile extends React.Component {
           onClick={this.enableEndlessScroll}
         />
         <NewPostButton />
-        {this.renderLogoutModal()}
+        <ConfirmationModal
+          isOpen={this.state.logoutModalIsOpen}
+          onRequestClose={this.closeLogoutModal}
+          onConfirmClick={this.props.userSignOut}
+          confirmText="Log out"
+        />
         {this.renderUsersModal()}
       </div>
     )
@@ -261,7 +219,6 @@ const mapStateToProps = (state, {params}) => {
     isFetchingPosts: getIsFetchingPosts(state),
     pagination: getPaginationByUsername(state, params.username),
   }
-
 }
 
 export default connect(

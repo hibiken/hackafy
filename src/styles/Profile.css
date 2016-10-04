@@ -89,15 +89,6 @@
   font-weight: bold;
 }
 
-.Profile__modal-button {
-  display: block;
-  width: 450px;
-  line-height: 1;
-  height: 50px;
-  margin: 0;
-  border-radius: 0;
-}
-
 .PostModal__post-stats {
   padding: 12px 0;
 }
