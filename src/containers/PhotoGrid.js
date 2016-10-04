@@ -104,7 +104,7 @@ class PhotoGrid extends React.Component {
               avatarUrl={getImageUrl(post.photoUrl)}
               filter={post.filter}
               likesCount={post.likesCount}
-              commentsCount={post.comments.length}
+              commentsCount={post.commentsCount}
               filterStyle={post.filterStyle}
             />
           ))}

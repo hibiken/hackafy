@@ -71,6 +71,10 @@ export const getAllPosts = (state) => {
   return fromPosts.getAllPosts(state.posts);
 };
 
+export const getPostById = (state, id) => {
+  return fromPosts.getPostById(state.posts, id);
+};
+
 export const getIsFetchingPosts = (state) => {
   return fromPosts.getIsFetching(state.posts);
 };

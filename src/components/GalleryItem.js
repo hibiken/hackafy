@@ -63,6 +63,21 @@ class GalleryItem extends React.Component {
     }
   }
 
+  renderViewMoreComments() {
+    const { nextPage, currentPage } = this.props.commentPagination;
+    if (nextPage !== null) {
+      return (
+        <div
+          className="GalleryItem__fetch-comments-link"
+          onClick={this.props.onFetchMoreComments}>
+          {currentPage === 1
+          ? `View all ${this.props.commentsCount} comments`
+          : 'View more comments'}
+        </div>
+      );
+    }
+  }
+
   renderComments() {
     return (
       <div className="GalleryItem__comments">
@@ -135,6 +150,7 @@ class GalleryItem extends React.Component {
           {this.renderLikes()}
 
           {this.renderCaption()}
+          {this.renderViewMoreComments()}
           {this.renderComments()}
           <div className="GalleryItem__action-box">
             <div className="GalleryItem__like-button">

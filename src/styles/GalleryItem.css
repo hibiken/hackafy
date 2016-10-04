@@ -71,6 +71,16 @@
   padding: 14px 24px;
 }
 
+.GalleryItem__fetch-comments-link {
+  color: #999;
+  cursor: pointer;
+}
+
+.GalleryItem__fetch-comments-link:hover,
+.GalleryItem__fetch-comments-link:active {
+  color: #777;
+}
+
 .GalleryItem__comments {
   padding-bottom: 10px;
 }

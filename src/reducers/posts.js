@@ -17,6 +17,7 @@ import {
   FETCH_POSTS_BY_LOCATION_FAILURE,
   FETCH_POSTS_BY_TAG_SUCCESS,
   FETCH_POSTS_BY_TAG_FAILURE,
+  FETCH_MORE_COMMENTS_SUCCUESS,
 } from '../actions/actionTypes';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
@@ -118,6 +119,12 @@ const post = (state = {}, action) => {
         commentsCount: state.commentsCount - 1,
         comments: state.comments.filter(comment => comment.id !== action.commentId),
       }
+    case FETCH_MORE_COMMENTS_SUCCUESS:
+      return {
+        ...state,
+        comments: [...action.payload, ...state.comments],
+        commentPagination: action.pagination,
+      }
     default:
       return state;
   }
@@ -139,17 +146,10 @@ const byId = (state = initialState.byId, action) => {
         [action.payload.id]: action.payload,
       };
     case LIKE_POST:
-      return {
-        ...state,
-        [action.postId]: post(state[action.postId], action),
-      }
     case DISLIKE_POST:
-      return {
-        ...state,
-        [action.postId]: post(state[action.postId], action),
-      }
     case ADD_COMMENT:
     case DELETE_COMMENT:
+    case FETCH_MORE_COMMENTS_SUCCUESS:
       return {
         ...state,
         [action.postId]: post(state[action.postId], action),
@@ -241,6 +241,10 @@ export const getPostsByIds = (state, ids) => {
 export const getAllPosts = (state) => {
   const { allIds, byId } = state;
   return allIds.map(id => byId[id]);
+}
+
+export const getPostById = (state, id) => {
+  return state.byId[id] || null;
 }
 
 export const getIsFetching = (state) => {

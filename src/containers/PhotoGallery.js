@@ -1,6 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts, likePost, dislikePost, addComment, deleteComment } from '../actions';
+import {
+  fetchPosts,
+  likePost,
+  dislikePost,
+  addComment,
+  deleteComment,
+  fetchMoreComments,
+} from '../actions';
 import GalleryItem from '../components/GalleryItem';
 import Spinner from '../components/Spinner';
 import {
@@ -61,6 +68,7 @@ class PhotoGallery extends React.Component {
             onCommentSubmit={(commentBody) => this.props.addComment(post.id, commentBody)}
             onCommentDelete={(commentId) => this.props.deleteComment(post.id, commentId)}
             currentUser={currentUser}
+            onFetchMoreComments={() => this.props.fetchMoreComments(post.id)}
           />
         ))}
         {isFetching ? (
@@ -84,5 +92,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchPosts, likePost, dislikePost, addComment, deleteComment }
+  { fetchPosts, likePost, dislikePost, addComment, deleteComment, fetchMoreComments }
 )(PhotoGallery);
