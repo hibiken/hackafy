@@ -72,6 +72,7 @@ class GalleryItem extends React.Component {
             username={comment.username}
             body={comment.body}
             deletable={this.props.currentUser.username === comment.username}
+            onDelete={() => this.props.onCommentDelete(comment.id)}
           />
         ))}
       </div>

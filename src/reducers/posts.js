@@ -9,6 +9,7 @@ import {
   LIKE_POST,
   DISLIKE_POST,
   ADD_COMMENT,
+  DELETE_COMMENT,
   FETCH_POSTS_BY_USERNAME_START,
   FETCH_POSTS_BY_USERNAME_SUCCESS,
   FETCH_POSTS_BY_USERNAME_FAILURE,
@@ -111,6 +112,12 @@ const post = (state = {}, action) => {
         commentsCount: state.commentsCount + 1,
         comments: [...state.comments, action.payload],
       }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        commentsCount: state.commentsCount - 1,
+        comments: state.comments.filter(comment => comment.id !== action.commentId),
+      }
     default:
       return state;
   }
@@ -142,6 +149,7 @@ const byId = (state = initialState.byId, action) => {
         [action.postId]: post(state[action.postId], action),
       }
     case ADD_COMMENT:
+    case DELETE_COMMENT:
       return {
         ...state,
         [action.postId]: post(state[action.postId], action),

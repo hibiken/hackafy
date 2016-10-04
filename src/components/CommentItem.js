@@ -56,12 +56,15 @@ class CommentItem extends React.Component {
           </span>
           )
         : null}
-        <ConfirmationModal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          onConfirmClick={() => { console.log('delete this comment')}}
-          confirmText="Delete Comment"
-        />
+        {this.props.deletable === true
+        ? (
+          <ConfirmationModal
+            isOpen={this.state.modalIsOpen}
+            onRequestClose={this.closeModal}
+            onConfirmClick={this.props.onDelete}
+            confirmText="Delete Comment"
+          />)
+        : null}
       </div>
     );
   }
@@ -73,6 +76,7 @@ CommentItem.propTypes = {
   username: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   deletable: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func,
 };
 
 CommentItem.defaultProps = {

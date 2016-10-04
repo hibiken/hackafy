@@ -34,6 +34,7 @@ export const DISLIKE_POST = 'DISLIKE_POST';
 
 /*** Post Comments ***/
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 /*** Public Profile ***/
 export const FETCH_PUBLIC_PROFILE_START = 'FETCH_PUBLIC_PROFILE_START';
