@@ -1,8 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import ConfirmationModal from './ConfirmationModal';
 import '../styles/CommentItem.css';
 
 class CommentItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalIsOpen: false,
+    };
+
+    this.closeModal = () => this.setState({ modalIsOpen: false });
+    this.openModal = () => this.setState({ modalIsOpen: true });
+  }
   renderBody() {
     const words = this.props.body.split(/\s+/);
     return (
@@ -39,7 +49,19 @@ class CommentItem extends React.Component {
     return (
       <div className="CommentItem__root">
         <strong><Link to={`/${username}`} className="CommentItem__username">{username}</Link></strong> {this.renderBody()}
-        {this.props.deletable === true ? <span className="CommentItem__delete-button"><i className="fa fa-times"/></span> : null}
+        {this.props.deletable === true
+        ? (
+          <span className="CommentItem__delete-button" onClick={this.openModal}>
+            <i className="fa fa-times"/>
+          </span>
+          )
+        : null}
+        <ConfirmationModal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          onConfirmClick={() => { console.log('delete this comment')}}
+          confirmText="Delete Comment"
+        />
       </div>
     );
   }
