@@ -1,0 +1,24 @@
+.NotFoundPage__container {
+  text-align: center;
+}
+
+.NotFoundPage__heading {
+  margin-top: 40px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.NotFoundPage__message {
+  font-size: 16px;
+  color: #555;
+  font-weight: 100;
+}
+
+.NotFoundPage__message a,
+.NotFoundPage__message a:hover,
+.NotFoundPage__message a:active {
+  color: #003569;
+  text-decoration: none;
+  cursor: pointer;
+}

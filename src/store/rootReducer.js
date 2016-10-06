@@ -100,6 +100,10 @@ export const getPublicProfileByUsername = (state, username) => {
   return fromPublicProfiles.getPublicProfileByUsername(state.publicProfiles, username);
 };
 
+export const getPublicProfileErrors = (state) => {
+  return fromPublicProfiles.getErrors(state.publicProfiles);
+};
+
 export const getPostsByUsername = (state, username) => {
   const postIds = fromPublicProfiles.getPostIdsByUsername(state.publicProfiles, username);
   return fromPosts.getPostsByIds(state.posts, postIds);

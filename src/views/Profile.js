@@ -8,6 +8,7 @@ import LoadMoreButton from '../components/LoadMoreButton';
 import ConfirmationModal from '../components/ConfirmationModal';
 import UsersModal from '../containers/UsersModal';
 import PhotoGrid from '../containers/PhotoGrid';
+import NotFoundPage from './NotFoundPage';
 import {
   userSignOut,
   fetchPublicProfile,
@@ -19,6 +20,7 @@ import {
   getPublicProfileByUsername,
   getPostsByUsername,
   getIsFetchingPublicProfile,
+  getPublicProfileErrors,
   getCurrentUser,
   getCurrentUsersFollowingIds,
   getIsFetchingPosts,
@@ -142,7 +144,12 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { isFetching, user } = this.props;
+    const { isFetching, user, errors } = this.props;
+
+    if (isFetching === false && errors.length > 0) {
+      return (<NotFoundPage />);
+    }
+
     if (isFetching || !user) {
       return (
         <div className="Profile__spinner-container">
@@ -150,6 +157,8 @@ class Profile extends React.Component {
         </div>
       );
     }
+
+
     const { username, avatarUrl } = this.props.user;
     console.log('this.props',this.props);
     return (
@@ -218,6 +227,7 @@ const mapStateToProps = (state, {params}) => {
     isFollowing: (currentUserFollowingIds.indexOf(user.id) >= 0),
     isFetchingPosts: getIsFetchingPosts(state),
     pagination: getPaginationByUsername(state, params.username),
+    errors: getPublicProfileErrors(state),
   }
 }
 

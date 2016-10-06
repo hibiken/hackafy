@@ -13,6 +13,7 @@ const initialState = {
   allUsernames: [],
   byUsername: {},
   isFetching: false,
+  errors: [],
 };
 
 const allUsernames = (state = initialState.allUsernames, action) => {
@@ -111,10 +112,22 @@ const isFetching = (state = initialState.isFetching, action) => {
   }
 }
 
+const errors = (state = initialState.errors, action) => {
+  switch (action.type) {
+    case LOCATION_CHANGE:
+      return [];
+    case FETCH_PUBLIC_PROFILE_FAILURE:
+      return action.errors;
+    default:
+      return state;
+  }
+}
+
 const publicProfiles = combineReducers({
   allUsernames,
   byUsername,
   isFetching,
+  errors,
 });
 
 export default publicProfiles;
@@ -135,6 +148,7 @@ export const getPublicProfileByUsername = (state, username) => {
 }
 
 export const getIsFetchingPublicProfile = (state) => state.isFetching;
+export const getErrors = (state) => state.errors;
 
 export const getPaginationByUsername = (state, username) => {
   const user = getPublicProfileByUsername(state, username);

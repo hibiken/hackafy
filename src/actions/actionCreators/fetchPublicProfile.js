@@ -28,9 +28,11 @@ export const fetchPublicProfile = (username) => (dispatch, getState) => {
       payload: data.user,
       username,
     })
-  },  (response) => {
+  },  ({response}) => {
+    const { errors } = response.data;
     dispatch({
       type: FETCH_PUBLIC_PROFILE_FAILURE,
+      errors,
     })
   });
 }
