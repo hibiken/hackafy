@@ -5,6 +5,7 @@ import Root from './containers/Root';
 
 import { getIsSignedIn, getCurrentUser } from './store/rootReducer';
 import ActionCable from 'actioncable';
+import { WS_URL } from './config/constants';
 import WebNotifications from './actioncable/WebNotificationsSubscription';
 import { INCREMENT_NOTIFICATION } from './actions/actionTypes';
 
@@ -22,7 +23,7 @@ ReactDOM.render(
 
 /**** Action cable logic ***/
 window.App = {};
-window.App.cable = ActionCable.createConsumer('ws://localhost:5000/api/cable');
+window.App.cable = ActionCable.createConsumer(WS_URL);
 const isSignedIn = getIsSignedIn(store.getState());
 
 if (isSignedIn === true) {
