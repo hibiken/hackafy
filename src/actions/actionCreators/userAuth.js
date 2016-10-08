@@ -12,6 +12,7 @@ import {
   FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT
 } from '../actionTypes';
+import WebNotifications from '../../actioncable/WebNotificationsSubscription';
 
 export const userSignUp = ({email, username, password}) => (dispatch) => {
   dispatch({type: USER_SIGN_UP_START});
@@ -52,14 +53,9 @@ export const userSignIn = (credentials) => (dispatch) => {
     });
     dispatch(push('/'));
     console.log('Createing web notification subscription...')
-    window.App.WebNotificationSubscription = window.App.cable.subscriptions.create({
-      channel: "WebNotificationsChannel",
-      username: data.user.attrs.username,
-    }, {
-      received(data) {
-        console.log('ACTION CABLE', data);
-        console.log('payload', JSON.parse(data.json))
-      }
+    WebNotifications.subscribe(data.user.attrs.username, (data) => {
+      console.log('ACTION CABLE', data);
+      console.log('payload', JSON.parse(data.json))
     });
   }, ({response}) => {
     dispatch({
@@ -93,6 +89,6 @@ export const facebookLogin = ({id, username, email}) => (dispatch) => {
 
 export const userSignOut = () => (dispatch) => {
   console.log('ACTION CABLE removing subscription...')
-  window.App.cable.subscriptions.remove(window.App.WebNotificationSubscription);
+  WebNotifications.unsubscribe();
   dispatch({type: USER_SIGN_OUT})
 };
