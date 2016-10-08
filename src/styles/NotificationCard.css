@@ -1,0 +1,33 @@
+.NotificationCard__root {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  padding: 10px;
+  border-radius: 2px;
+  width: 280px;
+  z-index: 10;
+}
+
+.NotificationCard__avatar-wrapper {
+  margin-right: 10px;
+}
+
+.NotificationCard__avatar-image {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.NotificationCard__message-wrapper {
+  flex-grow: 1;
+}
+
+.NotificationCard__close-button {
+  float: right;
+  color: #dbdbdb;
+  cursor: pointer;
+}
