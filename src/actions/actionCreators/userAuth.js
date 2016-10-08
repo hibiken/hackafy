@@ -51,6 +51,16 @@ export const userSignIn = (credentials) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
+    console.log('Createing web notification subscription...')
+    window.App.WebNotificationSubscription = window.App.cable.subscriptions.create({
+      channel: "WebNotificationsChannel",
+      username: data.user.attrs.username,
+    }, {
+      received(data) {
+        console.log('ACTION CABLE', data);
+        console.log('payload', JSON.parse(data.json))
+      }
+    });
   }, ({response}) => {
     dispatch({
       type: USER_SIGN_IN_FAILURE,
@@ -81,6 +91,8 @@ export const facebookLogin = ({id, username, email}) => (dispatch) => {
   })
 };
 
-export const userSignOut = () => ({
-  type: USER_SIGN_OUT,
-});
+export const userSignOut = () => (dispatch) => {
+  console.log('ACTION CABLE removing subscription...')
+  window.App.cable.subscriptions.remove(window.App.WebNotificationSubscription);
+  dispatch({type: USER_SIGN_OUT})
+};

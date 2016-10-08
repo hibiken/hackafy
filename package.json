@@ -6,6 +6,7 @@
     "react-scripts": "0.2.0"
   },
   "dependencies": {
+    "actioncable": "5.0.0",
     "axios": "0.13.1",
     "classnames": "2.2.5",
     "lodash": "4.14.1",
