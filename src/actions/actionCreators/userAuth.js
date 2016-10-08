@@ -10,7 +10,8 @@ import {
   USER_SIGN_IN_FAILURE,
   FACEBOOK_LOGIN_START,
   FACEBOOK_LOGIN_SUCCESS,
-  USER_SIGN_OUT
+  USER_SIGN_OUT,
+  INCREMENT_NOTIFICATION,
 } from '../actionTypes';
 import WebNotifications from '../../actioncable/WebNotificationsSubscription';
 
@@ -56,6 +57,10 @@ export const userSignIn = (credentials) => (dispatch) => {
     WebNotifications.subscribe(data.user.attrs.username, (data) => {
       console.log('ACTION CABLE', data);
       console.log('payload', JSON.parse(data.json))
+      dispatch({
+        type: INCREMENT_NOTIFICATION,
+        paylaod: JSON.parse(data.json).notification,
+      });
     });
   }, ({response}) => {
     dispatch({

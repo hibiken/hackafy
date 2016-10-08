@@ -6,6 +6,7 @@ import Root from './containers/Root';
 import { getIsSignedIn, getCurrentUser } from './store/rootReducer';
 import ActionCable from 'actioncable';
 import WebNotifications from './actioncable/WebNotificationsSubscription';
+import { INCREMENT_NOTIFICATION } from './actions/actionTypes';
 
 import './styles/vendors/normalize.css';
 import './styles/vendors/skeleton.css';
@@ -30,5 +31,9 @@ if (isSignedIn === true) {
   WebNotifications.subscribe(username, (data) => {
     console.log('ACTION CABLE', data);
     console.log('payload', JSON.parse(data.json))
+    store.dispatch({
+      type: INCREMENT_NOTIFICATION,
+      payload: JSON.parse(data.json).notification,
+    });
   });
 }

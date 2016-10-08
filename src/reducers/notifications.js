@@ -6,6 +6,7 @@ import {
   FETCH_NOTIFICATION_COUNT,
   CLEAR_NOTIFICATIONS,
   TOUCH_NOTIFICATION,
+  INCREMENT_NOTIFICATION,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -31,6 +32,8 @@ const allIds = (state = initialState.allIds, action) => {
         }
         return nextState;
       }, [...state]);
+    case INCREMENT_NOTIFICATION:
+      return [...state, action.payload.id]
     default:
       return state;
   }
@@ -60,6 +63,11 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.id]: _notification(state[action.id], action)
       };
+    case INCREMENT_NOTIFICATION:
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      }
     default:
       return state;
   }
@@ -71,6 +79,8 @@ const count = (state = initialState.count, action) => {
       return action.count;
     case CLEAR_NOTIFICATIONS:
       return 0;
+    case INCREMENT_NOTIFICATION:
+      return state + 1;
     default:
         return state;
   }
@@ -110,7 +120,8 @@ export default notifications;
 /*** Selectors ***/
 export const getNotifications = (state) => {
   const { allIds, byId } = state;
-  return allIds.map(id => byId[id]);
+  const sortedIds = allIds.sort((a, b) => b -a);
+  return sortedIds.map(id => byId[id]);
 };
 
 export const getIsFetchingNotifications = (state) => state.isFetching;
