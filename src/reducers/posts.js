@@ -19,6 +19,7 @@ import {
   FETCH_POSTS_BY_TAG_FAILURE,
   FETCH_MORE_COMMENTS_SUCCUESS,
   LIKE_POST_NOTIFICATION_RECEIVED,
+  COMMENT_ON_POST_NOTIFICATION_RECEIVED,
 } from '../actions/actionTypes';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
@@ -131,6 +132,11 @@ const post = (state = {}, action) => {
         ...state,
         likesCount: action.likesCount,
       }
+    case COMMENT_ON_POST_NOTIFICATION_RECEIVED:
+      return {
+        ...state,
+        comments: [...state.comments, action.comment],
+      }
     default:
       return state;
   }
@@ -157,6 +163,7 @@ const byId = (state = initialState.byId, action) => {
     case DELETE_COMMENT:
     case FETCH_MORE_COMMENTS_SUCCUESS:
     case LIKE_POST_NOTIFICATION_RECEIVED:
+    case COMMENT_ON_POST_NOTIFICATION_RECEIVED:
       return {
         ...state,
         [action.postId]: post(state[action.postId], action),

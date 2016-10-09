@@ -1,6 +1,7 @@
 import {
   LIKE_POST_NOTIFICATION_RECEIVED,
   START_FOLLOWING_NOTIFICATION_RECEIVED,
+  COMMENT_ON_POST_NOTIFICATION_RECEIVED,
 } from '../actionTypes';
 
 export const handleNotificationReceived = (notification) =>  {
@@ -18,6 +19,13 @@ export const handleNotificationReceived = (notification) =>  {
         type: START_FOLLOWING_NOTIFICATION_RECEIVED,
         payload: notification,
         followerIds: notification.metadata.followerIds,
+      }
+    case 'COMMENT_ON_POST':
+      return {
+        type: COMMENT_ON_POST_NOTIFICATION_RECEIVED,
+        payload: notification,
+        postId: notification.notifiableId,
+        comment: notification.metadata.comment,
       }
     default:
       return;
