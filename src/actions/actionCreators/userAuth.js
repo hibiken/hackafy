@@ -93,6 +93,12 @@ export const facebookLogin = ({id, username, email}) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
+    createConsumerWithToken(data.user.authenticationToken);
+    console.log('Createing web notification subscription...')
+    WebNotifications.subscribe((data) => {
+      console.log('ACTION CABLE', data);
+      dispatch(handleNotificationReceived(data.notification))
+    });
   })
 };
 
