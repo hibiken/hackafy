@@ -6,11 +6,14 @@ import {
   FETCH_NOTIFICATION_COUNT,
   CLEAR_NOTIFICATIONS,
   TOUCH_NOTIFICATION,
-  INCREMENT_NOTIFICATION,
+  NEW_NOTIFICATION_RECEIVED,
+  HIDE_NEW_NOTIFICATION,
 } from '../actions/actionTypes';
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
   allIds: [],
+  newIds: [],
   byId: {},
   count: 0,
   isFetching: false,
@@ -32,12 +35,25 @@ const allIds = (state = initialState.allIds, action) => {
         }
         return nextState;
       }, [...state]);
-    case INCREMENT_NOTIFICATION:
+    case NEW_NOTIFICATION_RECEIVED:
       return [...state, action.payload.id]
     default:
       return state;
   }
 };
+
+const newIds = (state = initialState.newIds, action) => {
+  switch (action.type) {
+    case NEW_NOTIFICATION_RECEIVED:
+      return [...state, action.payload.id];
+    case HIDE_NEW_NOTIFICATION:
+      return state.filter(id => id !== action.id);
+    case LOCATION_CHANGE:
+      return [];
+    default:
+      return state;
+  }
+}
 
 const _notification = (state = {}, action) => {
   switch (action.type) {
@@ -63,7 +79,7 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.id]: _notification(state[action.id], action)
       };
-    case INCREMENT_NOTIFICATION:
+    case NEW_NOTIFICATION_RECEIVED:
       return {
         ...state,
         [action.payload.id]: action.payload,
@@ -79,7 +95,7 @@ const count = (state = initialState.count, action) => {
       return action.count;
     case CLEAR_NOTIFICATIONS:
       return 0;
-    case INCREMENT_NOTIFICATION:
+    case NEW_NOTIFICATION_RECEIVED:
       return state + 1;
     default:
         return state;
@@ -109,6 +125,7 @@ const pagination = (state = initialState.pagination, action) => {
 
 const notifications = combineReducers({
   allIds,
+  newIds,
   byId,
   count,
   isFetching,
@@ -123,6 +140,13 @@ export const getNotifications = (state) => {
   const sortedIds = allIds.sort((a, b) => b -a);
   return sortedIds.map(id => byId[id]);
 };
+
+export const getNewNotifications = (state) => {
+  const { newIds, byId } = state;
+  return newIds
+        .sort((a, b) => b - a)
+        .map(id => byId[id]);
+}
 
 export const getIsFetchingNotifications = (state) => state.isFetching;
 

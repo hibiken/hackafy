@@ -5,7 +5,8 @@ import {
   FETCH_NOTIFICATIONS_FAILURE,
   FETCH_NOTIFICATION_COUNT,
   CLEAR_NOTIFICATIONS,
-  TOUCH_NOTIFICATION
+  TOUCH_NOTIFICATION,
+  HIDE_NEW_NOTIFICATION,
 } from '../actionTypes';
 import { getAuthToken, getNotificationsNextPage } from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
@@ -97,3 +98,8 @@ export const touchNotification = (id) => (dispatch, getState) => {
     });
   });
 }
+
+export const hideNewNotification = (id) => ({
+  type: HIDE_NEW_NOTIFICATION,
+  id,
+})

@@ -1,7 +1,10 @@
-.NotificationCard__root {
+.NotificationCardsContainer__root {
   position: fixed;
   bottom: 30px;
   left: 30px;
+}
+
+.NotificationCard__root {
   background: #fff;
   border: 1px solid #dbdbdb;
   display: flex;
@@ -9,6 +12,8 @@
   border-radius: 2px;
   width: 280px;
   z-index: 10;
+  margin-top: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
 
 .NotificationCard__avatar-wrapper {

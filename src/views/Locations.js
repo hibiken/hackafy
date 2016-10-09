@@ -7,6 +7,7 @@ import {
 } from '../store/rootReducer';
 import Spinner from '../components/Spinner';
 import PhotoGrid from '../containers/PhotoGrid';
+import NotificationCardsContainer from '../containers/NotificationCardsContainer';
 import { GoogleMapLoader, GoogleMap, Marker } from "react-google-maps";
 import mapStyle from '../config/mapStyle.json';
 import '../styles/Locations.css';
@@ -56,6 +57,7 @@ class Locations extends React.Component {
           <h3 className="Locations__main-header">{address}</h3>
           <PhotoGrid posts={posts} />
         </div>
+        <NotificationCardsContainer />
       </div>
     );
   }

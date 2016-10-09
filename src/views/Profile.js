@@ -8,6 +8,7 @@ import LoadMoreButton from '../components/LoadMoreButton';
 import ConfirmationModal from '../components/ConfirmationModal';
 import UsersModal from '../containers/UsersModal';
 import PhotoGrid from '../containers/PhotoGrid';
+import NotificationCardsContainer from '../containers/NotificationCardsContainer';
 import NotFoundPage from './NotFoundPage';
 import {
   userSignOut,
@@ -202,6 +203,7 @@ class Profile extends React.Component {
           show={this.props.pagination.nextPage && !this.state.endlessScroll}
           onClick={this.enableEndlessScroll}
         />
+        <NotificationCardsContainer />
         <NewPostButton />
         <ConfirmationModal
           isOpen={this.state.logoutModalIsOpen}

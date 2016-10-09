@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAvatarUrl, getImageUrl } from '../utils/helpers';
+import { getAvatarUrl, getImageUrl, getNotificationMessage } from '../utils/helpers';
 import classNames from 'classnames';
 import '../styles/NotificationItem.css';
 
@@ -30,20 +30,6 @@ class NotificationItem extends React.Component {
     this.props.itemClickCallback(event);
   }
 
-  renderMessage() {
-    const { actionType, actor } = this.props.notification;
-    switch (actionType) {
-      case 'START_FOLLOWING':
-        return `${actor.username} started following you`;
-      case 'LIKE_POST':
-        return `${actor.username} likes your post`;
-      case 'COMMENT_ON_POST':
-        return `${actor.username} commented on your post`;
-      default:
-        return null;
-    }
-  }
-
   renderPhoto() {
     const { notifiableType, photoUrl } = this.props.notification;
     if (notifiableType === 'Post') {
@@ -56,7 +42,7 @@ class NotificationItem extends React.Component {
   }
 
   render() {
-    const { actor, readAt } = this.props.notification;
+    const { actor, readAt, actionType } = this.props.notification;
     const className = classNames({
       'NotificationItem__root': true,
       'NotificationItem__root--unread': !readAt,
@@ -71,7 +57,7 @@ class NotificationItem extends React.Component {
           />
         </div>
         <div>
-          {this.renderMessage()}
+          {getNotificationMessage(actionType, actor.username)}
         </div>
         {this.renderPhoto()}
       </div>

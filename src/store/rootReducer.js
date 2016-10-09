@@ -145,6 +145,10 @@ export const getNotifications = (state) => {
   return fromNotifications.getNotifications(state.notifications);
 };
 
+export const getNewNotifications = (state) => {
+  return fromNotifications.getNewNotifications(state.notifications);
+};
+
 export const getIsFetchingNotifications = (state) => {
   return fromNotifications.getIsFetchingNotifications(state.notifications);
 };

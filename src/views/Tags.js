@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPostsByTagName } from '../actions';
 import LoadMoreButton from '../components/LoadMoreButton';
 import PhotoGrid from '../containers/PhotoGrid';
+import NotificationCardsContainer from '../containers/NotificationCardsContainer';
 import {
   getPostsByTagName,
   getIsFetchingPosts,
@@ -74,6 +75,7 @@ class Tags extends React.Component {
             onClick={this.enableInfiniteScroll}
            />
         </div>
+        <NotificationCardsContainer />
       </div>
     );
   }

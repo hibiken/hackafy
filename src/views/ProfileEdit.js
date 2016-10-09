@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfileEditForm from '../containers/ProfileEditForm';
+import NotificationCardsContainer from '../containers/NotificationCardsContainer';
 
 import '../styles/ProfileEdit.css';
 
@@ -12,6 +13,7 @@ class ProfileEdit extends React.Component {
             <ProfileEditForm />
           </div>
         </div>
+        <NotificationCardsContainer />
       </div>
     );
   }

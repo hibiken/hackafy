@@ -11,7 +11,7 @@ import {
   FACEBOOK_LOGIN_START,
   FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT,
-  INCREMENT_NOTIFICATION,
+  NEW_NOTIFICATION_RECEIVED,
 } from '../actionTypes';
 import WebNotifications from '../../actioncable/WebNotificationsSubscription';
 
@@ -58,7 +58,7 @@ export const userSignIn = (credentials) => (dispatch) => {
       console.log('ACTION CABLE', data);
       console.log('payload', JSON.parse(data.json))
       dispatch({
-        type: INCREMENT_NOTIFICATION,
+        type: NEW_NOTIFICATION_RECEIVED,
         paylaod: JSON.parse(data.json).notification,
       });
     });

@@ -21,7 +21,8 @@ import {
   fetchNotifcations,
   fetchNotificationCount,
   clearNotifications,
-  touchNotification
+  touchNotification,
+  hideNewNotification,
 } from './actionCreators/fetchNotifications';
 import { fetchMoreComments } from './actionCreators/fetchMoreComments';
 
@@ -58,6 +59,7 @@ export {
   fetchNotificationCount,
   clearNotifications,
   touchNotification,
+  hideNewNotification,
 
   fetchMoreComments,
 };

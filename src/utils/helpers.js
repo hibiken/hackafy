@@ -18,3 +18,17 @@ export const getImageUrl = (imageUrl) => {
 export const pluralize = (count, singular, plural) => {
   return count === 1 ? singular : plural;
 }
+
+// Notification message
+export const getNotificationMessage = (type, username) => {
+  switch (type) {
+    case 'START_FOLLOWING':
+      return `${username} started following you`;
+    case 'LIKE_POST':
+      return `${username} liked your post`;
+    case 'COMMENT_ON_POST':
+      return `${username} commented on your post`;
+    default:
+      return null;
+    }
+}
