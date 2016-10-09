@@ -28,6 +28,15 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
+    console.log('Createing web notification subscription...')
+    WebNotifications.subscribe(data.user.attrs.username, (data) => {
+      console.log('ACTION CABLE', data);
+      console.log('payload', JSON.parse(data.json))
+      dispatch({
+        type: NEW_NOTIFICATION_RECEIVED,
+        paylaod: JSON.parse(data.json).notification,
+      });
+    });
   }, ({response}) => {
     dispatch({
       type: USER_SIGN_UP_FAILURE,
