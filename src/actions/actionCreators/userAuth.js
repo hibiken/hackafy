@@ -33,8 +33,7 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
     console.log('Createing web notification subscription...')
     WebNotifications.subscribe((data) => {
       console.log('ACTION CABLE', data);
-      const { notification } = JSON.parse(data.json);
-      dispatch(handleNotificationReceived(notification))
+      dispatch(handleNotificationReceived(data.notification))
     });
   }, ({response}) => {
     dispatch({
@@ -65,8 +64,7 @@ export const userSignIn = (credentials) => (dispatch) => {
     console.log('Createing web notification subscription...')
     WebNotifications.subscribe((data) => {
       console.log('ACTION CABLE', data);
-      const { notification } = JSON.parse(data.json);
-      dispatch(handleNotificationReceived(notification))
+      dispatch(handleNotificationReceived(data.notification))
     });
   }, ({response}) => {
     dispatch({

@@ -31,7 +31,6 @@ if (isSignedIn === true) {
   console.log('Createing subscription...')
   WebNotifications.subscribe((data) => {
     console.log('ACTION CABLE', data);
-    const { notification } = JSON.parse(data.json);
-    store.dispatch(handleNotificationReceived(notification))
+    store.dispatch(handleNotificationReceived(data.notification))
   });
 }
