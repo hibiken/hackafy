@@ -7,6 +7,7 @@ import {
   CLEAR_NOTIFICATIONS,
   TOUCH_NOTIFICATION,
   LIKE_POST_NOTIFICATION_RECEIVED,
+  START_FOLLOWING_NOTIFICATION_RECEIVED,
   HIDE_NEW_NOTIFICATION,
 } from '../actions/actionTypes';
 import { LOCATION_CHANGE } from 'react-router-redux';
@@ -36,6 +37,7 @@ const allIds = (state = initialState.allIds, action) => {
         return nextState;
       }, [...state]);
     case LIKE_POST_NOTIFICATION_RECEIVED:
+    case START_FOLLOWING_NOTIFICATION_RECEIVED:
       return [...state, action.payload.id]
     default:
       return state;
@@ -45,6 +47,7 @@ const allIds = (state = initialState.allIds, action) => {
 const newIds = (state = initialState.newIds, action) => {
   switch (action.type) {
     case LIKE_POST_NOTIFICATION_RECEIVED:
+    case START_FOLLOWING_NOTIFICATION_RECEIVED:
       return [...state, action.payload.id];
     case HIDE_NEW_NOTIFICATION:
       return state.filter(id => id !== action.id);
@@ -80,6 +83,7 @@ const byId = (state = initialState.byId, action) => {
         [action.id]: _notification(state[action.id], action)
       };
     case LIKE_POST_NOTIFICATION_RECEIVED:
+    case START_FOLLOWING_NOTIFICATION_RECEIVED:
       return {
         ...state,
         [action.payload.id]: action.payload,
@@ -96,6 +100,7 @@ const count = (state = initialState.count, action) => {
     case CLEAR_NOTIFICATIONS:
       return 0;
     case LIKE_POST_NOTIFICATION_RECEIVED:
+    case START_FOLLOWING_NOTIFICATION_RECEIVED:
       return state + 1;
     default:
         return state;

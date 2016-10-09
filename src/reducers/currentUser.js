@@ -12,7 +12,8 @@ import {
   LIKE_POST,
   DISLIKE_POST,
   FOLLOW_USER,
-  UNFOLLOW_USER
+  UNFOLLOW_USER,
+  START_FOLLOWING_NOTIFICATION_RECEIVED,
 } from '../actions/actionTypes';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
@@ -95,6 +96,11 @@ const currentUser = (state = initialState, action) => {
       return {
         ...state,
         followingIds: state.followingIds.filter(id => id !== action.userId)
+      }
+    case START_FOLLOWING_NOTIFICATION_RECEIVED:
+      return {
+        ...state,
+        followerIds: action.followerIds,
       }
     case LOCATION_CHANGE:
       return {
