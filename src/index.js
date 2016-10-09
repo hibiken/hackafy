@@ -7,7 +7,7 @@ import { getIsSignedIn, getCurrentUser } from './store/rootReducer';
 import ActionCable from 'actioncable';
 import { WS_URL } from './config/constants';
 import WebNotifications from './actioncable/WebNotificationsSubscription';
-import { NEW_NOTIFICATION_RECEIVED } from './actions/actionTypes';
+import { handleNotificationReceived } from './actions';
 
 import './styles/vendors/normalize.css';
 import './styles/vendors/skeleton.css';
@@ -31,10 +31,7 @@ if (isSignedIn === true) {
   const { username } = getCurrentUser(store.getState());
   WebNotifications.subscribe(username, (data) => {
     console.log('ACTION CABLE', data);
-    console.log('payload', JSON.parse(data.json))
-    store.dispatch({
-      type: NEW_NOTIFICATION_RECEIVED,
-      payload: JSON.parse(data.json).notification,
-    });
+    const { notification } = JSON.parse(data.json);
+    store.dispatch(handleNotificationReceived(notification))
   });
 }

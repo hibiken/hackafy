@@ -11,8 +11,8 @@ import {
   FACEBOOK_LOGIN_START,
   FACEBOOK_LOGIN_SUCCESS,
   USER_SIGN_OUT,
-  NEW_NOTIFICATION_RECEIVED,
 } from '../actionTypes';
+import { handleNotificationReceived } from '../../actions'
 import WebNotifications from '../../actioncable/WebNotificationsSubscription';
 
 export const userSignUp = ({email, username, password}) => (dispatch) => {
@@ -31,11 +31,8 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
     console.log('Createing web notification subscription...')
     WebNotifications.subscribe(data.user.attrs.username, (data) => {
       console.log('ACTION CABLE', data);
-      console.log('payload', JSON.parse(data.json))
-      dispatch({
-        type: NEW_NOTIFICATION_RECEIVED,
-        paylaod: JSON.parse(data.json).notification,
-      });
+      const { notification } = JSON.parse(data.json);
+      dispatch(handleNotificationReceived(notification))
     });
   }, ({response}) => {
     dispatch({
@@ -65,11 +62,8 @@ export const userSignIn = (credentials) => (dispatch) => {
     console.log('Createing web notification subscription...')
     WebNotifications.subscribe(data.user.attrs.username, (data) => {
       console.log('ACTION CABLE', data);
-      console.log('payload', JSON.parse(data.json))
-      dispatch({
-        type: NEW_NOTIFICATION_RECEIVED,
-        paylaod: JSON.parse(data.json).notification,
-      });
+      const { notification } = JSON.parse(data.json);
+      dispatch(handleNotificationReceived(notification))
     });
   }, ({response}) => {
     dispatch({

@@ -24,6 +24,7 @@ import {
   touchNotification,
   hideNewNotification,
 } from './actionCreators/fetchNotifications';
+import { handleNotificationReceived } from './actionCreators/webNotifications';
 import { fetchMoreComments } from './actionCreators/fetchMoreComments';
 
 export {
@@ -60,6 +61,8 @@ export {
   clearNotifications,
   touchNotification,
   hideNewNotification,
+
+  handleNotificationReceived,
 
   fetchMoreComments,
 };
