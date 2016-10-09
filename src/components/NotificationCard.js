@@ -1,25 +1,37 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { getAvatarUrl, getNotificationMessage } from '../utils/helpers';
 import '../styles/NotificationCard.css';
 
-const NotificationCard = (props) => {
-  const { actionType, actor } = props.notification;
-  return (
-    <div className="NotificationCard__root">
-      <div className="NotificationCard__avatar-wrapper">
-        <img
-          src={getAvatarUrl(actor.avatarUrl)}
-          alt={'ken'}
-          width={30}
-          className="NotificationCard__avatar-image"
-        />
+class NotificationCard extends Component {
+  componentDidMount() {
+    this.timeoutID = window.setTimeout(() => {
+      this.props.onRemove();
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    window.clearTimeout(this.timeoutID);
+  }
+
+  render() {
+    const { actionType, actor } = this.props.notification;
+    return (
+      <div className="NotificationCard__root">
+        <div className="NotificationCard__avatar-wrapper">
+          <img
+            src={getAvatarUrl(actor.avatarUrl)}
+            alt={'ken'}
+            width={30}
+            className="NotificationCard__avatar-image"
+          />
+        </div>
+        <div className="NotificationCard__message-wrapper">
+          <span className="fa fa-times NotificationCard__close-button" onClick={this.props.onRemove}/>
+          <p>{getNotificationMessage(actionType, actor.username)}</p>
+        </div>
       </div>
-      <div className="NotificationCard__message-wrapper">
-        <span className="fa fa-times NotificationCard__close-button" onClick={props.onRemove}/>
-        <p>{getNotificationMessage(actionType, actor.username)}</p>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default NotificationCard;
