@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/configureStore';
 import Root from './containers/Root';
 
-import { getIsSignedIn, getCurrentUser } from './store/rootReducer';
-import ActionCable from 'actioncable';
-import { WS_URL } from './config/constants';
+import { getIsSignedIn, getAuthToken } from './store/rootReducer';
+import { createConsumerWithToken } from './actioncable/createConsumerWithToken';
 import WebNotifications from './actioncable/WebNotificationsSubscription';
 import { handleNotificationReceived } from './actions';
 
@@ -23,13 +22,14 @@ ReactDOM.render(
 
 /**** Action cable logic ***/
 window.App = {};
-window.App.cable = ActionCable.createConsumer(WS_URL);
+
 const isSignedIn = getIsSignedIn(store.getState());
 
 if (isSignedIn === true) {
+  const authToken = getAuthToken(store.getState());
+  createConsumerWithToken(authToken);
   console.log('Createing subscription...')
-  const { username } = getCurrentUser(store.getState());
-  WebNotifications.subscribe(username, (data) => {
+  WebNotifications.subscribe((data) => {
     console.log('ACTION CABLE', data);
     const { notification } = JSON.parse(data.json);
     store.dispatch(handleNotificationReceived(notification))

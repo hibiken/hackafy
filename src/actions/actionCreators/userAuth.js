@@ -13,6 +13,7 @@ import {
   USER_SIGN_OUT,
 } from '../actionTypes';
 import { handleNotificationReceived } from '../../actions'
+import { createConsumerWithToken } from '../../actioncable/createConsumerWithToken';
 import WebNotifications from '../../actioncable/WebNotificationsSubscription';
 
 export const userSignUp = ({email, username, password}) => (dispatch) => {
@@ -28,8 +29,9 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
+    createConsumerWithToken(data.user.authenticationToken);
     console.log('Createing web notification subscription...')
-    WebNotifications.subscribe(data.user.attrs.username, (data) => {
+    WebNotifications.subscribe((data) => {
       console.log('ACTION CABLE', data);
       const { notification } = JSON.parse(data.json);
       dispatch(handleNotificationReceived(notification))
@@ -59,8 +61,9 @@ export const userSignIn = (credentials) => (dispatch) => {
       payload: data.user,
     });
     dispatch(push('/'));
+    createConsumerWithToken(data.user.authenticationToken);
     console.log('Createing web notification subscription...')
-    WebNotifications.subscribe(data.user.attrs.username, (data) => {
+    WebNotifications.subscribe((data) => {
       console.log('ACTION CABLE', data);
       const { notification } = JSON.parse(data.json);
       dispatch(handleNotificationReceived(notification))

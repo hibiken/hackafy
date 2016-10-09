@@ -1,9 +1,8 @@
 const WebNotifications = {
-  subscribe(username, received) {
+  subscribe(received) {
     this.unsubscribe();
     window.App.WebNotificationsSubscription = window.App.cable.subscriptions.create({
       channel: "WebNotificationsChannel",
-      username,
     }, {
       received: received
     });
