@@ -99,7 +99,6 @@ const idsByTagName = (state = initialState.idsByTagName, action) => {
 const post = (state = {}, action) => {
   switch (action.type) {
     case LIKE_POST:
-    case LIKE_POST_NOTIFICATION_RECEIVED:
       return {
         ...state,
         likesCount: state.likesCount + 1,
@@ -126,6 +125,11 @@ const post = (state = {}, action) => {
         ...state,
         comments: [...action.payload, ...state.comments],
         commentPagination: action.pagination,
+      }
+    case LIKE_POST_NOTIFICATION_RECEIVED:
+      return {
+        ...state,
+        likesCount: action.likesCount,
       }
     default:
       return state;
