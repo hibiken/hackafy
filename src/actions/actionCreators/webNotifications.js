@@ -5,7 +5,6 @@ import {
 } from '../actionTypes';
 
 export const handleNotificationReceived = (notification) =>  {
-  console.log('notification', notification);
   switch (notification.actionType) {
     case 'LIKE_POST':
       return  {

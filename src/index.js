@@ -28,9 +28,7 @@ const isSignedIn = getIsSignedIn(store.getState());
 if (isSignedIn === true) {
   const authToken = getAuthToken(store.getState());
   createConsumerWithToken(authToken);
-  console.log('Createing subscription...')
   WebNotifications.subscribe((data) => {
-    console.log('ACTION CABLE', data);
     store.dispatch(handleNotificationReceived(data.notification))
   });
 }

@@ -30,9 +30,7 @@ export const userSignUp = ({email, username, password}) => (dispatch) => {
     });
     dispatch(push('/'));
     createConsumerWithToken(data.user.authenticationToken);
-    console.log('Createing web notification subscription...')
     WebNotifications.subscribe((data) => {
-      console.log('ACTION CABLE', data);
       dispatch(handleNotificationReceived(data.notification))
     });
   }, ({response}) => {
@@ -54,16 +52,13 @@ export const userSignIn = (credentials) => (dispatch) => {
     }
   })
   .then(({data}) => {
-    console.log('successfully signed in', data);
     dispatch({
       type: USER_SIGN_IN_SUCCESS,
       payload: data.user,
     });
     dispatch(push('/'));
     createConsumerWithToken(data.user.authenticationToken);
-    console.log('Createing web notification subscription...')
     WebNotifications.subscribe((data) => {
-      console.log('ACTION CABLE', data);
       dispatch(handleNotificationReceived(data.notification))
     });
   }, ({response}) => {
@@ -87,23 +82,19 @@ export const facebookLogin = ({id, username, email}) => (dispatch) => {
     }
   })
   .then(({data}) => {
-    console.log('succcessfully signed in', data);
     dispatch({
       type: FACEBOOK_LOGIN_SUCCESS,
       payload: data.user,
     });
     dispatch(push('/'));
     createConsumerWithToken(data.user.authenticationToken);
-    console.log('Createing web notification subscription...')
     WebNotifications.subscribe((data) => {
-      console.log('ACTION CABLE', data);
       dispatch(handleNotificationReceived(data.notification))
     });
   })
 };
 
 export const userSignOut = () => (dispatch) => {
-  console.log('ACTION CABLE removing subscription...')
   WebNotifications.unsubscribe();
   dispatch({type: USER_SIGN_OUT})
 };
