@@ -26,6 +26,7 @@ import {
 } from './actionCreators/fetchNotifications';
 import { handleNotificationReceived } from './actionCreators/webNotifications';
 import { fetchMoreComments } from './actionCreators/fetchMoreComments';
+import { fetchFollowSuggestions } from './actionCreators/fetchFollowSuggestions';
 
 export {
   userSignUp,
@@ -65,4 +66,6 @@ export {
   handleNotificationReceived,
 
   fetchMoreComments,
+
+  fetchFollowSuggestions,
 };

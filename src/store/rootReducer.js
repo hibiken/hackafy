@@ -6,6 +6,7 @@ import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
 import followersFollowing, * as fromFollowersFollowing from '../reducers/followersFollowing';
 import notifications, * as fromNotifications from '../reducers/notifications';
+import followSuggestions, * as fromSuggestions from '../reducers/followSuggestions';
 import { USER_SIGN_OUT } from '../actions/actionTypes';
 
 const appReducer = combineReducers({
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   publicProfiles,
   followersFollowing,
   notifications,
+  followSuggestions,
 });
 
 const rootReducer = (state, action) => {
@@ -168,3 +170,11 @@ export const getNotificationsTotalPages = (state) => {
 export const getNotificationsCurrentPage = (state) => {
   return fromNotifications.getCurrentPage(state.notifications);
 };
+
+export const getAllSuggestions = (state) => {
+  return fromSuggestions.getAllSuggestions(state.followSuggestions);
+}
+
+export const getIsFetchingSuggestions = (state) => {
+  return fromSuggestions.getIsFetching(state.followSuggestions);
+}
