@@ -9,6 +9,8 @@
 
 .Header__logo {
   font-size: 24px;
+  font-family: 'Pacifico', cursive;
+  letter-spacing: 0.1px;
   margin: 0;
 }
 
@@ -23,8 +25,8 @@
 
 .Header__instagram-icon {
   padding-right: 10px;
-  border-right: 1px solid;
-  margin-right: 8px;
+  border-right: 2px solid #dbdbdb;
+  margin-right: 4px;
 }
 
 .Header__nav-group {

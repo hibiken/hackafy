@@ -26,6 +26,7 @@
 .Profile__username {
   display: inline-block;
   margin-right: 10px;
+  font-family: 'Pacifico', cursive;
 }
 
 .Profile__edit-button {
