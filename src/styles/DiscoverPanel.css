@@ -1,0 +1,22 @@
+.DiscoverPanel__root {
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid #efefef;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  margin: 40px auto;
+}
+
+.DiscoverPanel__header {
+  padding: 15px;
+}
+
+.DiscoverPanel__heading {
+  font-size: 14px;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  margin: 0;
+}

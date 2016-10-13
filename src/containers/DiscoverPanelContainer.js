@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFollowSuggestions } from '../actions';
 import { getAllSuggestions, getIsFetchingSuggestions } from '../store/rootReducer';
+import DiscoverPanel from '../components/DiscoverPanel';
 
 class DiscoverPanelContainer extends Component {
   componentDidMount() {
@@ -11,10 +12,11 @@ class DiscoverPanelContainer extends Component {
   render() {
     console.log('props', this.props);
     return (
-      <div>
-        Discover people
-      </div>
-    )
+      <DiscoverPanel
+        users={this.props.users}
+        isFetching={this.props.isFetching}
+      />
+    );
   }
 }
 

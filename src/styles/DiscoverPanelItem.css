@@ -1,0 +1,36 @@
+.DiscoverPanelItem__root {
+  padding: 15px;
+  border-top: 1px solid #efefef;
+}
+
+.DiscoverPanelItem__user-info {
+  display: inline-flex;
+  align-items: center;
+}
+
+.DiscoverPanelItem__avatar-image {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  margin-right: 8px;
+}
+
+.DiscoverPanelItem__username,
+.DiscoverPanelItem__username:hover,
+.DiscoverPanelItem__username:active {
+  text-decoration: none;
+  color: #262626;
+  font-weight: 600;
+}
+
+.DiscoverPanelItem__user-info-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.DiscoverPanelItem__follow-button {
+  margin-left: auto;
+}
