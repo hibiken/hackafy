@@ -34,3 +34,29 @@
 .DiscoverPanelItem__follow-button {
   margin-left: auto;
 }
+
+.DiscoverPanelItem__posts-container {
+  padding-top: 5px;
+}
+
+.DiscoverPanelItem__no-posts {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.DiscoverPanelItem__photo-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.DiscoverPanelItem__photo-item--filter {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.DiscoverPanelItem__photo-item {
+  width: 180px;
+  height: 180px;
+  background-size: cover;
+  background-position: center center;
+}

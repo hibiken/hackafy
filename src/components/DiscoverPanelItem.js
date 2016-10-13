@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { getAvatarUrl } from '../utils/helpers';
+import { getAvatarUrl, getImageUrl } from '../utils/helpers';
+import { getFilterStyle } from '../config/filters';
 import FollowButtonContainer from '../containers/FollowButtonContainer';
 import '../styles/DiscoverPanelItem.css';
 
@@ -24,6 +25,31 @@ const DiscoverPanelItem = (props) => {
        <div className="DiscoverPanelItem__follow-button">
          <FollowButtonContainer userId={props.user.id} />
        </div>
+     </div>
+     <div className="DiscoverPanelItem__posts-container">
+      {props.user.posts.length === 0
+       ? (<div className="DiscoverPanelItem__no-posts">
+            <div>No posts yet.</div>
+          </div>)
+       : (
+         <div className="DiscoverPanelItem__photo-container">
+           {props.user.posts.map(post => (
+            <div
+              key={post.id}
+              className={`${post.filter} DiscoverPanelItem__photo-item--filter`}>
+              <div
+                style={{
+                  ...getFilterStyle(post.filterStyle),
+                  backgroundImage: `url(${getImageUrl(post.photoUrl)})`
+                }}
+                className="DiscoverPanelItem__photo-item"
+                >
+              </div>
+            </div>
+           ))}
+         </div>
+       )}
+
      </div>
     </div>
   );
