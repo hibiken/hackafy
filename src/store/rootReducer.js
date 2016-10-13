@@ -172,7 +172,16 @@ export const getNotificationsCurrentPage = (state) => {
 };
 
 export const getAllSuggestions = (state) => {
-  return fromSuggestions.getAllSuggestions(state.followSuggestions);
+  const suggestions = fromSuggestions.getAllSuggestions(state.followSuggestions);
+  return suggestions.reduce((users, user) => {
+    const followSuggestion = {
+      id: user.id,
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+      posts: fromPosts.getPostsByIds(state.posts, user.postIds),
+    }
+    return [...users, followSuggestion]
+  }, []);
 }
 
 export const getIsFetchingSuggestions = (state) => {
