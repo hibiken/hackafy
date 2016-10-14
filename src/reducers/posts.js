@@ -20,7 +20,6 @@ import {
   FETCH_MORE_COMMENTS_SUCCUESS,
   LIKE_POST_NOTIFICATION_RECEIVED,
   COMMENT_ON_POST_NOTIFICATION_RECEIVED,
-  FETCH_FOLLOW_SUGGESTIONS_SUCCESS,
 } from '../actions/actionTypes';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
@@ -169,14 +168,6 @@ const byId = (state = initialState.byId, action) => {
         ...state,
         [action.postId]: post(state[action.postId], action),
       }
-    case FETCH_FOLLOW_SUGGESTIONS_SUCCESS:
-      const posts = action.payload.reduce((accumulator, user) => {
-        return [...accumulator, ...user.posts];
-      }, []);
-      return posts.reduce((nextState, post) => {
-        nextState[post.id] = post;
-        return nextState;
-      }, {...state});
     default:
       return state;
   }

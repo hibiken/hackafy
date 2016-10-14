@@ -24,12 +24,7 @@ const byId = (state = initialState.byId, action) => {
   switch (action.type) {
     case FETCH_FOLLOW_SUGGESTIONS_SUCCESS:
       return action.payload.reduce((nextState, user) => {
-        nextState[user.id] = {
-          id: user.id,
-          avatarUrl: user.avatarUrl,
-          username: user.username,
-          postIds: user.posts.map(post => post.id),
-        };
+        nextState[user.id] = user;
         return nextState;
       }, {})
     default:
