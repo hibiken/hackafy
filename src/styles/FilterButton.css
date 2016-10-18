@@ -1,8 +1,9 @@
 .FilterButton__button {
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background-size: cover;
+  background-position: center center;
   text-align: center;
   color: #fff;
   padding: 0;

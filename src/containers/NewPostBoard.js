@@ -16,6 +16,8 @@ class NewPostBoard extends React.Component {
 
     this.state = {
       files: [],
+      step: 0,
+      selectedTab: 'filter',
       filter: '',
       caption: '',
       address: 'San Francisco, CA',
@@ -26,20 +28,47 @@ class NewPostBoard extends React.Component {
       },
     }
 
-    this.onDrop = this._onDrop.bind(this);
     this.onCaptionChange = (e) => this.setState({ caption: e.target.value });
     this.onAddressChange = (address) => this.setState({ address });
-    this.onSubmit = this._onSubmit.bind(this);
-    this.onSaturationChange = this._onSaturationChange.bind(this);
-    this.onContrastChange = this._onContrastChange.bind(this);
-    this.onBrightnessChange = this._onBrightnessChange.bind(this);
   }
 
-  _onDrop(files) {
-    this.setState({ files });
+  onDrop = (files) => {
+    this.setState({
+      files,
+      step: 1
+    });
   }
 
-  _onSubmit(e) {
+  _setTab(tabType) {
+    this.setState({selectedTab: tabType})
+  }
+
+  onNextClick = () => {
+    this.setState({step: this.state.step + 1})
+  }
+
+  onBackToStepZero = () => {
+    // Reset to initialState
+    this.setState({
+      files: [],
+      step: 0,
+      selectedTab: 'filter',
+      filter: '',
+      caption: '',
+      address: 'San Francisco, CA',
+      filterStyle: {
+        brightness: 1.0,
+        contrast: 1.0,
+        saturate: 1.0,
+      }
+    })
+  }
+
+  onBackToStepOne = () => {
+    this.setState({ step: 1 })
+  }
+
+  onSubmit = (e) => {
     e.preventDefault();
     if (this.state.files.length === 0) {
       return false;
@@ -53,14 +82,16 @@ class NewPostBoard extends React.Component {
           // TODO: error message
         }
         console.log('geocode success', lat, lng, placeId);
-        this.props.uploadPost({ caption, filter, address, lat, lng, placeId, filterStyle }, files[0]);
+        this.props.uploadPost({ caption, filter, address, lat, lng, placeId, filterStyle }, files[0])
+          .then(() => this.props.afterSubmit())
       });
     } else {
-      this.props.uploadPost({ caption, filter, filterStyle }, files[0]);
+      this.props.uploadPost({ caption, filter, filterStyle }, files[0])
+        .then(() => this.props.afterSubmit())
     }
   }
 
-  _onSaturationChange(event, value) {
+  onSaturationChange = (event, value) => {
     this.setState({
       filterStyle: {
         ...this.state.filterStyle,
@@ -69,7 +100,7 @@ class NewPostBoard extends React.Component {
     });
   }
 
-  _onContrastChange(event, value) {
+  onContrastChange = (event, value) => {
     this.setState({
       filterStyle: {
         ...this.state.filterStyle,
@@ -78,7 +109,7 @@ class NewPostBoard extends React.Component {
     });
   }
 
-  _onBrightnessChange(event, value) {
+  onBrightnessChange = (event, value) => {
     this.setState({
       filterStyle: {
         ...this.state.filterStyle,
@@ -92,7 +123,7 @@ class NewPostBoard extends React.Component {
       const preview = this.state.files[0].preview;
       return (
         <Dropzone
-          className="NewPostBoard__dropzone"
+          className="NewPostBoard__dropzone NewPostBoard__dropzone--active"
           multiple={false}
           accept="image/*"
           onDrop={this.onDrop}>
@@ -122,6 +153,65 @@ class NewPostBoard extends React.Component {
             </div>
           </div>
         </Dropzone>
+      )
+    }
+  }
+
+  renderTabPanel() {
+    if (this.state.selectedTab === 'filter') {
+      return (
+        <div className="NewPostBoard__tab-panel">
+          {this.renderFilterOptions()}
+        </div>
+      );
+    } else if (this.state.selectedTab === 'edit') {
+      return (
+        <div className="NewPostBoard__tab-panel">
+          <div className="NewPostBoard__slider-item">
+            <label className="NewPostBoard__slider-label">
+              <i className="fa fa-sun-o NewPostBoard__slider-icon" aria-hidden="true"/> Brightness
+            </label>
+            <Slider
+              defaultValue={1.0}
+              value={this.state.filterStyle.brightness}
+              onChange={this.onBrightnessChange}
+              min={0.20}
+              max={2.00}
+              step={0.01}
+              disabled={this.state.files.length === 0}
+            />
+          </div>
+
+          <div className="NewPostBoard__slider-item">
+            <label className="NewPostBoard__slider-label">
+              <i className="fa fa-adjust NewPostBoard__slider-icon" aria-hidden="true"/> Contrast
+            </label>
+            <Slider
+              defaultValue={1.0}
+              value={this.state.filterStyle.contrast}
+              onChange={this.onContrastChange}
+              min={0.20}
+              max={2.00}
+              step={0.01}
+              disabled={this.state.files.length === 0}
+            />
+          </div>
+
+          <div className="NewPostBoard__slider-item">
+            <label className="NewPostBoard__slider-label">
+              <i className="fa fa-tint NewPostBoard__slider-icon" aria-hidden="true" /> Saturation
+            </label>
+            <Slider
+              defaultValue={1.0}
+              value={this.state.filterStyle.saturate}
+              onChange={this.onSaturationChange}
+              min={0.00}
+              max={3.00}
+              step={0.01}
+              disabled={this.state.files.length === 0}
+            />
+          </div>
+        </div>
       )
     }
   }
@@ -162,85 +252,90 @@ class NewPostBoard extends React.Component {
             value={this.state.address}
             onChange={this.onAddressChange}
           />
-          <button onClick={this.onSubmit} disabled={this.props.isUploading}>
-            {this.props.isUploading === true
-            ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>)
-            : 'Submit'}
-          </button>
         </div>
       )
     }
   }
 
   render() {
-    return (
-      <div className="NewPostBoard__root">
-        <div className="row">
-          <div className="six columns">
-            <div className="NewPostBoard__dropzone-wrapper">
-              {this.renderDropzone()}
-            </div>
-          </div>
-          <div className="six columns">
-            <div className="NewPostBoard__slider-wrapper">
-              <div className="NewPostBoard__slider-item">
-                <label className="NewPostBoard__slider-label">
-                  <i className="fa fa-sun-o NewPostBoard__slider-icon" aria-hidden="true"/> Brightness
-                </label>
-                <Slider
-                  defaultValue={1.0}
-                  value={this.state.filterStyle.brightness}
-                  onChange={this.onBrightnessChange}
-                  min={0.20}
-                  max={2.00}
-                  step={0.01}
-                  disabled={this.state.files.length === 0}
-                />
-              </div>
-
-              <div className="NewPostBoard__slider-item">
-                <label className="NewPostBoard__slider-label">
-                  <i className="fa fa-adjust NewPostBoard__slider-icon" aria-hidden="true"/> Contrast
-                </label>
-                <Slider
-                  defaultValue={1.0}
-                  value={this.state.filterStyle.contrast}
-                  onChange={this.onContrastChange}
-                  min={0.20}
-                  max={2.00}
-                  step={0.01}
-                  disabled={this.state.files.length === 0}
-                />
-              </div>
-
-              <div className="NewPostBoard__slider-item">
-                <label className="NewPostBoard__slider-label">
-                  <i className="fa fa-tint NewPostBoard__slider-icon" aria-hidden="true" /> Saturation
-                </label>
-                <Slider
-                  defaultValue={1.0}
-                  value={this.state.filterStyle.saturate}
-                  onChange={this.onSaturationChange}
-                  min={0.00}
-                  max={3.00}
-                  step={0.01}
-                  disabled={this.state.files.length === 0}
-                />
+    switch (this.state.step) {
+      case 0:
+        return (
+          <div className="NewPostBoard__root">
+            <div className="row">
+              <div className="twelve columns">
+                <div className="NewPostBoard__dropzone-wrapper">
+                  {this.renderDropzone()}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="twelve columns">
-            {this.renderFilterOptions()}
+        );
+      case 1:
+        return (
+          <div className="NewPostBoard__root">
+            <div className="row">
+              <div className="twelve columns">
+                <div className="NewPostBoard__dropzone-row">
+                  <div>
+                    <button onClick={this.onBackToStepZero}>Back</button>
+                  </div>
+                  <div className="NewPostBoard__dropzone-wrapper">
+                    {this.renderDropzone()}
+                  </div>
+                  <div>
+                    <button onClick={this.onNextClick}>Next</button>
+                  </div>
+                </div>
+              </div>
+              <div className="twelve columns">
+                <div className="NewPostBoard__tabs">
+                  <button
+                    className="NewPostBoard__tab"
+                    onClick={() => this._setTab('filter')}>
+                    filter
+                  </button>
+                  <button
+                    className="NewPostBoard__tab"
+                    onClick={() => this._setTab('edit')}>
+                    Edit
+                  </button>
+                </div>
+                {this.renderTabPanel()}
+              </div>
+            </div>
           </div>
-          <div>
-            {this.renderCaptionField()}
+        );
+      case 2:
+        return (
+          <div className="NewPostBoard__root">
+            <div className="row">
+              <div className="twelve columns">
+                <div className="NewPostBoard__dropzone-row">
+                  <div>
+                    <button onClick={this.onBackToStepOne}>Back</button>
+                  </div>
+                  <div className="NewPostBoard__dropzone-wrapper">
+                    {this.renderDropzone()}
+                  </div>
+                  <div>
+                    <button onClick={this.onSubmit} disabled={this.props.isUploading}>
+                      {this.props.isUploading === true
+                      ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>)
+                      : 'Share'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="twelve columns">
+                {this.renderCaptionField()}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    )
+        )
+      default:
+        return null;
+    }
   }
 }
 
