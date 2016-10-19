@@ -20,7 +20,7 @@ const customStyles = {
     bottom                     : 'initial',
     border                     : '1px solid #ccc',
     background                 : '#fff',
-    overflow                   : 'hidden',
+    overflow                   : 'auto',
     WebkitOverflowScrolling    : 'touch',
     borderRadius               : '4px',
     outline                    : 'none',

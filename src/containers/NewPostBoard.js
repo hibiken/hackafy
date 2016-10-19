@@ -3,10 +3,12 @@ import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { uploadPost } from '../actions';
 import FilterButton from  '../components/FilterButton';
+import TabButton from '../components/TabButton';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 import Slider from 'material-ui/Slider';
 import { filters, filterStyles, getFilterStyle } from '../config/filters';
-import { getIsUploadingPost } from '../store/rootReducer';
+import { getIsUploadingPost, getCurrentUser } from '../store/rootReducer';
+import { getAvatarUrl } from '../utils/helpers';
 
 import '../styles/NewPostBoard.css';
 
@@ -17,10 +19,10 @@ class NewPostBoard extends React.Component {
     this.state = {
       files: [],
       step: 0,
-      selectedTab: 'filter',
+      selectedTab: 'edit',
       filter: '',
       caption: '',
-      address: 'San Francisco, CA',
+      address: '',
       filterStyle: {
         brightness: 1.0,
         contrast: 1.0,
@@ -52,10 +54,10 @@ class NewPostBoard extends React.Component {
     this.setState({
       files: [],
       step: 0,
-      selectedTab: 'filter',
+      selectedTab: 'edit',
       filter: '',
       caption: '',
-      address: 'San Francisco, CA',
+      address: '',
       filterStyle: {
         brightness: 1.0,
         contrast: 1.0,
@@ -241,17 +243,24 @@ class NewPostBoard extends React.Component {
     if (this.state.files.length > 0) {
       return (
         <div>
+          <PlacesAutocomplete
+            value={this.state.address}
+            onChange={this.onAddressChange}
+            classNames={{
+              input: 'NewPostBoard__address-input',
+              autocompleteContainer: 'NewPostBoard__place-autocomplete-container',
+            }}
+          />
           <div>
+            <label>Caption</label>
             <textarea
               value={this.state.caption}
               onChange={this.onCaptionChange}
               placeholder="Caption(optional)"
+              className="NewPostBoard__caption-box"
+              style={{resize: 'none'}}
             />
           </div>
-          <PlacesAutocomplete
-            value={this.state.address}
-            onChange={this.onAddressChange}
-          />
         </div>
       )
     }
@@ -278,28 +287,34 @@ class NewPostBoard extends React.Component {
               <div className="twelve columns">
                 <div className="NewPostBoard__dropzone-row">
                   <div>
-                    <button onClick={this.onBackToStepZero}>Back</button>
+                    <button
+                      onClick={this.onBackToStepZero}
+                      className="NewPostBoard__back-button"><i className="fa fa-arrow-left"/> Back</button>
                   </div>
                   <div className="NewPostBoard__dropzone-wrapper">
                     {this.renderDropzone()}
                   </div>
                   <div>
-                    <button onClick={this.onNextClick}>Next</button>
+                    <button
+                      onClick={this.onNextClick}
+                      className="NewPostBoard__next-button">Next <i className="fa fa-arrow-right"/></button>
                   </div>
                 </div>
               </div>
               <div className="twelve columns">
                 <div className="NewPostBoard__tabs">
-                  <button
-                    className="NewPostBoard__tab"
-                    onClick={() => this._setTab('filter')}>
-                    filter
-                  </button>
-                  <button
-                    className="NewPostBoard__tab"
-                    onClick={() => this._setTab('edit')}>
+                  <TabButton
+                   className="NewPostBoard__tab"
+                   onClick={() =>this._setTab('filter')}
+                   active={this.state.selectedTab === 'filter'}>
+                    Filter
+                  </TabButton>
+                  <TabButton
+                   className="NewPostBoard__tab"
+                   onClick={() =>this._setTab('edit')}
+                   active={this.state.selectedTab === 'edit'}>
                     Edit
-                  </button>
+                  </TabButton>
                 </div>
                 {this.renderTabPanel()}
               </div>
@@ -307,19 +322,25 @@ class NewPostBoard extends React.Component {
           </div>
         );
       case 2:
+        const { avatarUrl, username } = this.props.currentUser;
+        const preview = this.state.files[0].preview;
         return (
           <div className="NewPostBoard__root">
             <div className="row">
               <div className="twelve columns">
                 <div className="NewPostBoard__dropzone-row">
                   <div>
-                    <button onClick={this.onBackToStepOne}>Back</button>
-                  </div>
-                  <div className="NewPostBoard__dropzone-wrapper">
-                    {this.renderDropzone()}
+                    <button
+                      onClick={this.onBackToStepOne}
+                      className="NewPostBoard__back-button">
+                      <i className="fa fa-arrow-left"/> Back
+                    </button>
                   </div>
                   <div>
-                    <button onClick={this.onSubmit} disabled={this.props.isUploading}>
+                    <button
+                      onClick={this.onSubmit}
+                      disabled={this.props.isUploading}
+                      className="NewPostBoard__share-button">
                       {this.props.isUploading === true
                       ? (<i className="fa fa-spinner fa-pulse fa-3x fa-fw NewPostBoard__spinner"/>)
                       : 'Share'}
@@ -327,8 +348,45 @@ class NewPostBoard extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="twelve columns">
-                {this.renderCaptionField()}
+              <div className="row NewPostBoard__step-two-main-container">
+                <div className="six columns">
+                  <h2 className="NewPostBoard__preview-text">Preview</h2>
+                  <div className="NewPostBoard__preview-card">
+                    <div className="NewPostBoard__preview-card-header">
+                      <div className="NewPostBoard__preview-card-avatar-container">
+                        <img
+                          src={getAvatarUrl(avatarUrl)}
+                          className="NewPostBoard__preview-card-avatar-img"
+                          alt={`${username} profile`}
+                        />
+                      </div>
+                      <div className="GalleryItem-header__metadata-container">
+                        <div className="GalleryItem-header__username">
+                          <span>{username}</span>
+                        </div>
+                        {this.state.address.trim().length > 0
+                         ? (<div><span>{this.state.address}</span></div>)
+                         : null}
+                      </div>
+                    </div>
+                    <div className="NewPostBoard__dropzone-wrapper">
+                      <div
+                       className={`GalleryItem__body ${this.state.filter || ''}`}
+                       style={getFilterStyle(this.state.filterStyle)}>
+                        <img src={preview} role="presentation" />
+                      </div>
+                    </div>
+                    {this.state.caption.trim().length > 0
+                     ? (
+                      <div className="NewPostBoard__preview-card-footer">
+                       <strong>{username}</strong> {this.state.caption}
+                     </div>
+                    ) : null }
+                  </div>
+                </div>
+                <div className="six columns NewPostBoard__caption-location-container">
+                  {this.renderCaptionField()}
+                </div>
               </div>
             </div>
           </div>
@@ -341,6 +399,7 @@ class NewPostBoard extends React.Component {
 
 const mapStateToProps = (state) => ({
   isUploading: getIsUploadingPost(state),
+  currentUser: getCurrentUser(state),
 })
 
 export default connect(

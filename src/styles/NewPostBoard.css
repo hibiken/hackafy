@@ -12,12 +12,6 @@
   padding: 0;
 }
 
-/*
-.NewPostBoard__dropzone-wrapper,
-.NewPostBoard__tab-panel {
-  padding: 50px 0;
-}
-*/
 .NewPostBoard__dropzone-row {
   display: flex;
   justify-content: space-between;
@@ -41,13 +35,41 @@
   border: 2px solid rgb(102, 102, 102);
 }
 
+.NewPostBoard__next-button,
+.NewPostBoard__back-button,
+.NewPostBoard__share-button {
+  border-radius: 20px;
+}
+
+.NewPostBoard__share-button,
+.NewPostBoard__share-button:hover,
+.NewPostBoard__share-button:active {
+  background-color: rgb(76, 104, 215);
+  color: white;
+}
+
 .NewPostBoard__tabs {
-  margin-top: 8px;
+  width: 600px;
+  margin: 8px auto 0;
 }
 
 .NewPostBoard__tab {
   display: inline-block;
   width: 50%;
+  border: none;
+  border-radius: 0;
+  background-color: #efefef;
+  color: #999;
+}
+
+.NewPostBoard__tab:hover {
+  color: yellowgreen;
+}
+
+.NewPostBoard__tab.NewPostBoard__tab--active {
+  background-color: white;
+  color: #262626;
+  border-bottom: 2px solid yellowgreen;
 }
 
 .NewPostBoard__filters {
@@ -94,4 +116,62 @@
 .NewPostBoard__dropzone-text {
   font-size: 20px;
   color: #555;
+}
+
+.NewPostBoard__preview-text {
+  color: #555;
+  font-size: 20px;
+}
+
+.NewPostBoard__preview-card {
+  border: 1px solid #efefef;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  margin-bottom: 20px;
+}
+
+.NewPostBoard__preview-card-header {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+}
+
+.NewPostBoard__preview-card-footer {
+  padding: 5px 15px;
+}
+
+.NewPostBoard__preview-card-avatar-container {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
+}
+
+.NewPostBoard__preview-card-avatar-img {
+  display: inline-block;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.NewPostBoard__place-autocomplete-container {
+  z-index: 20;
+}
+
+.NewPostBoard__caption-box {
+  display: block;
+  width: 100%;
+}
+
+.NewPostBoard__address-input {
+  width: 100%;
+}
+
+.NewPostBoard__step-two-main-container {
+  margin-bottom: 80px;
+}
+
+.NewPostBoard__caption-location-container {
+  padding-top: 40px;
 }
