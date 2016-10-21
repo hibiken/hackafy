@@ -76,10 +76,12 @@ const validate = (values) => {
 
   if (!values.username) {
     errors.username = 'Username is required';
-  } else if (values.username.length < 3) {
-    errors.username = 'Username is too short (minimum 2 characters)';
+  } else if (values.username.length < 4) {
+    errors.username = 'Username is too short (minimum 3 characters)';
   } else if (values.username.length > 30) {
     errors.username = 'Username is too long (maximum 30 characters)';
+  } else if (!/^[A-Z0-9_-]{3,30}$/i.test(values.username)) {
+     errors.username = 'Username should be one word (- and _ allowed)'
   } // Add uniqueness
 
   if (!values.password) {
