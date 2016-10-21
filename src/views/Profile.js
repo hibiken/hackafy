@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import NewPostButton from '../components/NewPostButton';
+import NewPostModal from '../components/NewPostModal';
 import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import LoadMoreButton from '../components/LoadMoreButton';
@@ -37,6 +38,7 @@ class Profile extends React.Component {
     this.state = {
       logoutModalIsOpen: false,
       usersModalIsOpen: false,
+      newPostModalIsOpen: false,
       modalUserType: null,
       endlessScroll: false,
     };
@@ -44,6 +46,8 @@ class Profile extends React.Component {
     this.openLogoutModal = () => this.setState({ logoutModalIsOpen: true });
     this.closeLogoutModal = () => this.setState({ logoutModalIsOpen: false });
     this.closeUsersModal = () => this.setState({ usersModalIsOpen: false });
+    this.openNewPostModal = () => this.setState({ newPostModalIsOpen: true });
+    this.closeNewPostModal = () => this.setState({ newPostModalIsOpen: false });
     this.enableEndlessScroll = this._enableEndlessScroll.bind(this);
     this.handleScroll = this._handleScroll.bind(this);
     this.resetState = () => this.setState({
@@ -204,7 +208,11 @@ class Profile extends React.Component {
           onClick={this.enableEndlessScroll}
         />
         <NotificationCardsContainer />
-        <NewPostButton />
+        <NewPostButton onClick={this.openNewPostModal}/>
+        <NewPostModal
+          isOpen={this.state.newPostModalIsOpen}
+          onRequestClose={this.closeNewPostModal}
+        />
         <ConfirmationModal
           isOpen={this.state.logoutModalIsOpen}
           onRequestClose={this.closeLogoutModal}
