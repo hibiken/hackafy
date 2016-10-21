@@ -1,7 +1,7 @@
 import React from 'react';
-import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import { uploadPost } from '../actions';
+import PictureDropzone from '../components/PictureDropzone';
 import FilterButton from  '../components/FilterButton';
 import TabButton from '../components/TabButton';
 import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
@@ -120,45 +120,6 @@ class NewPostBoard extends React.Component {
     });
   }
 
-  renderDropzone() {
-    if (this.state.files.length > 0) {
-      const preview = this.state.files[0].preview;
-      return (
-        <Dropzone
-          className="NewPostBoard__dropzone NewPostBoard__dropzone--active"
-          multiple={false}
-          accept="image/*"
-          onDrop={this.onDrop}>
-          <figure
-            className={`NewPostBoard__preview-filter ${this.state.filter}`}
-            style={getFilterStyle(this.state.filterStyle)}>
-            <div
-              className="NewPostBoard__preview-img"
-              style={{backgroundImage: `url(${preview})`}}>
-            </div>
-          </figure>
-        </Dropzone>
-      )
-    } else {
-      return (
-        <Dropzone
-          className="NewPostBoard__dropzone"
-          onDrop={this.onDrop}
-          multiple={false}
-          accept="image/*">
-          <div className="NewPostBoard__dropzone-inner-wrapper">
-            <div className="NewPostBoard__dropzone-inner-content">
-              <div>
-                <i className="fa fa-camera NewPostBoard__dropzone-icon" aria-hidden="true" />
-              </div>
-              <div className="NewPostBoard__dropzone-text">Upload Picture</div>
-            </div>
-          </div>
-        </Dropzone>
-      )
-    }
-  }
-
   renderTabPanel() {
     if (this.state.selectedTab === 'filter') {
       return (
@@ -274,7 +235,7 @@ class NewPostBoard extends React.Component {
             <div className="row">
               <div className="twelve columns">
                 <div className="NewPostBoard__dropzone-wrapper">
-                  {this.renderDropzone()}
+                  <PictureDropzone onDrop={this.onDrop} />
                 </div>
               </div>
             </div>
@@ -292,7 +253,16 @@ class NewPostBoard extends React.Component {
                       className="NewPostBoard__back-button"><i className="fa fa-arrow-left"/> Back</button>
                   </div>
                   <div className="NewPostBoard__dropzone-wrapper">
-                    {this.renderDropzone()}
+                    <div className="NewPostBoard__edit-preview">
+                      <figure
+                        className={`NewPostBoard__preview-filter ${this.state.filter}`}
+                        style={getFilterStyle(this.state.filterStyle)}>
+                        <div
+                          className="NewPostBoard__preview-img"
+                          style={{backgroundImage: `url(${this.state.files[0].preview})`}}>
+                        </div>
+                      </figure>
+                    </div>
                   </div>
                   <div>
                     <button

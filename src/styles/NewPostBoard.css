@@ -31,8 +31,12 @@
   margin: auto;
 }
 
-.NewPostBoard__dropzone.NewPostBoard__dropzone--active {
+.NewPostBoard__edit-preview {
+  width: 300px;
+  height: 300px;
   border: 2px solid rgb(102, 102, 102);
+  border-radius: 5px;
+  margin: auto;
 }
 
 .NewPostBoard__next-button,
