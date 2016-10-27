@@ -248,13 +248,24 @@ export default combineReducers({
 });
 
 /*** Selectors ***/
+const sortComments = (posts) => {
+  return posts.map(post => ({
+    ...post,
+    comments: post.comments.sort((a, b) => {
+      return (new Date(a.createdAt) >= new Date(b.createdAt)) ? 1 : -1;
+    })
+  }));
+}
+
 export const getPostsByIds = (state, ids) => {
-  return ids.map(id => state.byId[id]);
+  const posts = ids.map(id => state.byId[id]);
+  return sortComments(posts);
 }
 
 export const getAllPosts = (state) => {
   const { allIds, byId } = state;
-  return allIds.map(id => byId[id]);
+  const posts = allIds.map(id => byId[id])
+  return sortComments(posts);
 }
 
 export const getPostById = (state, id) => {
@@ -273,7 +284,8 @@ export const getPostsByPlaceId = (state, placeId) => {
     return [];
   }
 
-  return ids.map(id => state.byId[id]);
+  const posts = ids.map(id => state.byId[id]);
+  return sortComments(posts);
 }
 
 export const getPostsByTagName = (state, tagName) => {
@@ -282,7 +294,8 @@ export const getPostsByTagName = (state, tagName) => {
     return [];
   }
 
-  return ids.map(id => state.byId[id]);
+  const posts = ids.map(id => state.byId[id]);
+  return sortComments(posts);
 }
 
 export const getCurrentPage = (state) => state.pagination.currentPage;
