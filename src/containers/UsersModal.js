@@ -50,7 +50,7 @@ class UsersModal extends React.Component {
       },
       content : {
         position: 'absolute',
-        top: '40%',
+        top: '50%',
         left: '50%',
         right: 'initial',
         bottom: 'initial',
@@ -64,6 +64,7 @@ class UsersModal extends React.Component {
         padding: '0px',
         width: '90%',
         maxWidth: '600px',
+        maxHeight: '80vh',
       }
     };
   }

@@ -15,6 +15,15 @@ const initialState = {
   isFetching: false,
 };
 
+/* Array of follower ids indexed by username
+
+Example :
+{
+  "kenhibino": [2, 3, 45, 56, 67],
+  "hansolo": [3, 4, 5, 67, 89, 345],
+  "lukusky": [3, 4, 6, 7, 8, 89]
+}
+*/
 const followerIdsByUsername = (state = initialState.followerIdsByUsername, action) => {
   switch (action.type) {
     case FETCH_FOLLOWERS_SUCCESS:
@@ -27,6 +36,15 @@ const followerIdsByUsername = (state = initialState.followerIdsByUsername, actio
   }
 }
 
+/* Array of following ids indexed by username
+
+Example :
+{
+  "kenhibino": [2, 3, 45, 56, 67],
+  "hansolo": [3, 4, 5, 67, 89, 345],
+  "lukusky": [3, 4, 6, 7, 8, 89]
+}
+*/
 const followingIdsByUsername = (state = initialState.followingIdsByUsername, action) => {
   switch (action.type) {
     case FETCH_FOLLOWING_SUCCESS:
@@ -39,6 +57,23 @@ const followingIdsByUsername = (state = initialState.followingIdsByUsername, act
   }
 }
 
+/* key-value pairs where key is id, and value is following/follower data
+
+Example:
+{
+  3: {
+    id: 3,
+    username: "cooldude",
+    avatarUrl: "https://avatar.jpg",
+  },
+  4: {
+    id: 4,
+    username: "js-ninja",
+    avatarUrl: "https://js-ninja.avatar.jpg",
+  },
+  ...
+}
+*/
 const usersById = (state = initialState.usersById, action) => {
   switch (action.type) {
     case FETCH_FOLLOWERS_SUCCESS:
