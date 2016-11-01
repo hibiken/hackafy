@@ -63,8 +63,9 @@ class UsersModal extends React.Component {
         outline: 'none',
         padding: '0px',
         width: '90%',
-        maxWidth: '600px',
-        maxHeight: '80vh',
+        maxWidth: (this.props.isFetching ? '300px' : '600px'),
+        maxHeight: (this.props.isFetching ? '200px' : '80vh'),
+        transition: 'all 400ms',
       }
     };
   }
