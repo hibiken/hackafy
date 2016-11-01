@@ -3,19 +3,16 @@ import { connect } from 'react-redux';
 import {
   fetchFollowers,
   fetchFollowing,
-  followUser,
-  unfollowUser
 } from '../actions';
 import Modal from 'react-modal';
 import { Link } from 'react-router';
-import FollowButton from '../components/FollowButton';
+import FollowButtonContainer from '../containers/FollowButtonContainer';
 import Spinner from '../components/Spinner';
 import {
   getFollowersByUsername,
   getFollowingByUsername,
   getIsFetchingFollowersFollowing,
   getCurrentUser,
-  getCurrentUsersFollowingIds
 } from '../store/rootReducer';
 import { getAvatarUrl } from '../utils/helpers';
 import '../styles/UsersModal.css';
@@ -156,14 +153,9 @@ class UsersModal extends React.Component {
 
   renderFollowButton(user) {
     if (user.username !== this.props.currentUser.username) {
-      const { currentUserFollowingIds } = this.props;
       return (
         <div className="UsersModal__follow-button-wrapper">
-          <FollowButton
-            isFollowing={currentUserFollowingIds.indexOf(user.id) >= 0}
-            onFollowClick={() => this.props.followUser(user.id)}
-            onUnfollowClick={() => this.props.unfollowUser(user.id)}
-          />
+          <FollowButtonContainer userId={user.id} />
         </div>
       )
     }
@@ -188,7 +180,6 @@ const mapStateToProps = (state, ownProps) => {
     following: getFollowingByUsername(state, username),
     isFetching: getIsFetchingFollowersFollowing(state),
     currentUser: getCurrentUser(state),
-    currentUserFollowingIds: getCurrentUsersFollowingIds(state),
   }
 }
 
@@ -197,7 +188,5 @@ export default connect(
 {
   fetchFollowers,
   fetchFollowing,
-  followUser,
-  unfollowUser
 }
 )(UsersModal);

@@ -67,6 +67,23 @@ const _user = (state = {postIds: [], pagination: {}}, action) => {
   }
 }
 
+const _currentUser = (state = {}, action) => {
+  switch (action.type) {
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followingCount: state.followingCount + 1,
+      }
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        followingCount: state.followingCount - 1,
+      }
+    default:
+      return state;
+  }
+}
+
 const byUsername = (state = initialState.byUsername, action) => {
   switch (action.type) {
     case FETCH_PUBLIC_PROFILE_SUCCESS:
@@ -80,14 +97,18 @@ const byUsername = (state = initialState.byUsername, action) => {
         [action.username]: _user(state[action.username], action),
       }
     case FOLLOW_USER:
-      return {
-        ...state,
-        [action.username]: _user(state[action.username], action),
-      }
     case UNFOLLOW_USER:
-      return {
-        ...state,
-        [action.username]: _user(state[action.username], action),
+      if (state[action.currentUserUsername]) {
+        return {
+          ...state,
+          [action.username]: _user(state[action.username], action),
+          [action.currentUserUsername]: _currentUser(state[action.currentUserUsername], action),
+        }
+      } else {
+        return {
+          ...state,
+          [action.username]: _user(state[action.username], action),
+        }
       }
     case LOCATION_CHANGE:
       const usernames = Object.keys(state);
