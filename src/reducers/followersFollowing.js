@@ -12,6 +12,8 @@ const initialState = {
   followerIdsByUsername: {},
   followingIdsByUsername: {},
   usersById: {},
+  followingPaginationsByUsername: {},
+  followerPaginationsByUsername: {},
   isFetching: false,
 };
 
@@ -87,6 +89,51 @@ const usersById = (state = initialState.usersById, action) => {
   }
 }
 
+/* pagination for following  indexed by username
+
+Example :
+{
+  "kenhibino": {
+    currentPage: 1,
+    nextPage: 2,
+    prevPage: null,
+    totalPages: 2,
+    totalCount: 10,
+  },
+  "hansolo": {
+    currentPage: 2,
+    nextPage: 3,
+    prevPage: 1,
+    totalPages: 5,
+    totalCount: 100,
+  }
+}
+*/
+
+const followingPaginationsByUsername = (state = initialState.followingPaginationsByUsername, action) => {
+  switch (action.type) {
+    case FETCH_FOLLOWING_SUCCESS:
+      return {
+        ...state,
+        [action.username]: action.pagination,
+      }
+    default:
+      return state;
+  }
+}
+
+const followerPaginationsByUsername = (state = initialState.followerPaginationsByUsername, action) => {
+  switch (action.type) {
+    case FETCH_FOLLOWERS_SUCCESS:
+      return {
+        ...state,
+        [action.username]: action.pagination,
+      }
+    default:
+      return state;
+  }
+}
+
 const isFetching = (state = initialState.isFetching, action) => {
   switch (action.type) {
     case FETCH_FOLLOWERS_START:
@@ -106,6 +153,8 @@ const followersFollowing = combineReducers({
   followerIdsByUsername,
   followingIdsByUsername,
   usersById,
+  followingPaginationsByUsername,
+  followerPaginationsByUsername,
   isFetching,
 });
 
@@ -139,5 +188,23 @@ export const getFollowingByUsername = (state, username) => {
   const followingIds = getFollowingIds(state, username);
   return followingIds.map(id => state.usersById[id]);
 };
+
+export const getFollowingNextPageByUsername = (state, username) => {
+  const pagination = state.followingPaginationsByUsername[username];
+  if (pagination) {
+    return pagination.nextPage;
+  } else {
+    return null;
+  }
+}
+
+export const getFollowerNextPageByUsername = (state, username) => {
+  const pagination = state.followerPaginationsByUsername[username];
+  if (pagination) {
+    return pagination.nextPage;
+  } else {
+    return null;
+  }
+}
 
 export const getIsFetching = (state) => state.isFetching;

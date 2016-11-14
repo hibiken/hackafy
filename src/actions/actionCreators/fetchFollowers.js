@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { getAuthToken } from '../../store/rootReducer';
+import {
+  getAuthToken,
+  getFollowingNextPageByUsername,
+  getFollowerNextPageByUsername,
+} from '../../store/rootReducer';
 import { API_URL } from '../../config/constants';
 import {
   FETCH_FOLLOWERS_START,
@@ -14,10 +18,14 @@ export const fetchFollowers = (username) => (dispatch, getState) => {
   dispatch({type: FETCH_FOLLOWERS_START});
 
   const authToken = getAuthToken(getState());
+  const nextPage = getFollowerNextPageByUsername(getState(), username);
+  const url = (nextPage === null)
+              ? `${API_URL}/users/${username}/followers`
+              : `${API_URL}/users/${username}/followers?page=${nextPage}`
 
   return axios({
     method: 'get',
-    url: `${API_URL}/users/${username}/followers`,
+    url,
     headers: {
       'Authorization': `Token ${authToken}`,
     },
@@ -27,6 +35,7 @@ export const fetchFollowers = (username) => (dispatch, getState) => {
     dispatch({
       type: FETCH_FOLLOWERS_SUCCESS,
       payload: data.users,
+      pagination: data.meta,
       username,
     })
   })
@@ -42,10 +51,14 @@ export const fetchFollowing = (username) => (dispatch, getState) => {
   dispatch({type: FETCH_FOLLOWING_START});
 
   const authToken = getAuthToken(getState());
+  const nextPage = getFollowingNextPageByUsername(getState(), username);
+  const url = (nextPage === null)
+              ? `${API_URL}/users/${username}/following`
+              : `${API_URL}/users/${username}/following?page=${nextPage}`
 
   return axios({
     method: 'get',
-    url: `${API_URL}/users/${username}/following`,
+    url,
     headers: {
       'Authorization': `Token ${authToken}`,
     },
@@ -55,6 +68,7 @@ export const fetchFollowing = (username) => (dispatch, getState) => {
     dispatch({
       type: FETCH_FOLLOWING_SUCCESS,
       payload: data.users,
+      pagination: data.meta,
       username,
     })
   })
