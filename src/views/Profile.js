@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner';
 import FollowButton from '../components/FollowButton';
 import LoadMoreButton from '../components/LoadMoreButton';
 import ConfirmationModal from '../components/ConfirmationModal';
-import UsersModal from '../containers/UsersModal';
+import UsersModalContainer from '../containers/UsersModalContainer';
 import PhotoGrid from '../containers/PhotoGrid';
 import NotificationCardsContainer from '../containers/NotificationCardsContainer';
 import NotFoundPage from './NotFoundPage';
@@ -139,7 +139,7 @@ class Profile extends React.Component {
 
   renderUsersModal() {
     return (
-      <UsersModal
+      <UsersModalContainer
         isOpen={this.state.usersModalIsOpen}
         onRequestClose={this.closeUsersModal}
         username={this.props.params.username}
