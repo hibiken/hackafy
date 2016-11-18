@@ -5,8 +5,7 @@ import {
   fetchFollowing,
 } from '../actions';
 import Modal from 'react-modal';
-import { Link } from 'react-router';
-import FollowButtonContainer from '../containers/FollowButtonContainer';
+import UserListItem from '../components/UserListItem';
 import Spinner from '../components/Spinner';
 import {
   getFollowersByUsername,
@@ -14,7 +13,6 @@ import {
   getIsFetchingFollowersFollowing,
   getCurrentUser,
 } from '../store/rootReducer';
-import { getAvatarUrl } from '../utils/helpers';
 import '../styles/UsersModal.css';
 
 class UsersModal extends React.Component {
@@ -89,15 +87,11 @@ class UsersModal extends React.Component {
         </header>
         <div className="UsersModal__list-container">
           {followers.map(user => (
-            <div key={user.id} className="UsersModal__list-item">
-              <div className="UsersModal__avatar-wrapper">
-                <img src={getAvatarUrl(user.avatarUrl)} alt={user.username} />
-              </div>
-              <div className="UsersModal__user-info">
-                <Link to={`/${user.username}`} className="UsersModal__username">{user.username}</Link>
-              </div>
-              {this.renderFollowButton(user)}
-            </div>
+            <UserListItem
+              key={user.id}
+              user={user}
+              isCurrentUser={this.props.currentUser.username === user.username}
+            />
           ))}
         </div>
       </div>
@@ -126,15 +120,11 @@ class UsersModal extends React.Component {
         </header>
         <div className="UsersModal__list-container">
           {following.map(user => (
-            <div key={user.id} className="UsersModal__list-item">
-              <div className="UsersModal__avatar-wrapper">
-                <img src={getAvatarUrl(user.avatarUrl)} alt={user.username} />
-              </div>
-              <div className="UsersModal__user-info">
-                <Link to={`/${user.username}`} className="UsersModal__username">{user.username}</Link>
-              </div>
-              {this.renderFollowButton(user)}
-            </div>
+            <UserListItem
+              key={user.id}
+              user={user}
+              isCurrentUser={user.username === this.props.currentUser.username}
+            />
           ))}
         </div>
       </div>
@@ -148,16 +138,6 @@ class UsersModal extends React.Component {
 
     if (this.props.usersType === 'following') {
       return this._getFollowingModalContent();
-    }
-  }
-
-  renderFollowButton(user) {
-    if (user.username !== this.props.currentUser.username) {
-      return (
-        <div className="UsersModal__follow-button-wrapper">
-          <FollowButtonContainer userId={user.id} />
-        </div>
-      )
     }
   }
 
