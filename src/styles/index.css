@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+
+/* disable scroll when modal is open */
+body.ReactModal__Body--open {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
