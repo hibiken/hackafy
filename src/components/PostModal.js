@@ -133,6 +133,7 @@ class PostModal extends React.Component {
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.onRequestClose}
+        contentLabel="PostModal"
         style={this.getCustomStyles()}>
         {this.renderModalContent()}
       </Modal>

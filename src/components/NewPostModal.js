@@ -35,6 +35,7 @@ class NewPostModal extends Component {
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.onRequestClose}
+        contentLabel="NewPostModal"
         style={customStyles}>
         <NewPostBoard afterSubmit={this.props.onRequestClose} />
       </Modal>

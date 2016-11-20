@@ -33,6 +33,7 @@ const ConfirmationModal = (props) => {
     <Modal
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}
+      contentLabel="ConfirmationModal"
       style={customStyles}>
       <div>
         <button
