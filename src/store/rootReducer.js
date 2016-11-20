@@ -5,6 +5,7 @@ import currentUser, * as fromCurrentUser from '../reducers/currentUser';
 import posts, * as fromPosts from '../reducers/posts';
 import publicProfiles, * as fromPublicProfiles from '../reducers/publicProfiles';
 import followersFollowing, * as fromFollowersFollowing from '../reducers/followersFollowing';
+import likers, * as fromLikers from '../reducers/likers';
 import notifications, * as fromNotifications from '../reducers/notifications';
 import followSuggestions, * as fromSuggestions from '../reducers/followSuggestions';
 import { USER_SIGN_OUT } from '../actions/actionTypes';
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   posts,
   publicProfiles,
   followersFollowing,
+  likers,
   notifications,
   followSuggestions,
 });
@@ -157,6 +159,18 @@ export const getFollowingNextPageByUsername = (state, username) => {
 
 export const getFollowerNextPageByUsername = (state, username) => {
   return fromFollowersFollowing.getFollowerNextPageByUsername(state.followersFollowing, username);
+};
+
+export const getLikersByPostId = (state, postId) => {
+  return fromLikers.getLikersByPostId(state.likers, postId);
+};
+
+export const getLikerPaginationByPostId = (state, postId) => {
+  return fromLikers.getLikerPaginationByPostId(state.likers, postId);
+};
+
+export const getIsFetchingLikers = (state) => {
+  return fromLikers.getIsFetching(state.likers);
 };
 
 export const getNotifications = (state) => {

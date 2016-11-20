@@ -47,7 +47,7 @@ class GalleryItem extends React.Component {
     const { likesCount } = this.props;
     if (likesCount > 0) {
       return (
-        <div className="GalleryItem__likes">
+        <div className="GalleryItem__likes" onClick={this.props.onLikersClick}>
           {likesCount} {likesCount === 1 ? 'like' : 'likes'}
         </div>
       );

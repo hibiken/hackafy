@@ -17,6 +17,7 @@ import { addComment, deleteComment } from './actionCreators/postComments';
 import { fetchPublicProfile, fetchPostsByUsername } from './actionCreators/fetchPublicProfile';
 import { followUser, unfollowUser } from './actionCreators/followUsers';
 import { fetchFollowers, fetchFollowing } from './actionCreators/fetchFollowers';
+import { fetchLikers } from './actionCreators/fetchLikers';
 import {
   fetchNotifcations,
   fetchNotificationCount,
@@ -56,6 +57,8 @@ export {
 
   fetchFollowers,
   fetchFollowing,
+
+  fetchLikers,
 
   fetchNotifcations,
   fetchNotificationCount,

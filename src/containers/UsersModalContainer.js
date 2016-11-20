@@ -13,13 +13,11 @@ import {
   getFollowerPaginationByUsername,
   getFollowingPaginationByUsername,
 } from '../store/rootReducer';
-import '../styles/UsersModal.css';
 
 class UsersModalContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen && !this.props.isOpen) {
-      console.log(`fetch ${nextProps.usersType}!!!`);
       switch (nextProps.usersType) {
         case 'followers':
           this.props.fetchFollowers(this.props.username);

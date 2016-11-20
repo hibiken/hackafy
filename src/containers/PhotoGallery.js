@@ -10,6 +10,7 @@ import {
 } from '../actions';
 import GalleryItem from '../components/GalleryItem';
 import Spinner from '../components/Spinner';
+import LikersModalContainer from './LikersModalContainer';
 import {
   getAllPosts,
   getIsFetchingPosts,
@@ -25,8 +26,14 @@ import '../styles/PhotoGallery.css'
 class PhotoGallery extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      likersModalIsOpen: false,
+      likersModalPostId: null,
+    };
     this.handleScroll = this._handleScroll.bind(this);
   }
+
   componentWillMount() {
     this.props.fetchPosts();
   }
@@ -53,6 +60,20 @@ class PhotoGallery extends React.Component {
     return !isFetching && (currentPage === null || currentPage < totalPages);
   }
 
+  openLikersModal = (postId) => {
+    this.setState({
+      likersModalIsOpen: true,
+      likersModalPostId: postId,
+    })
+  }
+
+  closeLikersModal = () => {
+    this.setState({
+      likersModalIsOpen: false,
+      likersModalPostId: null,
+    });
+  }
+
   render() {
     const { posts, isFetching, likedPostIds, currentUser } = this.props;
 
@@ -69,6 +90,7 @@ class PhotoGallery extends React.Component {
             onCommentDelete={(commentId) => this.props.deleteComment(post.id, commentId)}
             currentUser={currentUser}
             onFetchMoreComments={() => this.props.fetchMoreComments(post.id)}
+            onLikersClick={() => this.openLikersModal(post.id)}
           />
         ))}
         {isFetching ? (
@@ -76,6 +98,11 @@ class PhotoGallery extends React.Component {
             <Spinner />
           </div>
         ) : null}
+        <LikersModalContainer
+          isOpen={this.state.likersModalIsOpen}
+          onRequestClose={this.closeLikersModal}
+          postId={this.state.likersModalPostId}
+        />
       </div>
     );
   }
