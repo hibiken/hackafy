@@ -143,6 +143,14 @@ export const getIsFetchingFollowersFollowing = (state) => {
   return fromFollowersFollowing.getIsFetching(state.followersFollowing);
 };
 
+export const getFollowingPaginationByUsername = (state, username) => {
+  return fromFollowersFollowing.getFollowingPaginationByUsername(state.followersFollowing, username);
+};
+
+export const getFollowerPaginationByUsername = (state, username) => {
+  return fromFollowersFollowing.getFollowerPaginationByUsername(state.followersFollowing, username);
+};
+
 export const getFollowingNextPageByUsername = (state, username) => {
   return fromFollowersFollowing.getFollowingNextPageByUsername(state.followersFollowing, username);
 };

@@ -11,28 +11,25 @@ class UsersModal extends Component {
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.onRequestClose}
+        scrollOffset={20}
+        contentLabel="UsersModal"
+        handleScrollOffsetZone={this.props.fetchUsers}
         style={this.getCustomStyles()}>
         <div className="UsersModal__following-content">
           <header className="UsersModal__header">
             <h5 className="UsersModal__heading">{this.props.heading}</h5>
           </header>
-          {this.props.isFetching === true
-           ? (
-             <div className="UsersModal__spinner-container">
-               <Spinner />
-             </div>
-           )
-           : (
-             <div className="UsersModal__list-container">
-              {this.props.users.map(user => (
-                <UserListItem
-                  key={user.id}
-                  user={user}
-                  isCurrentUser={this.props.isCurrentUser(user)}
-                />
-              ))}
-             </div>
-           )}
+           <div className="UsersModal__list-container">
+            {this.props.users.map(user => (
+              <UserListItem
+                key={user.id}
+                user={user}
+                isCurrentUser={this.props.isCurrentUser(user)}
+              />
+            ))}
+           </div>
+           {this.props.isFetching === true
+            ? (<div className="UsersModal__spinner-container"><Spinner /></div>) : null}
         </div>
       </Modal>
     )
@@ -63,8 +60,8 @@ class UsersModal extends Component {
         outline: 'none',
         padding: '0px',
         width: '90%',
-        maxWidth: (this.props.isFetching ? '300px' : '600px'),
-        maxHeight: (this.props.isFetching ? '200px' : '80vh'),
+        maxWidth: '600px',
+        maxHeight: '80vh',
         transition: 'all 400ms',
       }
     };
@@ -78,6 +75,7 @@ UsersModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isCurrentUser: PropTypes.func.isRequired,
+  fetchUsers: PropTypes.func.isRequired,
 }
 
 export default UsersModal;

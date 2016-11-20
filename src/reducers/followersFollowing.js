@@ -17,6 +17,21 @@ const initialState = {
   isFetching: false,
 };
 
+const _userIds = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_FOLLOWING_SUCCESS:
+    case FETCH_FOLLOWERS_SUCCESS:
+      return action.payload.reduce((ids, user) => {
+        if (ids.indexOf(user.id) === -1) {
+          ids = [...ids, user.id];
+        }
+        return ids;
+      }, state)
+    default:
+      return state;
+    }
+}
+
 /* Array of follower ids indexed by username
 
 Example :
@@ -31,7 +46,7 @@ const followerIdsByUsername = (state = initialState.followerIdsByUsername, actio
     case FETCH_FOLLOWERS_SUCCESS:
       return {
         ...state,
-        [action.username]: action.payload.map(user => user.id)
+        [action.username]: _userIds(state[action.username], action),
       };
     default:
       return state;
@@ -47,12 +62,13 @@ Example :
   "lukusky": [3, 4, 6, 7, 8, 89]
 }
 */
+
 const followingIdsByUsername = (state = initialState.followingIdsByUsername, action) => {
   switch (action.type) {
     case FETCH_FOLLOWING_SUCCESS:
       return {
         ...state,
-        [action.username]: action.payload.map(user => user.id)
+        [action.username]: _userIds(state[action.username], action),
       }
     default:
       return state;
@@ -187,6 +203,22 @@ export const getFollowersByUsername = (state, username) => {
 export const getFollowingByUsername = (state, username) => {
   const followingIds = getFollowingIds(state, username);
   return followingIds.map(id => state.usersById[id]);
+};
+
+const defaultPagination = {
+  currentPage: null,
+  nextPage: null,
+  prevPage: null,
+  totalPages: null,
+  totalCount: null,
+}
+
+export const getFollowingPaginationByUsername = (state, username) => {
+  return state.followingPaginationsByUsername[username] || defaultPagination;
+};
+
+export const getFollowerPaginationByUsername = (state, username) => {
+  return state.followerPaginationsByUsername[username] || defaultPagination;
 };
 
 export const getFollowingNextPageByUsername = (state, username) => {
